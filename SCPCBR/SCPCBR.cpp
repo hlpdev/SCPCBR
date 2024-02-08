@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     while (!glfwWindowShouldClose(window)) {
         // TODO: Render here
         
-        //glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
