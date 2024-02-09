@@ -50,9 +50,9 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\Build\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\Intermediate\$(Configuration)\</IntDir>
-    <IncludePath>$(LLVMInstallDir)\lib\clang\$(LLVMIncludeVersion)\include;$(IncludePath);$(SolutionDir)\Dependencies\include;</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)\Dependencies\lib;</LibraryPath>
-    <SourcePath>$(VC_SourcePath);$(SolutionDir)\Dependencies\src;</SourcePath>
+    <IncludePath>$(LLVMInstallDir)\lib\clang\$(LLVMIncludeVersion)\include;$(IncludePath);$(ProjectDir)\Dependencies\include;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)\Dependencies\lib;</LibraryPath>
+    <SourcePath>$(VC_SourcePath);$(ProjectDir)\Dependencies\src;</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -74,7 +74,14 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;archive.lib;freetype.lib;</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>rmdir "$(OutDir)\Assets\" /S /Q</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)\Assets\" "$(OutDir)\Assets\" /s /e /h</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -98,10 +105,586 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\include\imgui\imgui.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>D:\SCPCBR_Native\\Intermediate\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformationFile>D:\SCPCBR_Native\\Intermediate\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>Default</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ModuleDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</ModuleDependenciesFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <ObjectFileName>D:\SCPCBR_Native\\Intermediate\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.tlog\</TrackerLogDirectory>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>D:\SCPCBR_Native\\Intermediate\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <LinkCompiled>true</LinkCompiled>
+      <ClangClMode>true</ClangClMode>
+      <MSCVersion>Default</MSCVersion>
+      <AdditionalOptions>-m64  </AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="Dependencies\include\imgui\imgui_draw.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>D:\SCPCBR_Native\\Intermediate\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformationFile>D:\SCPCBR_Native\\Intermediate\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>Default</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ModuleDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</ModuleDependenciesFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <ObjectFileName>D:\SCPCBR_Native\\Intermediate\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.tlog\</TrackerLogDirectory>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>D:\SCPCBR_Native\\Intermediate\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <LinkCompiled>true</LinkCompiled>
+      <ClangClMode>true</ClangClMode>
+      <MSCVersion>Default</MSCVersion>
+      <AdditionalOptions>-m64  </AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="Dependencies\include\imgui\imgui_freetype.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>D:\SCPCBR_Native\\Intermediate\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformationFile>D:\SCPCBR_Native\\Intermediate\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>Default</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ModuleDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</ModuleDependenciesFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <ObjectFileName>D:\SCPCBR_Native\\Intermediate\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.tlog\</TrackerLogDirectory>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>D:\SCPCBR_Native\\Intermediate\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <LinkCompiled>true</LinkCompiled>
+      <ClangClMode>true</ClangClMode>
+      <MSCVersion>Default</MSCVersion>
+      <AdditionalOptions>-m64  </AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="Dependencies\include\imgui\imgui_impl_glfw.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>D:\SCPCBR_Native\\Intermediate\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformationFile>D:\SCPCBR_Native\\Intermediate\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>Default</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ModuleDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</ModuleDependenciesFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <ObjectFileName>D:\SCPCBR_Native\\Intermediate\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.tlog\</TrackerLogDirectory>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>D:\SCPCBR_Native\\Intermediate\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <LinkCompiled>true</LinkCompiled>
+      <ClangClMode>true</ClangClMode>
+      <MSCVersion>Default</MSCVersion>
+      <AdditionalOptions>-m64  </AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="Dependencies\include\imgui\imgui_impl_opengl3.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>D:\SCPCBR_Native\\Intermediate\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformationFile>D:\SCPCBR_Native\\Intermediate\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>Default</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ModuleDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</ModuleDependenciesFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <ObjectFileName>D:\SCPCBR_Native\\Intermediate\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.tlog\</TrackerLogDirectory>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>D:\SCPCBR_Native\\Intermediate\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <LinkCompiled>true</LinkCompiled>
+      <ClangClMode>true</ClangClMode>
+      <MSCVersion>Default</MSCVersion>
+      <AdditionalOptions>-m64  </AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="Dependencies\include\imgui\imgui_stdlib.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>D:\SCPCBR_Native\\Intermediate\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformationFile>D:\SCPCBR_Native\\Intermediate\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>Default</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ModuleDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</ModuleDependenciesFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <ObjectFileName>D:\SCPCBR_Native\\Intermediate\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.tlog\</TrackerLogDirectory>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>D:\SCPCBR_Native\\Intermediate\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <LinkCompiled>true</LinkCompiled>
+      <ClangClMode>true</ClangClMode>
+      <MSCVersion>Default</MSCVersion>
+      <AdditionalOptions>-m64  </AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="Dependencies\include\imgui\imgui_tables.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>D:\SCPCBR_Native\\Intermediate\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformationFile>D:\SCPCBR_Native\\Intermediate\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>Default</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ModuleDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</ModuleDependenciesFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <ObjectFileName>D:\SCPCBR_Native\\Intermediate\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.tlog\</TrackerLogDirectory>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>D:\SCPCBR_Native\\Intermediate\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <LinkCompiled>true</LinkCompiled>
+      <ClangClMode>true</ClangClMode>
+      <MSCVersion>Default</MSCVersion>
+      <AdditionalOptions>-m64  </AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="Dependencies\include\imgui\imgui_widgets.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>D:\SCPCBR_Native\\Intermediate\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformationFile>D:\SCPCBR_Native\\Intermediate\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>Default</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ModuleDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</ModuleDependenciesFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <ObjectFileName>D:\SCPCBR_Native\\Intermediate\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>D:\SCPCBR_Native\\Intermediate\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.tlog\</TrackerLogDirectory>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>D:\SCPCBR_Native\\Intermediate\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <LinkCompiled>true</LinkCompiled>
+      <ClangClMode>true</ClangClMode>
+      <MSCVersion>Default</MSCVersion>
+      <AdditionalOptions>-m64  </AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="Dependencies\src\glad.c" />
+    <ClCompile Include="GameAssembly\GameAssembly.cpp" />
+    <ClCompile Include="Launcher\Launcher.cpp" />
+    <ClCompile Include="Launcher\Options.cpp" />
     <ClCompile Include="SCPCBR.cpp" />
+    <ClCompile Include="Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameAssembly.h" />
+    <ClInclude Include="Dependencies\include\archive.h" />
+    <ClInclude Include="Dependencies\include\archive_entry.h" />
+    <ClInclude Include="Dependencies\include\freetype\config\ftconfig.h" />
+    <ClInclude Include="Dependencies\include\freetype\config\ftheader.h" />
+    <ClInclude Include="Dependencies\include\freetype\config\ftmodule.h" />
+    <ClInclude Include="Dependencies\include\freetype\config\ftoption.h" />
+    <ClInclude Include="Dependencies\include\freetype\config\ftstdlib.h" />
+    <ClInclude Include="Dependencies\include\freetype\freetype.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftadvanc.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftbbox.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftbdf.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftbitmap.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftbzip2.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftcache.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftchapters.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftcid.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftdriver.h" />
+    <ClInclude Include="Dependencies\include\freetype\fterrdef.h" />
+    <ClInclude Include="Dependencies\include\freetype\fterrors.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftfntfmt.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftgasp.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftglyph.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftgxval.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftgzip.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftimage.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftincrem.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftlcdfil.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftlist.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftlzw.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftmac.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftmm.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftmodapi.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftmoderr.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftotval.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftoutln.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftparams.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftpfr.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftrender.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftsizes.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftsnames.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftstroke.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftsynth.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftsystem.h" />
+    <ClInclude Include="Dependencies\include\freetype\fttrigon.h" />
+    <ClInclude Include="Dependencies\include\freetype\fttypes.h" />
+    <ClInclude Include="Dependencies\include\freetype\ftwinfnt.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\autohint.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\cffotypes.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\cfftypes.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftcalc.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftdebug.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftdrv.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftgloadr.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\fthash.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftmemory.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftobjs.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftpic.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftpsprop.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftrfork.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftserv.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftstream.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\fttrace.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\ftvalid.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\internal.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\psaux.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\pshints.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svbdf.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svcfftl.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svcid.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svfntfmt.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svgldict.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svgxval.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svkern.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svmetric.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svmm.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svotval.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svpfr.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svpostnm.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svprop.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svpscmap.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svpsinfo.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svsfnt.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svttcmap.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svtteng.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svttglyf.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\services\svwinfnt.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\sfnt.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\t1types.h" />
+    <ClInclude Include="Dependencies\include\freetype\internal\tttypes.h" />
+    <ClInclude Include="Dependencies\include\freetype\t1tables.h" />
+    <ClInclude Include="Dependencies\include\freetype\ttnameid.h" />
+    <ClInclude Include="Dependencies\include\freetype\tttables.h" />
+    <ClInclude Include="Dependencies\include\freetype\tttags.h" />
+    <ClInclude Include="Dependencies\include\ft2build.h" />
+    <ClInclude Include="Dependencies\include\GLAD\glad.h" />
+    <ClInclude Include="Dependencies\include\GLFW\glfw3.h" />
+    <ClInclude Include="Dependencies\include\GLFW\glfw3native.h" />
+    <ClInclude Include="Dependencies\include\imgui\imconfig.h" />
+    <ClInclude Include="Dependencies\include\imgui\imgui.h" />
+    <ClInclude Include="Dependencies\include\imgui\imguicustom.h" />
+    <ClInclude Include="Dependencies\include\imgui\imgui_freetype.h" />
+    <ClInclude Include="Dependencies\include\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="Dependencies\include\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Dependencies\include\imgui\imgui_internal.h" />
+    <ClInclude Include="Dependencies\include\imgui\imgui_stdlib.h" />
+    <ClInclude Include="Dependencies\include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Dependencies\include\imgui\imstb_textedit.h" />
+    <ClInclude Include="Dependencies\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="Dependencies\include\ini.h" />
+    <ClInclude Include="Dependencies\include\KHR\khrplatform.h" />
+    <ClInclude Include="Dependencies\include\STB\stb_image.h" />
+    <ClInclude Include="ExecutableResources\resource.h" />
+    <ClInclude Include="GameAssembly\GameAssembly.h" />
+    <ClInclude Include="Launcher\Launcher.h" />
+    <ClInclude Include="Launcher\Options.h" />
+    <ClInclude Include="Util\Util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\GFX\Fonts\Courier New Bold.ttf" />
+    <Content Include="Assets\GFX\Fonts\Courier New.ttf" />
+    <Content Include="Assets\GFX\Fonts\DS-Digital.TTF" />
+    <Content Include="Assets\GFX\Fonts\Journal.ttf" />
+    <Content Include="Assets\GFX\Window\LauncherBackground.png" />
+    <Content Include="Assets\GFX\Window\LauncherTitle.png" />
+    <Content Include="Assets\GFX\Window\remastered.ico" />
+    <Content Include="Assets\GFX\Window\remastered.png" />
+    <Content Include="Dependencies\lib\archive.lib" />
+    <Content Include="Dependencies\lib\archive_static.lib" />
+    <Content Include="Dependencies\lib\freetype.lib" />
+    <Content Include="Dependencies\lib\glfw3.dll" />
+    <Content Include="Dependencies\lib\glfw3.lib" />
+    <Content Include="Dependencies\lib\glfw3dll.lib" />
+    <Content Include="Dependencies\lib\glfw3_mt.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\GFX\Window\remastered.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ExecutableResources\SCPCBR.rc">
+      <ResourceOutputFileName>D:\SCPCBR_Native\\Intermediate\Debug\%(Filename).res</ResourceOutputFileName>
+      <Culture>0x0409</Culture>
+      <TrackerLogDirectory>D:\SCPCBR_Native\\Intermediate\Debug\SCPCBR.tlog\</TrackerLogDirectory>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <UseResponseFile>false</UseResponseFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <LinkCompiled>true</LinkCompiled>
+    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
