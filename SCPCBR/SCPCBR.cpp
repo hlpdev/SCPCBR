@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     
     // Initialize GLFW
     if (!glfwInit()) {
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     // Set OpenGL & GLFW info
@@ -97,5 +97,5 @@ int main(int argc, char* argv[])
     Launcher::Free();
 
     glfwTerminate();
-    exit(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
 }
