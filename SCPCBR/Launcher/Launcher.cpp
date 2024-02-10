@@ -134,6 +134,9 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.05f, 0.05f, 0.05f, 0.9f));
     ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
     ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.05f, 0.05f, 0.05f, 0.9f));
+    ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
+    ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
     ImGui::PushItemWidth(ImGui::CalcItemWidth() - ImGui::GetStyle().ItemInnerSpacing.x * 2.0f - ImGui::GetFrameHeight() * 2.0f + 87);
     if (ImGui::BeginCombo("## DISPLAY-MODE-COMBO", currentItem.c_str(), ImGuiComboFlags_NoArrowButton)) {
         for (int i = 0; i < IM_ARRAYSIZE(displayModes); i++) {
@@ -174,7 +177,7 @@ void Launcher::Render(GLFWwindow* window) {
             Options::WriteIntOption("Graphics", "DisplayMode", currentIndex);
         }
     }
-    ImGui::PopStyleColor(6);
+    ImGui::PopStyleColor(9);
     
     ImGui::Separator();
 
@@ -190,6 +193,9 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.05f, 0.05f, 0.05f, 0.9f));
     ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
     ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.05f, 0.05f, 0.05f, 0.9f));
+    ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
+    ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
     ImGui::PushItemWidth(ImGui::CalcItemWidth() - ImGui::GetStyle().ItemInnerSpacing.x * 2.0f - ImGui::GetFrameHeight() * 2.0f + 87);
     if (ImGui::BeginCombo("## LANGUAGE-COMBO", currentLang, ImGuiComboFlags_NoArrowButton)) {
         for (size_t i = 0; i < Localization::GetLanguageAmount(); i++) {
@@ -230,7 +236,7 @@ void Launcher::Render(GLFWwindow* window) {
             Localization::SetActiveLanguage(currentLang);
         }
     }
-    ImGui::PopStyleColor(6);
+    ImGui::PopStyleColor(9);
 
     ImGui::Separator();
     
