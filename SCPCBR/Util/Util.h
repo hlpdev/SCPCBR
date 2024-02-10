@@ -19,6 +19,11 @@ namespace Util {
         bool LoadImageFromFile(std::string fileName, Image* image);
     }
 
+    namespace Strings {
+        void ReplaceByDelimiter(std::string& string, std::string& delimiter, std::string& toReplaceWith);
+        std::string ReplaceByDelimiterCopy(std::string string, std::string& delimiter, std::string& toReplaceWith);
+    }
+
     namespace Error {
         void Exit(std::string message);
     }

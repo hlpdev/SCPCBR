@@ -43,3 +43,21 @@ void Util::Error::Exit(std::string message) {
     MessageBoxA(0, message.c_str(), "SCP:CBR FATAL ERROR", MB_TOPMOST | MB_ICONERROR);
     exit(EXIT_FAILURE);
 }
+
+void Util::Strings::ReplaceByDelimiter(std::string& string, std::string& delimiter, std::string& toReplaceWith) {
+    size_t startPos = 0;
+    while ((startPos = string.find(delimiter, startPos)) != std::string::npos) {
+        string.replace(startPos, delimiter.length(), toReplaceWith);
+        startPos += toReplaceWith.length();
+    }
+}
+
+std::string Util::Strings::ReplaceByDelimiterCopy(std::string string, std::string& delimiter, std::string& toReplaceWith) {
+    size_t startPos = 0;
+    while ((startPos = string.find(delimiter, startPos)) != std::string::npos) {
+        string.replace(startPos, delimiter.length(), toReplaceWith);
+        startPos += toReplaceWith.length();
+    }
+
+    return string;
+}
