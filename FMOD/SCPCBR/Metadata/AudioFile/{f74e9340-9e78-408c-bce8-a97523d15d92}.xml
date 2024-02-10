@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{f74e9340-9e78-408c-bce8-a97523d15d92}">
+		<property name="assetPath">
+			<value>SCP/294/Retch1.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.30897959183673468</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d5bf54a2-9405-4b45-8b81-d224e146a5d6}</destination>
+		</relationship>
+	</object>
+</objects>

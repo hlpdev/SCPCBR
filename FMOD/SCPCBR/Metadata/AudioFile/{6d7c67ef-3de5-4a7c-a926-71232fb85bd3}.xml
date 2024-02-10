@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{6d7c67ef-3de5-4a7c-a926-71232fb85bd3}">
+		<property name="assetPath">
+			<value>Room/Intro/PA/2/Scientist0.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.2207482993197281</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d5bf54a2-9405-4b45-8b81-d224e146a5d6}</destination>
+		</relationship>
+	</object>
+</objects>

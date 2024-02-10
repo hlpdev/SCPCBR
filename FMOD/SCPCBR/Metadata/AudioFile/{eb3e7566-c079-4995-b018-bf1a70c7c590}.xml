@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{eb3e7566-c079-4995-b018-bf1a70c7c590}">
+		<property name="assetPath">
+			<value>SCP/106/Decay3.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.4490022675736962</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d5bf54a2-9405-4b45-8b81-d224e146a5d6}</destination>
+		</relationship>
+	</object>
+</objects>

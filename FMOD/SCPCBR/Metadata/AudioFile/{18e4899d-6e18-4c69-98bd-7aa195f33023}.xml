@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{18e4899d-6e18-4c69-98bd-7aa195f33023}">
+		<property name="assetPath">
+			<value>SCP/049/Searching4.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>5.7123958333333329</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d5bf54a2-9405-4b45-8b81-d224e146a5d6}</destination>
+		</relationship>
+	</object>
+</objects>

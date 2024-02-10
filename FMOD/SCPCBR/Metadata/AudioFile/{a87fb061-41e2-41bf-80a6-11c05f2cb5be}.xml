@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{a87fb061-41e2-41bf-80a6-11c05f2cb5be}">
+		<property name="assetPath">
+			<value>Ambient/Zone3/Ambient13.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.5575056689342404</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d5bf54a2-9405-4b45-8b81-d224e146a5d6}</destination>
+		</relationship>
+	</object>
+</objects>
