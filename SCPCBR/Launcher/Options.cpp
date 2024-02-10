@@ -36,7 +36,7 @@ bool Options::WriteStringOption(std::string category, std::string key, std::stri
     return file.write(ini);
 }
 
-bool Options::ResetOptions() {
+void Options::ResetOptions() {
     WriteStringOption("Graphics", "DisplayMode", "Fullscreen");
     WriteStringOption("Misc", "Language", "en-US");
 }

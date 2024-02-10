@@ -8,7 +8,7 @@ namespace Options {
     std::string ReadStringOption(std::string category, std::string key);
     bool WriteStringOption(std::string category, std::string key, std::string value);
     
-    bool ResetOptions();
+    void ResetOptions();
 }
 
 #endif // OPTIONS_H
