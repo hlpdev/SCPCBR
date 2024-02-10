@@ -24,13 +24,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>ClangCL</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>ClangCL</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -74,7 +74,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;archive.lib;freetype.lib;</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;archive.lib;freetype.lib;fmod_vc.lib;fmodstudio_vc.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>rmdir "$(OutDir)\Assets\" /S /Q</Command>
@@ -105,6 +105,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioEngine\AudioEngine.cpp" />
     <ClCompile Include="Dependencies\include\imgui\imgui.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
@@ -533,10 +534,12 @@
     <ClCompile Include="GameAssembly\GameAssembly.cpp" />
     <ClCompile Include="Launcher\Launcher.cpp" />
     <ClCompile Include="Launcher\Options.cpp" />
+    <ClCompile Include="Localization\Localization.cpp" />
     <ClCompile Include="SCPCBR.cpp" />
     <ClCompile Include="Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioEngine\AudioEngine.h" />
     <ClInclude Include="Dependencies\include\archive.h" />
     <ClInclude Include="Dependencies\include\archive_entry.h" />
     <ClInclude Include="Dependencies\include\freetype\config\ftconfig.h" />
@@ -648,21 +651,25 @@
     <ClInclude Include="Dependencies\include\ini.h" />
     <ClInclude Include="Dependencies\include\KHR\khrplatform.h" />
     <ClInclude Include="Dependencies\include\STB\stb_image.h" />
+    <ClInclude Include="Dependencies\include\toml.hpp" />
     <ClInclude Include="ExecutableResources\resource.h" />
     <ClInclude Include="GameAssembly\GameAssembly.h" />
     <ClInclude Include="Launcher\Launcher.h" />
     <ClInclude Include="Launcher\Options.h" />
+    <ClInclude Include="Localization\Localization.h" />
     <ClInclude Include="Util\Util.h" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\GFX\Fonts\Courier New Bold.ttf" />
-    <Content Include="Assets\GFX\Fonts\Courier New.ttf" />
-    <Content Include="Assets\GFX\Fonts\DS-Digital.TTF" />
-    <Content Include="Assets\GFX\Fonts\Journal.ttf" />
+    <Content Include="Assets\Fonts\CourierNewBold\en.ttf" />
+    <Content Include="Assets\Fonts\CourierNew\en.ttf" />
+    <Content Include="Assets\Fonts\DSDigital\en.TTF" />
+    <Content Include="Assets\Fonts\Journal\en.ttf" />
     <Content Include="Assets\GFX\Window\LauncherBackground.png" />
     <Content Include="Assets\GFX\Window\LauncherTitle.png" />
     <Content Include="Assets\GFX\Window\remastered.ico" />
     <Content Include="Assets\GFX\Window\remastered.png" />
+    <Content Include="Assets\Localization\en.toml" />
+    <Content Include="Assets\Localization\ru.toml" />
     <Content Include="Dependencies\lib\archive.lib" />
     <Content Include="Dependencies\lib\archive_static.lib" />
     <Content Include="Dependencies\lib\freetype.lib" />
