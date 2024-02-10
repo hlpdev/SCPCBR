@@ -3,6 +3,7 @@
 #include <Windows.h>
 
 #include "Options.h"
+#include "../Localization/Localization.h"
 #include "../Util/Util.h"
 #include "GLFW/glfw3.h"
 #include "imgui/imgui.h"
