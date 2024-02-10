@@ -7,8 +7,6 @@ public:
     ~SteamWrapper();
 
     void RunCallbacks();
-
-    void SetNotificationPosition()
 };
 
 #endif // STEAMWRAPPER_H

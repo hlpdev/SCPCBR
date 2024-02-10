@@ -105,7 +105,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AudioEngine\AudioEngine.cpp" />
     <ClCompile Include="Dependencies\include\imgui\imgui.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
@@ -540,7 +539,6 @@
     <ClCompile Include="Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AudioEngine\AudioEngine.h" />
     <ClInclude Include="Dependencies\include\archive.h" />
     <ClInclude Include="Dependencies\include\archive_entry.h" />
     <ClInclude Include="Dependencies\include\FMOD\fmod.h" />
