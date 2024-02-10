@@ -13,6 +13,8 @@
 
 #include <string>
 
+#include "Localization/Localization.h"
+
 int main(int argc, char* argv[])
 {
     // Hide console window
