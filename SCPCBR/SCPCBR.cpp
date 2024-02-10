@@ -20,6 +20,8 @@ int main(int argc, char* argv[])
 {
     // Hide console window
     ShowWindowAsync(GetConsoleWindow(), SW_HIDE);
+
+    SteamWrapper* steam = new SteamWrapper();
     
     // Initialize GLFW
     if (!glfwInit()) {
@@ -77,6 +79,8 @@ int main(int argc, char* argv[])
     Launcher::Init();
     
     while (!glfwWindowShouldClose(window)) {
+        steam->RunCallbacks();
+        
         glfwPollEvents();
 
         ImGui_ImplOpenGL3_NewFrame();
@@ -101,5 +105,8 @@ int main(int argc, char* argv[])
     Localization::Free();
 
     glfwTerminate();
+
+    delete steam;
+    
     exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
 }
