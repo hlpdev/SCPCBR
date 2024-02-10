@@ -71,6 +71,7 @@ int main(int argc, char* argv[])
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
+    Localization::Init();
     Launcher::Init();
     
     while (!glfwWindowShouldClose(window)) {
@@ -95,6 +96,7 @@ int main(int argc, char* argv[])
     }
 
     Launcher::Free();
+    Localization::Free();
 
     glfwTerminate();
     exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
