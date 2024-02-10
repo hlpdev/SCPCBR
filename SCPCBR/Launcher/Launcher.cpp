@@ -78,10 +78,10 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::SetNextWindowPos(ImVec2((width / 2.0 - width / 2.0 * 0.9) / 2.0, 150));
     ImGui::Begin("### LAUNCHER-RESOLUTION-WINDOW", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 
-    ImGui::PushFont(smallFont);
-    ImGui::TextWrapped("This is a faithful recreation of SCP: Containment Breach Remastered created in C++ using GLFW, OpenGL, ImGui, and more.");
-    ImGui::TextWrapped("Created by Hunter & the HNT8 Organization, the original developers of SCP: Containment Breach Remastered.");
-    ImGui::TextWrapped("This project is open source. You can find the source code on our github page.");
+    ImGui::PushFont(Localization::GetActiveLanguageCourierNewSmall());
+    ImGui::TextWrapped(Localization::GetTranslatedKey("Launcher", "DisclaimerPart1").c_str());
+    ImGui::TextWrapped(Localization::GetTranslatedKey("Launcher", "DisclaimerPart2").c_str());
+    ImGui::TextWrapped(Localization::GetTranslatedKey("Launcher", "DisclaimerPart3").c_str());
     ImGui::PopFont();
 
     ImGui::Separator();
@@ -90,19 +90,19 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
 
-    if (ImGui::Button("Discord", ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
+    if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "DiscordButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
         
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
-    if (ImGui::Button("Mods", ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
+    if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "ModsButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
         
     }
     
-    if (ImGui::Button("Store Page", ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
+    if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "StorePageButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
         
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
-    if (ImGui::Button("GitHub", ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
+    if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "GitHubButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
         
     }
 
@@ -114,14 +114,18 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::SetNextWindowPos(ImVec2(width / 2.0 + (width / 2.0 - width / 2.0 * 0.9) / 2.0 - (width / 2.0 - width / 2.0 * 0.9) / 4.0, 150));
     ImGui::Begin("### LAUNCHER-OPTIONS-WINDOW", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 
-    ImGui::TextCentered("Launch Options");
+    ImGui::TextCentered(Localization::GetTranslatedKey("Launcher", "OptionsHeader").c_str());
 
     ImGui::Separator();
     
-    ImGui::Text("Display Mode:");
+    ImGui::Text(Localization::GetTranslatedKey("Launcher", "DisplayModeHeader").c_str());
 
-    const char* displayModes[] = { "Windowed", "Fullscreen", "Exclusive Fullscreen" };
-    static const char* currentItem = displayModes[Options::ReadIntOption("Graphics", "DisplayMode")];
+    std::string displayModes[] = {
+        Localization::GetTranslatedKey("Launcher", "DisplayMode1"),
+        Localization::GetTranslatedKey("Launcher", "DisplayMode2"),
+        Localization::GetTranslatedKey("Launcher", "DisplayMode3")
+    };
+    std::string currentItem = displayModes[Options::ReadIntOption("Graphics", "DisplayMode")];
     static int currentIndex = Options::ReadIntOption("Graphics", "DisplayMode");
 
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.05f, 0.05f, 0.05f, 0.9f));
@@ -131,10 +135,10 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
     ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
     ImGui::PushItemWidth(ImGui::CalcItemWidth() - ImGui::GetStyle().ItemInnerSpacing.x * 2.0f - ImGui::GetFrameHeight() * 2.0f + 87);
-    if (ImGui::BeginCombo("## DISPLAY-MODE-COMBO", currentItem, ImGuiComboFlags_NoArrowButton)) {
+    if (ImGui::BeginCombo("## DISPLAY-MODE-COMBO", currentItem.c_str(), ImGuiComboFlags_NoArrowButton)) {
         for (int i = 0; i < IM_ARRAYSIZE(displayModes); i++) {
             bool is_selected = (currentItem == displayModes[i]);
-            if (ImGui::Selectable(displayModes[i], is_selected)) {
+            if (ImGui::Selectable(displayModes[i].c_str(), is_selected)) {
                 currentItem = displayModes[i];
                 currentIndex = i;
                 Options::WriteIntOption("Graphics", "DisplayMode", i);
@@ -174,12 +178,12 @@ void Launcher::Render(GLFWwindow* window) {
     
     ImGui::Separator();
 
-    ImGui::Text("Language:");
+    ImGui::Text(Localization::GetTranslatedKey("Launcher", "LanguageHeader").c_str());
 
-    const char* languages[] = { "English" };
-    static const char* currentLang = languages[Options::ReadIntOption("Misc", "Language")];
-    static int currentLangIndex = Options::ReadIntOption("Misc", "Language");
-
+    std::vector<const char*> languages = Localization::GetAllLanguageNames();
+    static const char* currentLang = Localization::GetActiveLanguage()->Name.c_str();
+    static size_t currentLangIndex = Localization::GetActiveLanguageIndex();
+    
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.05f, 0.05f, 0.05f, 0.9f));
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
@@ -188,12 +192,12 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
     ImGui::PushItemWidth(ImGui::CalcItemWidth() - ImGui::GetStyle().ItemInnerSpacing.x * 2.0f - ImGui::GetFrameHeight() * 2.0f + 87);
     if (ImGui::BeginCombo("## LANGUAGE-COMBO", currentLang, ImGuiComboFlags_NoArrowButton)) {
-        for (int i = 0; i < IM_ARRAYSIZE(languages); i++) {
-            bool is_selected = (currentLang == languages[i]);
-            if (ImGui::Selectable(languages[i], is_selected)) {
-                currentLang = languages[i];
+        for (size_t i = 0; i < Localization::GetLanguageAmount(); i++) {
+            bool is_selected = currentLang == languages.at(i);
+            if (ImGui::Selectable(languages.at(i), is_selected)) {
+                currentLang = languages.at(i);
                 currentLangIndex = i;
-                Options::WriteIntOption("Misc", "Language", i);
+                Localization::SetActiveLanguage(currentLang);
             }
             if (is_selected) {
                 ImGui::SetItemDefaultFocus();
@@ -206,24 +210,24 @@ void Launcher::Render(GLFWwindow* window) {
     if (ImGui::ArrowButton("## LANGUAGE-COMBO-LEFT", ImGuiDir_Left)) {
         if (currentLangIndex != 0) {
             currentLangIndex--;
-            currentLang = languages[currentLangIndex];
-            Options::WriteIntOption("Misc", "Language", currentLangIndex);
+            currentLang = languages.at(currentLangIndex);
+            Localization::SetActiveLanguage(currentLang);
         } else {
-            currentLangIndex = IM_ARRAYSIZE(languages) - 1;
-            currentLang = languages[currentLangIndex];
-            Options::WriteIntOption("Misc", "Language", currentLangIndex);
+            currentLangIndex = Localization::GetLanguageAmount() - 1;
+            currentLang = languages.at(currentLangIndex);
+            Localization::SetActiveLanguage(currentLang);
         }
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::ArrowButton("## LANGUAGE-COMBO-RIGHT", ImGuiDir_Right)) {
-        if (currentLangIndex != IM_ARRAYSIZE(languages) - 1) {
+        if (currentLangIndex != Localization::GetLanguageAmount() - 1) {
             currentLangIndex++;
-            currentLang = languages[currentLangIndex];
-            Options::WriteIntOption("Misc", "Language", currentLangIndex);
+            currentLang = languages.at(currentLangIndex);
+            Localization::SetActiveLanguage(currentLang);
         } else {
             currentLangIndex = 0;
-            currentLang = languages[currentLangIndex];
-            Options::WriteIntOption("Misc", "Language", currentLangIndex);
+            currentLang = languages.at(currentLangIndex);
+            Localization::SetActiveLanguage(currentLang);
         }
     }
     ImGui::PopStyleColor(6);
@@ -233,7 +237,7 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.05f, 0.05f, 0.05f, 0.9f));
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
-    if (ImGui::Button("LAUNCH", ImVec2(width / 2.0 * 0.9 + (width / 2.0 - width / 2.0 * 0.9) / 4.0 - 16, 82))) {
+    if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "LaunchButton").c_str(), ImVec2(width / 2.0 * 0.9 + (width / 2.0 - width / 2.0 * 0.9) / 4.0 - 16, 82))) {
         
     }
     ImGui::PopStyleColor(3);
