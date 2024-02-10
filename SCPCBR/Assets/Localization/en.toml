@@ -1,0 +1,26 @@
+[LanguageInfo]
+Identifier = "en"
+Name = "English" # Display name for the language
+GlyphRange = "Default" # The ImGui glyph range to display fonts in. Can be Default, Greek, Korean, Japanese, ChineseFull, ChineseSimplifiedCommon, Cyrillic, Thai, Vietnamese
+
+[Fonts]
+CourierNew = "Assets/Fonts/CourierNew/en.ttf" # Path to Courier New
+CourierNewBold = "Assets/Fonts/CourierNewBold/en.ttf" # Path to Courier New Bold
+DSDigital = "Assets/Fonts/DSDigital/en.ttf" # Path to DS-Digital
+Journal = "Assets/Fonts/Journal/en.ttf" # Path to Journal
+
+[Launcher]
+OptionsHeader = "Launch Options"
+DisplayModeHeader = "Display Mode:"
+DisplayMode1 = "Windowed"
+DisplayMode2 = "Fullscreen"
+DisplayMode3 = "Exclusive Fullscreen"
+LanguageHeader = "Language:"
+LaunchButton = "LAUNCH"
+DiscordButton = "Discord"
+ModsButton = "Mods"
+StorePageButton = "Store Page"
+GitHubButton = "GitHub"
+DisclaimerPart1 = "This is a faithful recreation of SCP: Containment Breach Remastered created in C++ using GLFW, OpenGL, ImGui, and more."
+DisclaimerPart2 = "Created by Hunter & the HNT8 Organization, the original developers of SCP: Containment Breach Remastered."
+DisclaimerPart3 = "This project is open source. You can find the source code on our github page."
