@@ -33,6 +33,8 @@ void Launcher::Render(GLFWwindow* window) {
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
 
+    ImGui::PushFont(Localization::GetActiveLanguageCourierNew());
+    
     // RENDER BACKGROUND
     {
         ImVec2 pos1;
@@ -239,6 +241,8 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::End();
     ImGui::PopStyleColor();
     ImGui::PopStyleVar(2);
+
+    ImGui::PopFont();
 }
 
 void Launcher::Free() {
