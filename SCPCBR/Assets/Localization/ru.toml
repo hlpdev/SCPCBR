@@ -1,0 +1,26 @@
+[LanguageInfo]
+Identifier = "en"
+Name = "Russian" # Display name for the language
+GlyphRange = "Cyrillic" # The ImGui glyph range to display fonts in. Can be Default, Greek, Korean, Japanese, ChineseFull, ChineseSimplifiedCommon, Cyrillic, Thai, Vietnamese
+
+[Fonts]
+CourierNew = "Assets/Fonts/CourierNew/ru.ttf" # Path to Courier New
+CourierNewBold = "Assets/Fonts/CourierNewBold/ru.ttf" # Path to Courier New Bold
+DSDigital = "Assets/Fonts/DSDigital/en.ttf" # Path to DS-Digital
+Journal = "Assets/Fonts/Journal/en.ttf" # Path to Journal
+
+[Launcher]
+OptionsHeader = "Параметры Запуска"
+DisplayModeHeader = "Режим отображения:"
+DisplayMode1 = "Оконный"
+DisplayMode2 = "Полноэкранный"
+DisplayMode3 = "Эксклюзивный полноэкранный режим"
+LanguageHeader = "Язык:"
+LaunchButton = "ЗАПУСК"
+DiscordButton = "Раздор"
+ModsButton = "Моды"
+StorePageButton = "Магазин"
+GitHubButton = "GitHub"
+DisclaimerPart1 = "Это точная копия SCP: Containment Breach Remastered, созданная на C++ с использованием GLFW, OpenGL, ImGui и других инструментов."
+DisclaimerPart2 = "Создано Hunter & the HNT8 Organization, первоначальными разработчиками SCP: Containment Breach Remastered."
+DisclaimerPart3 = "Этот проект с открытым исходным кодом. Вы можете найти исходный код на нашей странице github."
