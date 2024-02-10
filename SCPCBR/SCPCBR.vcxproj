@@ -74,7 +74,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;archive.lib;freetype.lib;fmod_vc.lib;fmodstudio_vc.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;archive.lib;freetype.lib;fmod_vc.lib;fmodstudio_vc.lib;steam_api64.lib;</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>rmdir "$(OutDir)\Assets\" /S /Q</Command>
@@ -661,7 +661,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Fonts\CourierNewBold\en.ttf" />
+    <Content Include="Assets\Fonts\CourierNewBold\ru.ttf" />
     <Content Include="Assets\Fonts\CourierNew\en.ttf" />
+    <Content Include="Assets\Fonts\CourierNew\ru.ttf" />
     <Content Include="Assets\Fonts\DSDigital\en.TTF" />
     <Content Include="Assets\Fonts\Journal\en.ttf" />
     <Content Include="Assets\GFX\Window\LauncherBackground.png" />
