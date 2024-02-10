@@ -65,7 +65,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -536,12 +536,24 @@
     <ClCompile Include="Launcher\Options.cpp" />
     <ClCompile Include="Localization\Localization.cpp" />
     <ClCompile Include="SCPCBR.cpp" />
+    <ClCompile Include="SteamWrapper\SteamWrapper.cpp" />
     <ClCompile Include="Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioEngine\AudioEngine.h" />
     <ClInclude Include="Dependencies\include\archive.h" />
     <ClInclude Include="Dependencies\include\archive_entry.h" />
+    <ClInclude Include="Dependencies\include\FMOD\fmod.h" />
+    <ClInclude Include="Dependencies\include\FMOD\fmod.hpp" />
+    <ClInclude Include="Dependencies\include\FMOD\fmod_codec.h" />
+    <ClInclude Include="Dependencies\include\FMOD\fmod_common.h" />
+    <ClInclude Include="Dependencies\include\FMOD\fmod_dsp.h" />
+    <ClInclude Include="Dependencies\include\FMOD\fmod_dsp_effects.h" />
+    <ClInclude Include="Dependencies\include\FMOD\fmod_errors.h" />
+    <ClInclude Include="Dependencies\include\FMOD\fmod_output.h" />
+    <ClInclude Include="Dependencies\include\FMOD_Studio\fmod_studio.h" />
+    <ClInclude Include="Dependencies\include\FMOD_Studio\fmod_studio.hpp" />
+    <ClInclude Include="Dependencies\include\FMOD_Studio\fmod_studio_common.h" />
     <ClInclude Include="Dependencies\include\freetype\config\ftconfig.h" />
     <ClInclude Include="Dependencies\include\freetype\config\ftheader.h" />
     <ClInclude Include="Dependencies\include\freetype\config\ftmodule.h" />
@@ -651,12 +663,58 @@
     <ClInclude Include="Dependencies\include\ini.h" />
     <ClInclude Include="Dependencies\include\KHR\khrplatform.h" />
     <ClInclude Include="Dependencies\include\STB\stb_image.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamapps.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamappticket.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamclient.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamcontroller.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamdualsense.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamfriends.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamgamecoordinator.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamgameserver.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamgameserverstats.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamhtmlsurface.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamhttp.h" />
+    <ClInclude Include="Dependencies\include\steam\isteaminput.h" />
+    <ClInclude Include="Dependencies\include\steam\isteaminventory.h" />
+    <ClInclude Include="Dependencies\include\steam\isteammatchmaking.h" />
+    <ClInclude Include="Dependencies\include\steam\isteammusic.h" />
+    <ClInclude Include="Dependencies\include\steam\isteammusicremote.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamnetworking.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamnetworkingmessages.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamnetworkingsockets.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamnetworkingutils.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamparentalsettings.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamps3overlayrenderer.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamremoteplay.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamremotestorage.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamscreenshots.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamugc.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamuser.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamuserstats.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamutils.h" />
+    <ClInclude Include="Dependencies\include\steam\isteamvideo.h" />
+    <ClInclude Include="Dependencies\include\steam\matchmakingtypes.h" />
+    <ClInclude Include="Dependencies\include\steam\steamclientpublic.h" />
+    <ClInclude Include="Dependencies\include\steam\steamencryptedappticket.h" />
+    <ClInclude Include="Dependencies\include\steam\steamhttpenums.h" />
+    <ClInclude Include="Dependencies\include\steam\steamnetworkingfakeip.h" />
+    <ClInclude Include="Dependencies\include\steam\steamnetworkingtypes.h" />
+    <ClInclude Include="Dependencies\include\steam\steamps3params.h" />
+    <ClInclude Include="Dependencies\include\steam\steamtypes.h" />
+    <ClInclude Include="Dependencies\include\steam\steamuniverse.h" />
+    <ClInclude Include="Dependencies\include\steam\steam_api.h" />
+    <ClInclude Include="Dependencies\include\steam\steam_api_common.h" />
+    <ClInclude Include="Dependencies\include\steam\steam_api_flat.h" />
+    <ClInclude Include="Dependencies\include\steam\steam_api_internal.h" />
+    <ClInclude Include="Dependencies\include\steam\steam_gameserver.h" />
     <ClInclude Include="Dependencies\include\toml.hpp" />
     <ClInclude Include="ExecutableResources\resource.h" />
     <ClInclude Include="GameAssembly\GameAssembly.h" />
     <ClInclude Include="Launcher\Launcher.h" />
     <ClInclude Include="Launcher\Options.h" />
     <ClInclude Include="Localization\Localization.h" />
+    <ClInclude Include="PrimitiveTypes.h" />
+    <ClInclude Include="SteamWrapper\SteamWrapper.h" />
     <ClInclude Include="Util\Util.h" />
   </ItemGroup>
   <ItemGroup>
@@ -672,6 +730,9 @@
     <Content Include="Assets\GFX\Window\remastered.png" />
     <Content Include="Assets\Localization\en.toml" />
     <Content Include="Assets\Localization\ru.toml" />
+    <Content Include="Dependencies\include\steam\lib\win64\sdkencryptedappticket64.dll" />
+    <Content Include="Dependencies\include\steam\lib\win64\sdkencryptedappticket64.lib" />
+    <Content Include="Dependencies\include\steam\steam_api.json" />
     <Content Include="Dependencies\lib\archive.lib" />
     <Content Include="Dependencies\lib\archive_static.lib" />
     <Content Include="Dependencies\lib\freetype.lib" />
