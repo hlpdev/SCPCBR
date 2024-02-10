@@ -13,9 +13,6 @@ Util::Image::Image* backgroundImage;
 
 Util::Image::Image* titleImage;
 
-ImFont* normalFont;
-ImFont* smallFont;
-
 void Launcher::Init() {
     bool res;
 
@@ -30,11 +27,6 @@ void Launcher::Init() {
     if (!res) {
         Util::Error::Exit("The texture \"Assets\\GFX\\Window\\LauncherTitle.png\" failed to load. Ensure the file exists, or verify your game files.");
     }
-
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-    normalFont = io.Fonts->AddFontFromFileTTF("Assets\\GFX\\Fonts\\Courier New.ttf", 20.0f, NULL, ImGui::GetIO().Fonts->GetGlyphRangesDefault());
-    smallFont = io.Fonts->AddFontFromFileTTF("Assets\\GFX\\Fonts\\Courier New.ttf", 14.0f, NULL, ImGui::GetIO().Fonts->GetGlyphRangesDefault());
 }
 
 void Launcher::Render(GLFWwindow* window) {
