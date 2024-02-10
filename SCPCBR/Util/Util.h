@@ -26,6 +26,7 @@ namespace Util {
 
     namespace Error {
         void Exit(std::string message);
+        void ExitFast();
     }
 }
 

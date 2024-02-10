@@ -44,6 +44,10 @@ void Util::Error::Exit(std::string message) {
     exit(EXIT_FAILURE);
 }
 
+void Util::Error::ExitFast() {
+    exit(EXIT_FAILURE);
+}
+
 void Util::Strings::ReplaceByDelimiter(std::string& string, std::string& delimiter, std::string& toReplaceWith) {
     size_t startPos = 0;
     while ((startPos = string.find(delimiter, startPos)) != std::string::npos) {
