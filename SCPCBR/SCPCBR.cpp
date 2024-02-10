@@ -1,16 +1,12 @@
 #include <iostream>
 #include <Windows.h>
 
-#include "Launcher/Options.h"
-
 #include "GameAssembly/GameAssembly.h"
 
 #include "Launcher/Launcher.h"
 
 #include <GLFW/glfw3.h>
 #include <imgui/imgui.h>
-#include <imgui/imgui_stdlib.h>
-#include <imgui/imgui_freetype.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 #include <GLAD/glad.h>
