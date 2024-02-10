@@ -74,7 +74,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;archive.lib;freetype.lib;fmod_vc.lib;fmodstudio_vc.lib;steam_api64.lib;</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;archive.lib;freetype.lib;steam_api64.lib;fmod_vc.lib;fmodL_vc.lib;</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>rmdir "$(OutDir)\Assets\" /S /Q</Command>
@@ -105,6 +105,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioEngine\AudioEngine.cpp" />
     <ClCompile Include="Dependencies\include\imgui\imgui.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
@@ -539,6 +540,7 @@
     <ClCompile Include="Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioEngine\AudioEngine.h" />
     <ClInclude Include="Dependencies\include\archive.h" />
     <ClInclude Include="Dependencies\include\archive_entry.h" />
     <ClInclude Include="Dependencies\include\FMOD\fmod.h" />
@@ -549,9 +551,6 @@
     <ClInclude Include="Dependencies\include\FMOD\fmod_dsp_effects.h" />
     <ClInclude Include="Dependencies\include\FMOD\fmod_errors.h" />
     <ClInclude Include="Dependencies\include\FMOD\fmod_output.h" />
-    <ClInclude Include="Dependencies\include\FMOD_Studio\fmod_studio.h" />
-    <ClInclude Include="Dependencies\include\FMOD_Studio\fmod_studio.hpp" />
-    <ClInclude Include="Dependencies\include\FMOD_Studio\fmod_studio_common.h" />
     <ClInclude Include="Dependencies\include\freetype\config\ftconfig.h" />
     <ClInclude Include="Dependencies\include\freetype\config\ftheader.h" />
     <ClInclude Include="Dependencies\include\freetype\config\ftmodule.h" />
@@ -733,11 +732,13 @@
     <Content Include="Dependencies\include\steam\steam_api.json" />
     <Content Include="Dependencies\lib\archive.lib" />
     <Content Include="Dependencies\lib\archive_static.lib" />
+    <Content Include="Dependencies\lib\fmodL_vc.lib" />
+    <Content Include="Dependencies\lib\fmod_vc.lib" />
     <Content Include="Dependencies\lib\freetype.lib" />
-    <Content Include="Dependencies\lib\glfw3.dll" />
     <Content Include="Dependencies\lib\glfw3.lib" />
     <Content Include="Dependencies\lib\glfw3dll.lib" />
     <Content Include="Dependencies\lib\glfw3_mt.lib" />
+    <Content Include="Dependencies\lib\steam_api64.lib" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\GFX\Window\remastered.ico" />

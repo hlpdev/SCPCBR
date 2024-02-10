@@ -5,6 +5,7 @@
 #include "Launcher/Launcher.h"
 #include "Localization/Localization.h"
 #include "SteamWrapper/SteamWrapper.h"
+#include "AudioEngine/AudioEngine.h"
 
 #include <GLFW/glfw3.h>
 
@@ -22,6 +23,7 @@ int main(int argc, char* argv[])
     ShowWindowAsync(GetConsoleWindow(), SW_HIDE);
 
     SteamWrapper* steam = new SteamWrapper();
+    steam->SetNotificationPosition(SteamWrapper::NotificationPosition::TopRight);
     
     // Initialize GLFW
     if (!glfwInit()) {
@@ -30,7 +32,7 @@ int main(int argc, char* argv[])
 
     // Set OpenGL & GLFW info
     const char* glsl_version = "#version 130";
-    //glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -75,11 +77,13 @@ int main(int argc, char* argv[])
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
+    AudioEngine::Init();
     Localization::Init();
     Launcher::Init();
     
     while (!glfwWindowShouldClose(window)) {
         steam->RunCallbacks();
+        AudioEngine::RunCallbacks();
         
         glfwPollEvents();
 

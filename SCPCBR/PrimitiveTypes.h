@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-struct Vec2 {
+typedef struct Vec2 {
     float X;
     float Y;
 
@@ -16,9 +16,9 @@ struct Vec2 {
         X = x;
         Y = y;
     }
-};
+} Vec2;
 
-struct Vec3 : Vec2 {
+typedef struct Vec3 : Vec2 {
     float Z;
 
     Vec3() {
@@ -32,9 +32,9 @@ struct Vec3 : Vec2 {
         Y = y;
         Z = z;
     }
-};
+} Vec3;
 
-struct Vec4 : Vec3 {
+typedef struct Vec4 : Vec3 {
     float A;
 
     Vec4() {
@@ -50,9 +50,9 @@ struct Vec4 : Vec3 {
         Z = z;
         A = a;
     }
-};
+} Vec4;
 
-struct RGB {
+typedef struct RGB {
     RGB() {
         this->red = 0;
         this->green = 0;
@@ -96,9 +96,9 @@ protected:
     int red;
     int green;
     int blue;
-};
+} RGB;
 
-struct RGBA : RGB {
+typedef struct RGBA : RGB {
     RGBA() {
         this->red = 0;
         this->green = 0;
@@ -124,9 +124,9 @@ struct RGBA : RGB {
 
 protected:
     int alpha;
-};
+} RGBA;
 
-struct RGBf {
+typedef struct RGBf {
     RGBf() {
         this->red = 0;
         this->green = 0;
@@ -170,9 +170,9 @@ protected:
     float red;
     float green;
     float blue;
-};
+} RGBf;
 
-struct RGBAf : RGBf {
+typedef struct RGBAf : RGBf {
     RGBAf() {
         this->red = 0.0f;
         this->green = 0.0f;
@@ -198,14 +198,6 @@ struct RGBAf : RGBf {
 
 protected:
     float alpha;
-};
-
-typedef Vec2 Vec2;
-typedef Vec3 Vec3;
-typedef Vec4 Vec4;
-typedef RGB RGB;
-typedef RGBf RGBf;
-typedef RGBA RGBA;
-typedef RGBAf RGBAf;
+} RGBAf;
 
 #endif // PRIMITIVETYPES_H

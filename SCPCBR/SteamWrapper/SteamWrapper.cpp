@@ -25,3 +25,7 @@ SteamWrapper::~SteamWrapper() {
 void SteamWrapper::RunCallbacks() {
     SteamAPI_RunCallbacks();
 }
+
+void SteamWrapper::SetNotificationPosition(NotificationPosition notificationPosition) {
+    SteamUtils()->SetOverlayNotificationPosition(static_cast<ENotificationPosition>(notificationPosition));
+}

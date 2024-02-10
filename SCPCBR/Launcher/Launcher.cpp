@@ -3,6 +3,7 @@
 #include <Windows.h>
 
 #include "Options.h"
+#include "../AudioEngine/AudioEngine.h"
 #include "../Localization/Localization.h"
 #include "../Util/Util.h"
 #include "GLFW/glfw3.h"
@@ -91,19 +92,19 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
 
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "DiscordButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
-        
+        //buttonSound->Play();
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "ModsButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
-        
+        //buttonSound->Play();
     }
     
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "StorePageButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
-        
+        //buttonSound->Play();
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "GitHubButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
-        
+        //buttonSound->Play();
     }
 
     ImGui::PopStyleColor(3);
@@ -145,6 +146,7 @@ void Launcher::Render(GLFWwindow* window) {
                 currentItem = displayModes[i];
                 currentIndex = i;
                 Options::WriteIntOption("Graphics", "DisplayMode", i);
+                //buttonSound->Play();
             }
             if (is_selected) {
                 ImGui::SetItemDefaultFocus();
@@ -155,6 +157,7 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PopItemWidth();
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::ArrowButton("## DISPLAY-MODE-COMBO-LEFT", ImGuiDir_Left)) {
+        //buttonSound->Play();
         if (currentIndex != 0) {
             currentIndex--;
             currentItem = displayModes[currentIndex];
@@ -167,6 +170,7 @@ void Launcher::Render(GLFWwindow* window) {
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::ArrowButton("## DISPLAY-MODE-COMBO-RIGHT", ImGuiDir_Right)) {
+        //buttonSound->Play();
         if (currentIndex != IM_ARRAYSIZE(displayModes) - 1) {
             currentIndex++;
             currentItem = displayModes[currentIndex];
@@ -204,6 +208,7 @@ void Launcher::Render(GLFWwindow* window) {
                 currentLang = languages.at(i);
                 currentLangIndex = i;
                 Localization::SetActiveLanguage(currentLang);
+                //buttonSound->Play();
             }
             if (is_selected) {
                 ImGui::SetItemDefaultFocus();
@@ -214,6 +219,7 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PopItemWidth();
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::ArrowButton("## LANGUAGE-COMBO-LEFT", ImGuiDir_Left)) {
+        //buttonSound->Play();
         if (currentLangIndex != 0) {
             currentLangIndex--;
             currentLang = languages.at(currentLangIndex);
@@ -226,6 +232,7 @@ void Launcher::Render(GLFWwindow* window) {
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::ArrowButton("## LANGUAGE-COMBO-RIGHT", ImGuiDir_Right)) {
+        //buttonSound->Play();
         if (currentLangIndex != Localization::GetLanguageAmount() - 1) {
             currentLangIndex++;
             currentLang = languages.at(currentLangIndex);
@@ -244,7 +251,7 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "LaunchButton").c_str(), ImVec2(width / 2.0 * 0.9 + (width / 2.0 - width / 2.0 * 0.9) / 4.0 - 16, 82))) {
-        
+        //buttonSound->Play();
     }
     ImGui::PopStyleColor(3);
     
