@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <vector>
 
-#include "../Launcher/Options.h"
+#include "../Options/Options.h"
 
 Localization::Language* ActiveLanguage = nullptr;
 size_t ActiveLanguageIndex = -1;

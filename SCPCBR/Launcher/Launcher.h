@@ -2,6 +2,7 @@
 #define LAUNCHER_H
 
 #include "GLFW/glfw3.h"
+#include "../Types/Types.h"
 
 namespace Launcher {
     void Init();
