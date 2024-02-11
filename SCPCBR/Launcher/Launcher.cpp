@@ -30,7 +30,7 @@ void Launcher::Init() {
     }
 }
 
-void Launcher::Render(GLFWwindow* window) {
+void Launcher::Render(GLFWwindow* window, bool* inLauncher) {
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
 
@@ -252,6 +252,7 @@ void Launcher::Render(GLFWwindow* window) {
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "LaunchButton").c_str(), ImVec2(width / 2.0 * 0.9 + (width / 2.0 - width / 2.0 * 0.9) / 4.0 - 16, 82))) {
         //buttonSound->Play();
+        *inLauncher = false;
     }
     ImGui::PopStyleColor(3);
     

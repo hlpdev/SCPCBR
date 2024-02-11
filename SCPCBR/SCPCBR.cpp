@@ -17,6 +17,12 @@
 
 #include <string>
 
+#include "Launcher/Options.h"
+
+GLFWwindow* window;
+
+void InitializeGame();
+
 int main(int argc, char* argv[])
 {
     // Hide console window
@@ -39,7 +45,7 @@ int main(int argc, char* argv[])
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
     // Create GLFW window
-    GLFWwindow* window = glfwCreateWindow(640, 410, GameWindowTitle, 0, 0);
+    window = glfwCreateWindow(640, 410, GameWindowTitle, 0, 0);
     if (!window) {
         glfwTerminate();
         exit(EXIT_FAILURE);
@@ -80,6 +86,8 @@ int main(int argc, char* argv[])
     AudioEngine::Init();
     Localization::Init();
     Launcher::Init();
+
+    bool inLauncher = true;
     
     while (!glfwWindowShouldClose(window)) {
         steam->RunCallbacks();
@@ -91,7 +99,13 @@ int main(int argc, char* argv[])
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         
-        Launcher::Render(window);
+        if (inLauncher) {
+            Launcher::Render(window, &inLauncher);
+        }
+
+        if (!inLauncher) {
+            InitializeGame();
+        }
 
         ImGui::Render();
 
@@ -107,10 +121,59 @@ int main(int argc, char* argv[])
 
     Launcher::Free();
     Localization::Free();
+    AudioEngine::Free();
 
     glfwTerminate();
 
     delete steam;
     
     exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
+}
+
+void WindowFocusedCallback(GLFWwindow* window, int state) {
+    if (state == GLFW_TRUE) {
+        glfwRestoreWindow(window);
+    } else {
+        glfwIconifyWindow(window);
+    }
+}
+
+bool alreadyInitialized = false;
+void InitializeGame() {
+    if (alreadyInitialized) {
+        return;
+    }
+
+    alreadyInitialized = true;
+
+    int displayMode = Options::ReadIntOption("Graphics", "DisplayMode");
+
+    switch (displayMode) {
+        case 0: {
+            // windowed
+            glfwMaximizeWindow(window);
+            glfwSetWindowAttrib(window, GLFW_RESIZABLE, GLFW_TRUE);
+            break;
+        }
+        case 1: {
+            // borderless
+            const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+            glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
+            glfwSetWindowPos(window, 0, 0);
+            glfwSetWindowSize(window, mode->width, mode->height);
+            glfwSetWindowAttrib(window, GLFW_FLOATING, GLFW_TRUE);
+
+            glfwSetWindowFocusCallback(window, WindowFocusedCallback);
+            break;
+        }
+        default: {
+            // fullscreen
+            GLFWmonitor* monitor = glfwGetPrimaryMonitor();    
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+                
+            glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+            break;
+        }
+    }
 }

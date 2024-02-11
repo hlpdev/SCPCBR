@@ -5,7 +5,7 @@
 
 namespace Launcher {
     void Init();
-    void Render(GLFWwindow* window);
+    void Render(GLFWwindow* window, bool* inLauncher);
     void Free();
 }
 #endif // LAUNCHER_H
