@@ -30,7 +30,48 @@ void Launcher::Init() {
     }
 }
 
-void Launcher::Render(GLFWwindow* window, bool* inLauncher) {
+void WindowFocusedCallback(GLFWwindow* window, int state) {
+    if (state == GLFW_TRUE) {
+        glfwRestoreWindow(window);
+    } else {
+        glfwIconifyWindow(window);
+    }
+}
+
+void InitializeGame(GLFWwindow* window) {
+    int displayMode = Options::ReadIntOption("Graphics", "DisplayMode");
+
+    switch (displayMode) {
+        case 0: {
+            // windowed
+            glfwMaximizeWindow(window);
+            glfwSetWindowAttrib(window, GLFW_RESIZABLE, GLFW_TRUE);
+            break;
+        }
+        case 1: {
+            // borderless
+            const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+            glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
+            glfwSetWindowPos(window, 0, 0);
+            glfwSetWindowSize(window, mode->width, mode->height);
+            glfwSetWindowAttrib(window, GLFW_FLOATING, GLFW_TRUE);
+
+            glfwSetWindowFocusCallback(window, WindowFocusedCallback);
+            break;
+        }
+        default: {
+            // fullscreen
+            GLFWmonitor* monitor = glfwGetPrimaryMonitor();    
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+                
+            glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+            break;
+        }
+    }
+}
+
+void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
 

@@ -17,8 +17,6 @@
 
 #include <string>
 
-#include "Launcher/Options.h"
-
 GLFWwindow* window;
 
 void InitializeGame();
@@ -128,52 +126,4 @@ int main(int argc, char* argv[])
     delete steam;
     
     exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
-}
-
-void WindowFocusedCallback(GLFWwindow* window, int state) {
-    if (state == GLFW_TRUE) {
-        glfwRestoreWindow(window);
-    } else {
-        glfwIconifyWindow(window);
-    }
-}
-
-bool alreadyInitialized = false;
-void InitializeGame() {
-    if (alreadyInitialized) {
-        return;
-    }
-
-    alreadyInitialized = true;
-
-    int displayMode = Options::ReadIntOption("Graphics", "DisplayMode");
-
-    switch (displayMode) {
-        case 0: {
-            // windowed
-            glfwMaximizeWindow(window);
-            glfwSetWindowAttrib(window, GLFW_RESIZABLE, GLFW_TRUE);
-            break;
-        }
-        case 1: {
-            // borderless
-            const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-
-            glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
-            glfwSetWindowPos(window, 0, 0);
-            glfwSetWindowSize(window, mode->width, mode->height);
-            glfwSetWindowAttrib(window, GLFW_FLOATING, GLFW_TRUE);
-
-            glfwSetWindowFocusCallback(window, WindowFocusedCallback);
-            break;
-        }
-        default: {
-            // fullscreen
-            GLFWmonitor* monitor = glfwGetPrimaryMonitor();    
-            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-                
-            glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-            break;
-        }
-    }
 }
