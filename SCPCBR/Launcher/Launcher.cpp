@@ -91,11 +91,6 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
         }
 
         ImGui::GetBackgroundDrawList()->AddImage((void*)(intptr_t)backgroundImage->TextureId, pos1, pos2);
-
-#ifdef _DEBUG
-        ImGui::GetBackgroundDrawList()->AddText(ImVec2(1, 1), ImColor(255, 255, 255), std::string(std::to_string((int)ImGui::GetIO().Framerate) + " FPS").c_str());
-#endif
-        
     }
 
     // RENDER TITLE

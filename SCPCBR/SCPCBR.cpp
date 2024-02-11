@@ -97,6 +97,10 @@ int main(int argc, char* argv[])
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+#ifdef _DEBUG
+        ImGui::GetForegroundDrawList()->AddText(ImVec2(1, 1), ImColor(255, 255, 255), std::string(std::to_string((int)ImGui::GetIO().Framerate) + " FPS").c_str());
+#endif
+
         switch (CurrentGlobalGameState) {
             case GlobalGameState::Launcher: {
                 Launcher::Render(window, &CurrentGlobalGameState);
