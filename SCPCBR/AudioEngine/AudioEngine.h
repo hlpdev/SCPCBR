@@ -7,6 +7,8 @@ namespace AudioEngine {
     void Init();
     
     void RunCallbacks();
+
+    void Free();
 };
 
 #endif // AUDIOENGINE_H
