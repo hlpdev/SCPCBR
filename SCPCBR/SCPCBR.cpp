@@ -19,10 +19,12 @@
 
 GLFWwindow* window;
 
-void InitializeGame();
+GlobalGameState CurrentGlobalGameState;
 
 int main(int argc, char* argv[])
 {
+    CurrentGlobalGameState = GlobalGameState::Launcher;
+    
     // Hide console window
     ShowWindowAsync(GetConsoleWindow(), SW_HIDE);
 
@@ -84,8 +86,6 @@ int main(int argc, char* argv[])
     AudioEngine::Init();
     Localization::Init();
     Launcher::Init();
-
-    bool inLauncher = true;
     
     while (!glfwWindowShouldClose(window)) {
         steam->RunCallbacks();
@@ -96,13 +96,19 @@ int main(int argc, char* argv[])
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        
-        if (inLauncher) {
-            Launcher::Render(window, &inLauncher);
-        }
 
-        if (!inLauncher) {
-            InitializeGame();
+        switch (CurrentGlobalGameState) {
+            case GlobalGameState::Launcher: {
+                Launcher::Render(window, &CurrentGlobalGameState);
+                break;
+            }
+            case GlobalGameState::Splash: {
+                break;
+            }
+            case GlobalGameState::MainMenu:
+                break;
+            case GlobalGameState::Game:
+                break;
         }
 
         ImGui::Render();
