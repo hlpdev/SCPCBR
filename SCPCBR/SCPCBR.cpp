@@ -90,6 +90,12 @@ int main(int argc, char* argv[])
     AudioEngine::Init();
     Localization::Init();
     Launcher::Init();
+
+    AudioEngine::CreateChannelGroup("Game");
+    AudioEngine::CreateChannelGroup("Music");
+
+    AudioEngine::SetChannelGroupVolume("Game", Options::ReadIntOption("Audio", "GameVolume") / 100.0f);
+    AudioEngine::SetChannelGroupVolume("Music", Options::ReadIntOption("Audio", "MusicVolume") / 100.0f);
     
     while (!glfwWindowShouldClose(window)) {
         steam->RunCallbacks();
