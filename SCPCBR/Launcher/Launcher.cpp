@@ -2,13 +2,14 @@
 
 #include <Windows.h>
 
-#include "../Options//Options.h"
+#include "../Options/Options.h"
 #include "../AudioEngine/AudioEngine.h"
 #include "../Localization/Localization.h"
 #include "../Util/Util.h"
-#include "GLFW/glfw3.h"
-#include "imgui/imgui.h"
-#include "imgui/imguicustom.h"
+
+#include <GLFW/glfw3.h>
+#include <imgui/imgui.h>
+#include <imgui/imguicustom.h>
 
 Util::Image::Image* backgroundImage;
 
@@ -28,6 +29,8 @@ void Launcher::Init() {
     if (!res) {
         Util::Error::Exit("The texture \"Assets\\GFX\\Window\\LauncherTitle.png\" failed to load. Ensure the file exists, or verify your game files.");
     }
+
+    AudioEngine::LoadSoundByName("Assets\\SFX\\Interact\\Button.ogg", FMOD_2D);
 }
 
 void WindowFocusedCallback(GLFWwindow* window, int state) {
@@ -128,19 +131,19 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
 
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "DiscordButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
-        //buttonSound->Play();
+        AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "ModsButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
-        //buttonSound->Play();
+        AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
     }
     
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "StorePageButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
-        //buttonSound->Play();
+        AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "GitHubButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
-        //buttonSound->Play();
+        AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
     }
 
     ImGui::PopStyleColor(3);
@@ -182,7 +185,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
                 currentItem = displayModes[i];
                 currentIndex = i;
                 Options::WriteIntOption("Graphics", "DisplayMode", i);
-                //buttonSound->Play();
+                AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
             if (is_selected) {
                 ImGui::SetItemDefaultFocus();
@@ -193,7 +196,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
     ImGui::PopItemWidth();
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::ArrowButton("## DISPLAY-MODE-COMBO-LEFT", ImGuiDir_Left)) {
-        //buttonSound->Play();
+        AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
         if (currentIndex != 0) {
             currentIndex--;
             currentItem = displayModes[currentIndex];
@@ -206,7 +209,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::ArrowButton("## DISPLAY-MODE-COMBO-RIGHT", ImGuiDir_Right)) {
-        //buttonSound->Play();
+        AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
         if (currentIndex != IM_ARRAYSIZE(displayModes) - 1) {
             currentIndex++;
             currentItem = displayModes[currentIndex];
@@ -244,7 +247,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
                 currentLang = languages.at(i);
                 currentLangIndex = i;
                 Localization::SetActiveLanguage(currentLang);
-                //buttonSound->Play();
+                AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
             if (is_selected) {
                 ImGui::SetItemDefaultFocus();
@@ -255,7 +258,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
     ImGui::PopItemWidth();
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::ArrowButton("## LANGUAGE-COMBO-LEFT", ImGuiDir_Left)) {
-        //buttonSound->Play();
+        AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
         if (currentLangIndex != 0) {
             currentLangIndex--;
             currentLang = languages.at(currentLangIndex);
@@ -268,7 +271,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
     if (ImGui::ArrowButton("## LANGUAGE-COMBO-RIGHT", ImGuiDir_Right)) {
-        //buttonSound->Play();
+        AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
         if (currentLangIndex != Localization::GetLanguageAmount() - 1) {
             currentLangIndex++;
             currentLang = languages.at(currentLangIndex);
@@ -287,7 +290,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.09f, 0.09f, 0.09f, 0.95f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "LaunchButton").c_str(), ImVec2(width / 2.0 * 0.9 + (width / 2.0 - width / 2.0 * 0.9) / 4.0 - 16, 82))) {
-        //buttonSound->Play();
+        AudioEngine::PlaySoundByName("Assets\\SFX\\Interact\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
         InitializeGame(window);
         *gameState = GlobalGameState::Splash;
     }

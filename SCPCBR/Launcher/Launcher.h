@@ -6,7 +6,7 @@
 
 namespace Launcher {
     void Init();
-    void Render(GLFWwindow* window, GlobalGameState* inLauncher);
+    void Render(GLFWwindow* window, GlobalGameState* globalGameState);
     void Free();
 }
 #endif // LAUNCHER_H
