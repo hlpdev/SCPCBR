@@ -6,6 +6,7 @@
 #include "Localization/Localization.h"
 #include "SteamWrapper/SteamWrapper.h"
 #include "AudioEngine/AudioEngine.h"
+#include "SplashScreen/SplashScreen.h"
 
 #include <GLFW/glfw3.h>
 
@@ -16,6 +17,8 @@
 #include <GLAD/glad.h>
 
 #include <string>
+
+#include "Options/Options.h"
 
 GLFWwindow* window;
 
