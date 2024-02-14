@@ -609,6 +609,7 @@
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="SCPCBR.cpp" />
+    <ClCompile Include="SplashScreen\SplashScreen.cpp" />
     <ClCompile Include="SteamWrapper\SteamWrapper.cpp" />
     <ClCompile Include="Types\Types.cpp" />
     <ClCompile Include="Util\Util.cpp" />
@@ -784,6 +785,7 @@
     <ClInclude Include="Launcher\Launcher.h" />
     <ClInclude Include="Localization\Localization.h" />
     <ClInclude Include="Options\Options.h" />
+    <ClInclude Include="SplashScreen\SplashScreen.h" />
     <ClInclude Include="SteamWrapper\SteamWrapper.h" />
     <ClInclude Include="Types\Types.h" />
     <ClInclude Include="Util\Util.h" />
