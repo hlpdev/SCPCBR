@@ -49,6 +49,8 @@ void InitializeGame(GLFWwindow* window) {
             // windowed
             glfwMaximizeWindow(window);
             glfwSetWindowAttrib(window, GLFW_RESIZABLE, GLFW_TRUE);
+
+            glfwSetWindowSizeLimits(window, 640, 410, 7680, 4320);
             break;
         }
         case 1: {
