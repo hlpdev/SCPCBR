@@ -1,6 +1,8 @@
 #ifndef STEAMWRAPPER_H
 #define STEAMWRAPPER_H
 
+#include <string>
+
 class SteamWrapper {
 public:
     SteamWrapper();
@@ -16,6 +18,9 @@ public:
     } NotificationPosition;
     
     void SetNotificationPosition(NotificationPosition notificationPosition);
+
+    void SetRichPresence(const std::string& key, const std::string& value);
+    void ClearRichPresence();
 };
 
 #endif // STEAMWRAPPER_H

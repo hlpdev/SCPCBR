@@ -29,3 +29,11 @@ void SteamWrapper::RunCallbacks() {
 void SteamWrapper::SetNotificationPosition(NotificationPosition notificationPosition) {
     SteamUtils()->SetOverlayNotificationPosition(static_cast<ENotificationPosition>(notificationPosition));
 }
+
+void SteamWrapper::SetRichPresence(const std::string& key, const std::string& value) {
+    SteamFriends()->SetRichPresence(key.c_str(), value.c_str());
+}
+
+void SteamWrapper::ClearRichPresence() {
+    SteamFriends()->ClearRichPresence();
+}
