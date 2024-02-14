@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
 
     SteamWrapper* steam = new SteamWrapper();
     steam->SetNotificationPosition(SteamWrapper::NotificationPosition::TopRight);
+    steam->SetRichPresence("steam_display", "#Launcher");
     
     // Initialize GLFW
     if (!glfwInit()) {
