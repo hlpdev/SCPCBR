@@ -34,43 +34,66 @@ void AudioEngine::RunCallbacks() {
 }
 
 void AudioEngine::LoadSoundByName(const std::string& name, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO* exInfo) {
-    FMOD::Sound* sound = nullptr;
+    Util::Strings::ReplaceAll(const_cast<std::string&>(name), "\\", "/");
     
-    FMOD_RESULT result = System->createSound(name.c_str(), mode, exInfo, &sound);
+    FMOD_RESULT result = System->createSound(name.c_str(), mode, exInfo, &LoadedSounds[name]);
 
     if (result != FMOD_OK) {
         Util::Error::Exit("An error occured with the audio engine. Failed to load sound: " + name + "\nError: " + FMOD_ErrorString(result));
     }
-
-    result = System->playSound(sound, nullptr, true, nullptr);
+    
+    result = System->playSound(LoadedSounds[name], nullptr, true, nullptr);
     if (result != FMOD_OK) {
         Util::Error::Exit("An error occured with the audio engine. Failed to play & pause sound: " + name + "\nError: " + FMOD_ErrorString(result));
     }
-
-    LoadedSounds[name] = sound;
 }
 
-void AudioEngine::PlaySoundByName(const std::string& name, FMOD::ChannelGroup* group, bool paused, FMOD::Channel** channel) {
-    FMOD_RESULT result = System->playSound(LoadedSounds[name], group, paused, channel);
+FMOD::Channel* AudioEngine::PlaySoundByName(const std::string& name, FMOD::ChannelGroup* group, bool paused) {
+    Util::Strings::ReplaceAll(const_cast<std::string&>(name), "\\", "/");
+
+    FMOD::Channel* channel;
+    
+    FMOD_RESULT result = System->playSound(LoadedSounds[name], group, paused, &channel);
 
     if (result != FMOD_OK) {
         Util::Error::Exit("An error occured with the audio engine. Failed to play sound: " + name + "\nError: " + FMOD_ErrorString(result));
     }
+
+    return channel;
+}
+
+bool AudioEngine::IsSoundPlaying(FMOD::Channel* channel) {
+    bool isPlaying;
+    FMOD_RESULT result = channel->isPlaying(&isPlaying);
+    
+    if (result != FMOD_OK) {
+        Util::Error::Exit(std::string("An error occured with the audio engine. Failed to check if sound was playing.\nError: ") + FMOD_ErrorString(result));
+    }
+
+    return isPlaying;
+}
+
+void AudioEngine::StopSound(FMOD::Channel* channel) {
+    FMOD_RESULT result = channel->stop();
+
+    if (result != FMOD_OK) {
+        Util::Error::Exit(std::string("An error occured with the audio engine. Failed to stop sound\nError: ") + FMOD_ErrorString(result));
+    }
 }
 
 void AudioEngine::CreateChannelGroup(const std::string& name) {
-    FMOD::ChannelGroup* group;
+    Util::Strings::ReplaceAll(const_cast<std::string&>(name), "\\", "/");
     
-    FMOD_RESULT result = System->createChannelGroup(name.c_str(), &group);
+    FMOD_RESULT result = System->createChannelGroup(name.c_str(), &ChannelGroups[name]);
 
     if (result != FMOD_OK) {
         Util::Error::Exit("Failed to create channel group with name: " + name + "\nError: " + FMOD_ErrorString(result));
     }
-
-    ChannelGroups[name] = group;
 }
 
 FMOD::ChannelGroup* AudioEngine::GetChannelGroup(const std::string& name) {
+    Util::Strings::ReplaceAll(const_cast<std::string&>(name), "\\", "/");
+    
     if (ChannelGroups.contains(name)) {
         return ChannelGroups[name];
     }
@@ -79,6 +102,8 @@ FMOD::ChannelGroup* AudioEngine::GetChannelGroup(const std::string& name) {
 }
 
 void AudioEngine::SetChannelGroupVolume(const std::string& name, float volume) {
+    Util::Strings::ReplaceAll(const_cast<std::string&>(name), "\\", "/");
+    
     FMOD::ChannelGroup* group = GetChannelGroup(name);
 
     if (group == nullptr) {
@@ -92,6 +117,8 @@ void AudioEngine::SetChannelGroupVolume(const std::string& name, float volume) {
 }
 
 float AudioEngine::GetChannelGroupVolume(const std::string& name) {
+    Util::Strings::ReplaceAll(const_cast<std::string&>(name), "\\", "/");
+    
     FMOD::ChannelGroup* group = GetChannelGroup(name);
 
     if (group == nullptr) {

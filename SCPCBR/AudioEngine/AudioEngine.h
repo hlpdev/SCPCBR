@@ -11,7 +11,10 @@ namespace AudioEngine {
     void RunCallbacks();
 
     void LoadSoundByName(const std::string& name, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO* exInfo = nullptr);
-    void PlaySoundByName(const std::string& name, FMOD::ChannelGroup* group = nullptr, bool paused = false, FMOD::Channel** channel = nullptr);
+    FMOD::Channel* PlaySoundByName(const std::string& name, FMOD::ChannelGroup* group = nullptr, bool paused = false);
+    
+    bool IsSoundPlaying(FMOD::Channel* channel);
+    void StopSound(FMOD::Channel* channel);
 
     void CreateChannelGroup(const std::string& name);
     FMOD::ChannelGroup* GetChannelGroup(const std::string& name);
