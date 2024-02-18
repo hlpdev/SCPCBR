@@ -16,6 +16,7 @@ namespace Localization {
         ImFont* CourierNewBold;
         ImFont* DSDigital;
         ImFont* Journal;
+        ImFont* BadlocCompression;
         
         toml::parse_result Toml;
     };
@@ -35,6 +36,7 @@ namespace Localization {
     ImFont* GetActiveLanguageCourierNewBold();
     ImFont* GetActiveLanguageDSDigital();
     ImFont* GetActiveLanguageJournal();
+    ImFont* GetActiveLanguageBadlocCompression();
     
     std::vector<const char*> GetAllLanguageNames();
 

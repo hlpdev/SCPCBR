@@ -8,6 +8,7 @@ CourierNew = "Assets/Fonts/CourierNew/en.ttf" # Path to Courier New
 CourierNewBold = "Assets/Fonts/CourierNewBold/en.ttf" # Path to Courier New Bold
 DSDigital = "Assets/Fonts/DSDigital/en.ttf" # Path to DS-Digital
 Journal = "Assets/Fonts/Journal/en.ttf" # Path to Journal
+BadlocCompression = "Assets/Fonts/BadlocCompression/en.ttf" # Path to Badloc Compression
 
 [Launcher]
 OptionsHeader = "Launch Options"

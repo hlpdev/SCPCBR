@@ -63,6 +63,10 @@ void Localization::Init() {
 
         newLanguage->Journal = io.Fonts->AddFontFromFileTTF(JournalFontFile, 20.0f, 0, glyphRange);
 
+        const char* BadlocCompression = parsedToml["Fonts"]["BadlocCompression"].value_exact<const char*>().value();
+        
+        newLanguage->BadlocCompression = io.Fonts->AddFontFromFileTTF(BadlocCompression, 12.0f, 0, glyphRange);
+
         newLanguage->Toml = parsedToml;
 
         Languages.push_back(newLanguage);
@@ -131,6 +135,10 @@ ImFont* Localization::GetActiveLanguageDSDigital() {
 
 ImFont* Localization::GetActiveLanguageJournal() {
     return ActiveLanguage->Journal;
+}
+
+ImFont* Localization::GetActiveLanguageBadlocCompression() {
+    return ActiveLanguage->BadlocCompression;
 }
 
 std::vector<const char*> Localization::GetAllLanguageNames() {
