@@ -5,6 +5,8 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 
+#include "../Util/Util.h"
+
 namespace ImGui {
     template<typename ... Args>
     void TextCentered(const char* text, Args ... args) {
