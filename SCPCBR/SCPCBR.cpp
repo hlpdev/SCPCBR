@@ -19,6 +19,7 @@
 #include <string>
 
 #include "Options/Options.h"
+#include "PreloadManager/PreloadManager.h"
 
 GLFWwindow* window;
 
@@ -87,7 +88,10 @@ int main(int argc, char* argv[])
 
     AudioEngine::Init();
     Localization::Init();
+    
     Launcher::Init();
+    SplashScreen::Init();
+    PreloadManager::Init();
 
     AudioEngine::CreateChannelGroup("Game");
     AudioEngine::CreateChannelGroup("Music");
@@ -121,10 +125,16 @@ int main(int argc, char* argv[])
                 SplashScreen::Render(window, &CurrentGlobalGameState, steam);
                 break;
             }
-            case GlobalGameState::MainMenu:
+            case GlobalGameState::Preload: {
+                PreloadManager::Render(window, &CurrentGlobalGameState);
                 break;
-            case GlobalGameState::Game:
+            }
+            case GlobalGameState::MainMenu: {
                 break;
+            }
+            case GlobalGameState::Game: {
+                break;
+            }
         }
 
         ImGui::Render();
@@ -139,7 +149,10 @@ int main(int argc, char* argv[])
         glfwSwapBuffers(window);
     }
 
+    PreloadManager::Free();
+    SplashScreen::Free();
     Launcher::Free();
+    
     Localization::Free();
     AudioEngine::Free();
 
