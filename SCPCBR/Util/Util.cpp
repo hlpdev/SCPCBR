@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <random>
 
-#include "STB/stb_image.h"
+#include <STB/stb_image.h>
 
 bool Util::Image::LoadImageFromFile(std::string fileName, Image* image) {
     int components;

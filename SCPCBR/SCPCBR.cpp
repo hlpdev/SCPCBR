@@ -2,11 +2,14 @@
 #include <Windows.h>
 
 #include "GameAssembly/GameAssembly.h"
-#include "Launcher/Launcher.h"
 #include "Localization/Localization.h"
 #include "SteamWrapper/SteamWrapper.h"
 #include "AudioEngine/AudioEngine.h"
+#include "Options/Options.h"
+#include "Launcher/Launcher.h"
 #include "SplashScreen/SplashScreen.h"
+#include "PreloadManager/PreloadManager.h"
+#include "MainMenu/MainMenu.h"
 
 #include <GLFW/glfw3.h>
 
@@ -17,9 +20,6 @@
 #include <GLAD/glad.h>
 
 #include <string>
-
-#include "Options/Options.h"
-#include "PreloadManager/PreloadManager.h"
 
 GLFWwindow* window;
 

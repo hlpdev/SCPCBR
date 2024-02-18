@@ -1,8 +1,9 @@
 #ifndef LOCALIZATION_H
 #define LOCALIZATION_H
 
-#include "toml.hpp"
-#include "imgui/imgui.h"
+#include <toml.hpp>
+#include <imgui/imgui.h>
+
 #include "../Util/Util.h"
 
 namespace Localization {

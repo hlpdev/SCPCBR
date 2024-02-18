@@ -5,10 +5,10 @@
 #include <thread>
 #include <Windows.h>
 #include <imgui/imgui.h>
+#include <imgui/imgui_custom.h>
 
 #include "../AudioEngine/AudioEngine.h"
 #include "../Localization/Localization.h"
-#include "imgui/imgui_custom.h"
 
 bool splashStarted = false;
 bool finished = false;

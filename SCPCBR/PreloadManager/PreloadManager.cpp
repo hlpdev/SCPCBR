@@ -3,12 +3,12 @@
 #include <thread>
 #include <Windows.h>
 #include <toml.hpp>
+#include <imgui/imgui.h>
+#include <imgui/imgui_custom.h>
 
 #include "../AudioEngine/AudioEngine.h"
 #include "../Localization/Localization.h"
 #include "../Util/Util.h"
-#include "imgui/imgui.h"
-#include "..\Dependencies\include\imgui\imgui_custom.h"
 
 bool preloadStarted = false;
 float progress = 0;
