@@ -1054,7 +1054,7 @@ void ProcessPreloadThread() {
     progress = 0.4379747f;
     AudioEngine::LoadSoundByName("Assets/SFX/Music/Intro.ogg", FMOD_2D);
     progress = 0.43881857f;
-    AudioEngine::LoadSoundByName("Assets/SFX/Music/Menu.ogg", FMOD_2D);
+    AudioEngine::LoadSoundByName("Assets/SFX/Music/Menu.ogg", FMOD_2D | FMOD_LOOP_NORMAL);
     progress = 0.43966246f;
     AudioEngine::LoadSoundByName("Assets/SFX/Music/MenuBackup.ogg", FMOD_2D);
     progress = 0.44050634f;
