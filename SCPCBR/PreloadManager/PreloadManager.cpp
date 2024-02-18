@@ -2664,6 +2664,8 @@ void PreloadManager::Render(GLFWwindow* window, GlobalGameState* gameState) {
 
         if (glfwGetKey(window, GLFW_KEY_SPACE)) {
             *gameState = GlobalGameState::MainMenu;
+
+            AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
         }
         
         ImGui::End();
