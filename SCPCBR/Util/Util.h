@@ -10,12 +10,11 @@
 
 namespace Util {
     namespace Image {
-        struct Image {
+        typedef struct Image {
             int Width;
             int Height;
             unsigned int TextureId;
-        };
-        typedef Image Image;
+        } Image;
         
         bool LoadImageFromFile(std::string fileName, Image* image);
     }
