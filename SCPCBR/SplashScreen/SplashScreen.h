@@ -4,10 +4,11 @@
 #include <GLFW/glfw3.h>
 
 #include "../Types/Types.h"
+#include "../SteamWrapper/SteamWrapper.h"
 
 namespace SplashScreen {
-    void Init(GLFWwindow* window);
-    void Render(GLFWwindow* window, GlobalGameState* gameState);
+    void Init();
+    void Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapper* steam);
     void Free();
 }
 
