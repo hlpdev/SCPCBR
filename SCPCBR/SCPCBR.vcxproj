@@ -608,6 +608,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="PreloadManager\PreloadManager.cpp" />
     <ClCompile Include="SCPCBR.cpp" />
     <ClCompile Include="SplashScreen\SplashScreen.cpp" />
     <ClCompile Include="SteamWrapper\SteamWrapper.cpp" />
@@ -723,7 +724,7 @@
     <ClInclude Include="Dependencies\include\GLFW\glfw3native.h" />
     <ClInclude Include="Dependencies\include\imgui\imconfig.h" />
     <ClInclude Include="Dependencies\include\imgui\imgui.h" />
-    <ClInclude Include="Dependencies\include\imgui\imguicustom.h" />
+    <ClInclude Include="Dependencies\include\imgui\imgui_custom.h" />
     <ClInclude Include="Dependencies\include\imgui\imgui_freetype.h" />
     <ClInclude Include="Dependencies\include\imgui\imgui_impl_glfw.h" />
     <ClInclude Include="Dependencies\include\imgui\imgui_impl_opengl3.h" />
@@ -785,6 +786,7 @@
     <ClInclude Include="Launcher\Launcher.h" />
     <ClInclude Include="Localization\Localization.h" />
     <ClInclude Include="Options\Options.h" />
+    <ClInclude Include="PreloadManager\PreloadManager.h" />
     <ClInclude Include="SplashScreen\SplashScreen.h" />
     <ClInclude Include="SteamWrapper\SteamWrapper.h" />
     <ClInclude Include="Types\Types.h" />
