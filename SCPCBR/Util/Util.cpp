@@ -1,6 +1,7 @@
 #include "Util.h"
 
 #include <Windows.h>
+#include <random>
 
 #include "STB/stb_image.h"
 
@@ -64,4 +65,91 @@ std::string Util::Strings::ReplaceByDelimiterCopy(std::string string, std::strin
     }
 
     return string;
+}
+
+std::vector<std::string> Util::Strings::Split(std::string text, std::string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
+
+    while ((pos_end = text.find(delimiter, pos_start)) != std::string::npos) {
+        token = text.substr (pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back (token);
+    }
+
+    res.push_back (text.substr(pos_start));
+    return res;
+}
+
+int Util::Math::RandomInt(int min, int max) {
+    std::random_device random;
+    std::mt19937 generator(random());
+    std::uniform_int_distribution<> distribution(min, max);
+
+    return distribution(generator);
+}
+
+float Util::Math::RandomFloat(float min, float max) {
+    std::random_device random;
+    std::mt19937 generator(random());
+    std::uniform_real_distribution<> distribution(min, max);
+
+    return distribution(generator);
+}
+
+int Util::Math::Clamp(int number, int min, int max) {
+    if (number < min) {
+        return min;
+    }
+
+    if (number > max) {
+        return max;
+    }
+
+    return number;
+}
+
+int Util::Math::ClampMin(int number, int min) {
+    if (number < min) {
+        return min;
+    }
+
+    return number;
+}
+
+int Util::Math::ClampMax(int number, int max) {
+    if (number > max) {
+        return max;
+    }
+
+    return number;
+}
+
+float Util::Math::Clamp(float number, float min, float max) {
+    if (number < min) {
+        return min;
+    }
+
+    if (number > max) {
+        return max;
+    }
+
+    return number;
+}
+
+float Util::Math::ClampMin(float number, float min) {
+    if (number < min) {
+        return min;
+    }
+
+    return number;
+}
+
+float Util::Math::ClampMax(float number, float max) {
+    if (number > max) {
+        return max;
+    }
+
+    return number;
 }
