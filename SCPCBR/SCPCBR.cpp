@@ -31,9 +31,7 @@ int main(int argc, char* argv[])
     // Hide console window
     ShowWindowAsync(GetConsoleWindow(), SW_HIDE);
 
-    SteamWrapper* steam = new SteamWrapper();
-    steam->SetNotificationPosition(SteamWrapper::NotificationPosition::TopRight);
-    steam->SetRichPresence("steam_display", "#Launcher");
+    SteamWrapper* steam = nullptr;
     
     // Initialize GLFW
     if (!glfwInit()) {
@@ -98,7 +96,10 @@ int main(int argc, char* argv[])
     AudioEngine::SetChannelGroupVolume("Music", Options::ReadIntOption("Audio", "MusicVolume") / 100.0f);
     
     while (!glfwWindowShouldClose(window)) {
-        steam->RunCallbacks();
+        if (steam) {
+            steam->RunCallbacks();
+        }
+        
         AudioEngine::RunCallbacks();
         
         glfwPollEvents();
@@ -117,6 +118,7 @@ int main(int argc, char* argv[])
                 break;
             }
             case GlobalGameState::Splash: {
+                SplashScreen::Render(window, &CurrentGlobalGameState, steam);
                 break;
             }
             case GlobalGameState::MainMenu:
