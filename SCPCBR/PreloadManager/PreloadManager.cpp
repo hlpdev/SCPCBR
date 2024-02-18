@@ -2437,7 +2437,6 @@ void PreloadManager::Init() {
     }
 
     title = loadingScreenOptions.at(Util::Math::RandomInt(0, loadingScreenOptions.size() - 1));
-    //title = "CWM";
     
     const std::string texture = parsedToml[title]["Texture"].value_exact<std::string>().value();
     const std::string alignX = parsedToml[title]["AlignX"].value_exact<std::string>().value();
