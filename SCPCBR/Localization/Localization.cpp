@@ -49,6 +49,7 @@ void Localization::Init() {
         const char* CourierNewFontFile = parsedToml["Fonts"]["CourierNew"].value_exact<const char*>().value();
         
         newLanguage->CourierNew = io.Fonts->AddFontFromFileTTF(CourierNewFontFile, 20.0f, 0, glyphRange);
+        newLanguage->CourierNewLarge = io.Fonts->AddFontFromFileTTF(CourierNewFontFile, 50.0f, 0, glyphRange);
         newLanguage->CourierNewSmall = io.Fonts->AddFontFromFileTTF(CourierNewFontFile, 14.0f, 0, glyphRange);
 
         const char* CourierNewBoldFontFile = parsedToml["Fonts"]["CourierNewBold"].value_exact<const char*>().value();
@@ -119,6 +120,10 @@ Localization::Language* Localization::GetActiveLanguage() {
 
 ImFont* Localization::GetActiveLanguageCourierNew() {
     return ActiveLanguage->CourierNew;
+}
+
+ImFont* Localization::GetActiveLanguageCourierNewLarge() {
+    return ActiveLanguage->CourierNewLarge;
 }
 
 ImFont* Localization::GetActiveLanguageCourierNewSmall() {
