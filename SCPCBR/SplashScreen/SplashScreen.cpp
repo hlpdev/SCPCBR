@@ -8,6 +8,7 @@
 
 #include "../AudioEngine/AudioEngine.h"
 #include "../Localization/Localization.h"
+#include "imgui/imgui_custom.h"
 
 bool splashStarted = false;
 bool finished = false;
@@ -191,20 +192,25 @@ void SplashScreenThread() {
 
 Util::Image::Image* scpcbrImage = (Util::Image::Image*)malloc(sizeof(Util::Image::Image));
 
-void SplashScreen::Init() {
-    AudioEngine::LoadSoundByName("Assets\\SFX\\Splash\\Splash.mp3", FMOD_3D);
+FMOD::Channel* splashChannel;
 
-    bool res = LoadImageFromFile("Assets\\GFX\\Window\\remastered2.png", scpcbrImage);
+void SplashScreen::Init() {
+    AudioEngine::LoadSoundByName("Assets/SFX/Splash/Splash.mp3", FMOD_3D);
+
+    bool res = LoadImageFromFile("Assets/GFX/Window/remastered2.png", scpcbrImage);
     if (!res) {
         Util::Error::Exit("The texture \"Assets\\GFX\\Window\\remastered2.png\" failed to load. Ensure the file exists, or verify your game files.");
     }
 }
 
+std::thread splashScreenThread;
+
 void SplashScreen::Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapper* steam) {
     if (!splashStarted) {
         splashStarted = true;
-        AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Splash.mp3", AudioEngine::GetChannelGroup("Game"));
-        std::thread(SplashScreenThread).detach();
+        splashChannel = AudioEngine::PlaySoundByName("Assets/SFX/Splash/Splash.mp3", AudioEngine::GetChannelGroup("Game"));
+        splashScreenThread = std::thread(SplashScreenThread);
+        splashScreenThread.detach();
 
         steam = new SteamWrapper();
         steam->SetNotificationPosition(SteamWrapper::NotificationPosition::TopRight);
@@ -303,6 +309,25 @@ void SplashScreen::Render(GLFWwindow* window, GlobalGameState* gameState, SteamW
         ImGui::PopStyleColor();
         ImGui::PopStyleVar();
     }
+
+    // PRESS SPACE TO CONTINUE
+    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+    ImGui::SetNextWindowSize(ImVec2(width, 30));
+    ImGui::SetNextWindowPos(ImVec2(0, height - 50));
+    ImGui::Begin("## SKIP", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+
+    ImGui::TextCentered(Localization::GetTranslatedKey("LoadingScreens", "anykey").c_str());
+
+    if (glfwGetKey(window, GLFW_KEY_SPACE)) {
+        *gameState = GlobalGameState::Preload;
+
+        AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+        AudioEngine::StopSound(splashChannel);
+    }
+        
+    ImGui::End();
+    ImGui::PopStyleColor(2);
 
     ImGui::PopFont();
 
