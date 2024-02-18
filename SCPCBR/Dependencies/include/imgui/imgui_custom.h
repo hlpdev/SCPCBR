@@ -26,7 +26,7 @@ namespace ImGui {
         int currentWord = 0;
         std::string line;
         while (currentWord < words.size()) {
-            if (CalcTextSize(line.c_str()).x >= (width - 100)) {
+            if (CalcTextSize((line + words.at(currentWord) + " ").c_str()).x >= (width - 50)) {
                 lines.push_back(line);
                 line = "";
             }
