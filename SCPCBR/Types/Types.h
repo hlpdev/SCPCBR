@@ -4,6 +4,7 @@
 enum class GlobalGameState {
     Launcher,
     Splash,
+    Preload,
     MainMenu,
     Game
 };
