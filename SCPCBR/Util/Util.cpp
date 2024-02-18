@@ -82,6 +82,17 @@ std::vector<std::string> Util::Strings::Split(std::string text, std::string deli
     return res;
 }
 
+void Util::Strings::ReplaceAll(std::string& text, const std::string& replace, const std::string& replaceWith) {
+    for( size_t pos = 0; ; pos += replace.length() ) {
+        // Locate the substring to replace
+        pos = text.find( replace, pos );
+        if( pos == std::string::npos ) break;
+        // Replace by erasing and inserting
+        text.erase( pos, replace.length() );
+        text.insert( pos, replaceWith );
+    }
+}
+
 int Util::Math::RandomInt(int min, int max) {
     std::random_device random;
     std::mt19937 generator(random());

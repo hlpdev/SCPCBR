@@ -25,6 +25,8 @@ namespace Util {
         std::string ReplaceByDelimiterCopy(std::string string, std::string& delimiter, std::string& toReplaceWith);
 
         std::vector<std::string> Split(std::string text, std::string delimiter);
+
+        void ReplaceAll(std::string& text, const std::string& replace, const std::string& replaceWith);
     }
 
     namespace Error {
