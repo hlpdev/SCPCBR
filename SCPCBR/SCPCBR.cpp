@@ -92,6 +92,7 @@ int main(int argc, char* argv[])
     Launcher::Init();
     SplashScreen::Init();
     PreloadManager::Init();
+    MainMenu::Init();
 
     AudioEngine::CreateChannelGroup("Game");
     AudioEngine::CreateChannelGroup("Music");
@@ -130,6 +131,7 @@ int main(int argc, char* argv[])
                 break;
             }
             case GlobalGameState::MainMenu: {
+                MainMenu::Render(window, &CurrentGlobalGameState);
                 break;
             }
             case GlobalGameState::Game: {
@@ -149,6 +151,7 @@ int main(int argc, char* argv[])
         glfwSwapBuffers(window);
     }
 
+    MainMenu::Free();
     PreloadManager::Free();
     SplashScreen::Free();
     Launcher::Free();
