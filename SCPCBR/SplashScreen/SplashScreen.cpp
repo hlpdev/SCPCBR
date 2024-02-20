@@ -206,133 +206,137 @@ void SplashScreen::Init() {
 std::thread splashScreenThread;
 
 void SplashScreen::Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapper* steam) {
-    if (!splashStarted) {
-        splashStarted = true;
-        splashChannel = AudioEngine::PlaySoundByName("Assets/SFX/Splash/Splash.mp3", AudioEngine::GetChannelGroup("Game"));
-        splashScreenThread = std::thread(SplashScreenThread);
-        splashScreenThread.detach();
+    try {
+        if (!splashStarted) {
+            splashStarted = true;
+            splashChannel = AudioEngine::PlaySoundByName("Assets/SFX/Splash/Splash.mp3", AudioEngine::GetChannelGroup("Game"));
+            splashScreenThread = std::thread(SplashScreenThread);
+            splashScreenThread.detach();
 
-        steam = new SteamWrapper();
-        steam->SetNotificationPosition(SteamWrapper::NotificationPosition::TopRight);
-        steam->SetRichPresence("steam_display", "#Launcher");
-    }
-    
-    int width, height;
-    glfwGetWindowSize(window, &width, &height);
+            steam = new SteamWrapper();
+            steam->SetNotificationPosition(SteamWrapper::NotificationPosition::TopRight);
+            steam->SetRichPresence("steam_display", "#Launcher");
+        }
+        
+        int width, height;
+        glfwGetWindowSize(window, &width, &height);
 
-    ImGui::PushFont(Localization::GetActiveLanguageCourierNew());
+        ImGui::PushFont(Localization::GetActiveLanguageCourierNew());
 
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, backColor);
-    ImGui::SetNextWindowPos(ImVec2(width - 250, 10));
-    ImGui::SetNextWindowSize(ImVec2(240, 240));
-    ImGui::Begin("## SPLASH-SCREEN-LOGO", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
-    ImGui::SetCursorPos(ImVec2(0, 0));
-    ImGui::Image((void*)(intptr_t)scpcbrImage->TextureId, ImVec2(240, 240));
-    ImGui::End();
-    ImGui::PopStyleColor();
-    ImGui::PopStyleVar();
-    
-    if (mode == 1) {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
         ImGui::PushStyleColor(ImGuiCol_WindowBg, backColor);
-        ImGui::SetNextWindowPos(ImVec2(0, 0));
-        ImGui::SetNextWindowSize(ImVec2(width, height));
-        ImGui::Begin("## SPLASH-SCREEN1", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
-
-        for (const std::string& log : consoleMessages) {
-            ImGui::Text(log.c_str());
-        }
-
-        if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
-            ImGui::SetScrollHereY(1.0f);
-    
+        ImGui::SetNextWindowPos(ImVec2(width - 250, 10));
+        ImGui::SetNextWindowSize(ImVec2(240, 240));
+        ImGui::Begin("## SPLASH-SCREEN-LOGO", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+        ImGui::SetCursorPos(ImVec2(0, 0));
+        ImGui::Image(reinterpret_cast<void*>(static_cast<intptr_t>(scpcbrImage->TextureId)), ImVec2(240, 240));
         ImGui::End();
         ImGui::PopStyleColor();
         ImGui::PopStyleVar();
-    } else if (mode == 2) {
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 3);
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, backColor);
-        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1, 1, 1, 1));
-        ImGui::SetNextWindowPos(ImVec2(10, 10));
-        ImGui::SetNextWindowSize(ImVec2(490, 90));
-        ImGui::Begin("## SPLASH-SCREEN1", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
-
-        ImGui::Text("CPU Type          : Krait 400 CPU at 2500MHz");
-        ImGui::Text("Cache Memory      : 1048756K");
-        ImGui::Text("Memory Installed  : 1024M DRAM");
-
-        if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
-            ImGui::SetScrollHereY(1.0f);
-    
-        ImGui::End();
-        ImGui::PopStyleColor(2);
-        ImGui::PopStyleVar();
-
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 3);
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, backColor);
-        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1, 1, 1, 1));
-        ImGui::SetNextWindowPos(ImVec2(10, 100));
-        ImGui::SetNextWindowSize(ImVec2(490, 180));
-        ImGui::Begin("## SPLASH-SCREEN2", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
-
-        ImGui::Text("Pri. Master Disk  : 2048MB, ROM");
-        ImGui::Text("Pri. Slave Disk   : 12582912MB");
-        ImGui::Text("Sec. Master Disk  : 16777216MB");
-        ImGui::Text("");
-        ImGui::Text("Display Type      : True HD-IPS*LCD 2560x1440");
-        ImGui::Text("Serial Port (s)   : A2DP");
-        ImGui::Text("Parallel Port (s) : 378");
-        ImGui::Text("GPS On Module (s) : Yes");
-
-        if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
-            ImGui::SetScrollHereY(1.0f);
-    
-        ImGui::End();
-        ImGui::PopStyleColor(2);
-        ImGui::PopStyleVar();
         
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, backColor);
-        ImGui::SetNextWindowPos(ImVec2(10, 290));
-        ImGui::SetNextWindowSize(ImVec2(width, height - 290));
-        ImGui::Begin("## SPLASH-SCREEN3", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+        if (mode == 1) {
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, backColor);
+            ImGui::SetNextWindowPos(ImVec2(0, 0));
+            ImGui::SetNextWindowSize(ImVec2(width, height));
+            ImGui::Begin("## SPLASH-SCREEN1", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
-        for (const std::string& log : consoleMessages) {
-            ImGui::Text(log.c_str());
+            for (const std::string& log : consoleMessages) {
+                ImGui::Text(log.c_str());
+            }
+
+            if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+                ImGui::SetScrollHereY(1.0f);
+        
+            ImGui::End();
+            ImGui::PopStyleColor();
+            ImGui::PopStyleVar();
+        } else if (mode == 2) {
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 3);
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, backColor);
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1, 1, 1, 1));
+            ImGui::SetNextWindowPos(ImVec2(10, 10));
+            ImGui::SetNextWindowSize(ImVec2(490, 90));
+            ImGui::Begin("## SPLASH-SCREEN2", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+
+            ImGui::Text("CPU Type          : Krait 400 CPU at 2500MHz");
+            ImGui::Text("Cache Memory      : 1048756K");
+            ImGui::Text("Memory Installed  : 1024M DRAM");
+
+            if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+                ImGui::SetScrollHereY(1.0f);
+        
+            ImGui::End();
+            ImGui::PopStyleColor(2);
+            ImGui::PopStyleVar();
+
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 3);
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, backColor);
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1, 1, 1, 1));
+            ImGui::SetNextWindowPos(ImVec2(10, 100));
+            ImGui::SetNextWindowSize(ImVec2(490, 180));
+            ImGui::Begin("## SPLASH-SCREEN3", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+
+            ImGui::Text("Pri. Master Disk  : 2048MB, ROM");
+            ImGui::Text("Pri. Slave Disk   : 12582912MB");
+            ImGui::Text("Sec. Master Disk  : 16777216MB");
+            ImGui::Text("");
+            ImGui::Text("Display Type      : True HD-IPS*LCD 2560x1440");
+            ImGui::Text("Serial Port (s)   : A2DP");
+            ImGui::Text("Parallel Port (s) : 378");
+            ImGui::Text("GPS On Module (s) : Yes");
+
+            if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+                ImGui::SetScrollHereY(1.0f);
+        
+            ImGui::End();
+            ImGui::PopStyleColor(2);
+            ImGui::PopStyleVar();
+            
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, backColor);
+            ImGui::SetNextWindowPos(ImVec2(10, 290));
+            ImGui::SetNextWindowSize(ImVec2(width, height - 290));
+            ImGui::Begin("## SPLASH-SCREEN4", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+
+            for (const std::string& log : consoleMessages) {
+                ImGui::Text(log.c_str());
+            }
+
+            if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+                ImGui::SetScrollHereY(1.0f);
+        
+            ImGui::End();
+            ImGui::PopStyleColor();
+            ImGui::PopStyleVar();
         }
 
-        if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
-            ImGui::SetScrollHereY(1.0f);
-    
+        // PRESS SPACE TO CONTINUE
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
+        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+        ImGui::SetNextWindowSize(ImVec2(width, 30));
+        ImGui::SetNextWindowPos(ImVec2(0, height - 50));
+        ImGui::Begin("## SKIP", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+
+        ImGui::TextCentered(Localization::GetTranslatedKey("LoadingScreens", "anykey").c_str());
+
+        if (glfwGetKey(window, GLFW_KEY_SPACE)) {
+            *gameState = GlobalGameState::Preload;
+
+            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+            AudioEngine::StopSound(splashChannel);
+        }
+            
         ImGui::End();
-        ImGui::PopStyleColor();
-        ImGui::PopStyleVar();
-    }
+        ImGui::PopStyleColor(2);
 
-    // PRESS SPACE TO CONTINUE
-    ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
-    ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
-    ImGui::SetNextWindowSize(ImVec2(width, 30));
-    ImGui::SetNextWindowPos(ImVec2(0, height - 50));
-    ImGui::Begin("## SKIP", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+        ImGui::PopFont();
 
-    ImGui::TextCentered(Localization::GetTranslatedKey("LoadingScreens", "anykey").c_str());
-
-    if (glfwGetKey(window, GLFW_KEY_SPACE)) {
-        *gameState = GlobalGameState::Preload;
-
-        AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
-        AudioEngine::StopSound(splashChannel);
-    }
-        
-    ImGui::End();
-    ImGui::PopStyleColor(2);
-
-    ImGui::PopFont();
-
-    if (finished) {
-        *gameState = GlobalGameState::Preload;
+        if (finished) {
+            *gameState = GlobalGameState::Preload;
+        }
+    } catch (...) {
+        // IGNORE, UNKNOWN FATAL ERROR THROWS HERE FOR SOME REASON, JUST SKIP DISPLAYING THE SPLASH FOR A SINGLE FRAME
     }
 }
 
