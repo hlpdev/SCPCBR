@@ -1055,8 +1055,6 @@ void ProcessPreloadThread() {
     AudioEngine::LoadSoundByName("Assets/SFX/Music/Intro.ogg", FMOD_2D);
     progress = 0.43881857f;
     AudioEngine::LoadSoundByName("Assets/SFX/Music/Menu.ogg", FMOD_2D | FMOD_LOOP_NORMAL);
-    progress = 0.43966246f;
-    AudioEngine::LoadSoundByName("Assets/SFX/Music/MenuBackup.ogg", FMOD_2D);
     progress = 0.44050634f;
     AudioEngine::LoadSoundByName("Assets/SFX/Music/PD.ogg", FMOD_2D);
     progress = 0.44135022f;
@@ -2413,11 +2411,7 @@ Util::Image::Image* loadingScreenImage = nullptr;
 LoadingScreenImagePosition loadingScreenImagePosition;
 std::string title;
 std::string currentText;
-std::string text1;
-std::string text2;
-std::string text3;
-std::string text4;
-int textAmount = 0;
+std::vector<std::string> text;
 
 void PreloadManager::Init() {
     AudioEngine::LoadSoundByName("Assets/SFX/SCP/990/cwm1.ogg", FMOD_2D);
@@ -2473,23 +2467,19 @@ void PreloadManager::Init() {
     }
     
     if (parsedToml[title]["Text1"].is_string()) {
-        text1 = parsedToml[title]["Text1"].value_exact<std::string>().value();
-        textAmount++;
+        text.push_back(Localization::GetTranslatedKey("LoadingScreens", parsedToml[title]["Text1"].value_exact<std::string>().value()));
     }
     
     if (parsedToml[title]["Text2"].is_string()) {
-        text2 = parsedToml[title]["Text2"].value_exact<std::string>().value();
-        textAmount++;
+        text.push_back(Localization::GetTranslatedKey("LoadingScreens", parsedToml[title]["Text2"].value_exact<std::string>().value()));
     }
     
     if (parsedToml[title]["Text3"].is_string()) {
-        text3 = parsedToml[title]["Text3"].value_exact<std::string>().value();
-        textAmount++;
+        text.push_back(Localization::GetTranslatedKey("LoadingScreens", parsedToml[title]["Text3"].value_exact<std::string>().value()));
     }
     
     if (parsedToml[title]["Text4"].is_string()) {
-        text4 = parsedToml[title]["Text4"].value_exact<std::string>().value();
-        textAmount++;
+        text.push_back(Localization::GetTranslatedKey("LoadingScreens", parsedToml[title]["Text4"].value_exact<std::string>().value()));
     }
 
     if (!disableBackground) {
@@ -2503,28 +2493,33 @@ void PreloadManager::Init() {
     if (!LoadImageFromFile("Assets/LoadingScreens/" + texture, loadingScreenImage)) {
         Util::Error::Exit("The texture \"Assets\\LoadingScreens\\" + texture + "\" failed to load. Ensure the file exists, or verify your game files.");
     }
+
+    if (title == "CWM") {
+        text.emplace_back(Localization::GetTranslatedKey("LoadingScreens", "fineradio"));
+        text.emplace_back(Localization::GetTranslatedKey("LoadingScreens", "burn"));
+        text.emplace_back(Localization::GetTranslatedKey("LoadingScreens", "cannotcontrol"));
+        text.emplace_back(Localization::GetTranslatedKey("LoadingScreens", "trust"));
+        text.emplace_back(Localization::GetTranslatedKey("LoadingScreens", "question1"));
+        text.emplace_back(Localization::GetTranslatedKey("LoadingScreens", "jorge"));
+        text.emplace_back(Localization::GetTranslatedKey("LoadingScreens", "question2"));
+        text.emplace_back(Localization::GetTranslatedKey("LoadingScreens", "midnight"));
+        text.emplace_back(Localization::GetTranslatedKey("LoadingScreens", "alloylife"));
+    }
 }
 
 bool cyclingTextStarted = false;
 
 void cycleTextThread() {
+    int time = 13000;
+    if (title == "CWM") {
+        time = 0;
+    }
+    
     cyclingTextStarted = true;
     while (cyclingTextStarted) {
-        if (!text1.empty()) {
-            currentText = text1;
-            Sleep(13000);
-        }
-        if (!text2.empty()) {
-            currentText = text2;
-            Sleep(13000);
-        }
-        if (!text3.empty()) {
-            currentText = text3;
-            Sleep(13000);
-        }
-        if (!text4.empty()) {
-            currentText = text4;
-            Sleep(13000);
+        for (std::string string : text) {
+            currentText = string;
+            Sleep(time);
         }
     }
 }
@@ -2552,50 +2547,6 @@ void PreloadManager::Render(GLFWwindow* window, GlobalGameState* gameState) {
             }
             
             AudioEngine::PlaySoundByName("Assets/SFX/SCP/990/cwm2.ogg", AudioEngine::GetChannelGroup("Game"));
-        }
-
-        // ReSharper disable once CppDefaultCaseNotHandledInSwitchStatement
-        switch (Util::Math::RandomInt(0, 9)) {  // NOLINT(hicpp-multiway-paths-covered)
-            case 0: {
-                text1 = "fineradio";
-                break;
-            }
-            case 1: {
-                text1 = "burn";
-                break;
-            }
-            case 2: {
-                text1 = "cannotcontrol";
-                break;
-            }
-            case 3: {
-                text1 = "trust";
-                break;
-            }
-            case 4: {
-                text1 = "gentleman";
-                break;
-            }
-            case 5: {
-                text1 = "question1";
-                break;
-            }
-            case 6: {
-                text1 = "jorge";
-                break;
-            }
-            case 7: {
-                text1 = "question2";
-                break;
-            }
-            case 8: {
-                text1 = "midnight";
-                break;
-            }
-            case 9: {
-                text1 = "alloylife";
-                break;
-            }
         }
     }
 
@@ -2682,7 +2633,7 @@ void PreloadManager::Render(GLFWwindow* window, GlobalGameState* gameState) {
         ImGui::SetNextWindowPos(ImVec2(width / 2.0f, height / 2.0f), 0, ImVec2(0.5, 0.5));
         ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
-        ImGui::Begin("## BACKGROUND-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+        ImGui::Begin("## PROGRESS-TITLE-TEXT", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 
         ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.5f);
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1, 1, 1, 1));
@@ -2710,7 +2661,7 @@ void PreloadManager::Render(GLFWwindow* window, GlobalGameState* gameState) {
         }
 
         if (!currentText.empty()) {
-            ImGui::TextWrappedCentered(Localization::GetTranslatedKey("LoadingScreens", currentText).c_str());
+            ImGui::TextWrappedCentered(currentText.c_str());
         }
         
         ImGui::End();
