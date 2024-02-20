@@ -27,110 +27,110 @@ void SplashScreenThread() {
     
     Sleep(550);
 
-    consoleMessages.push_back("SCP:CBR, An HNT8 Production");
-    consoleMessages.push_back("Copyright (C) 2024, HNT8 Organization.");
+    consoleMessages.emplace_back("SCP:CBR, An HNT8 Production");
+    consoleMessages.emplace_back("Copyright (C) 2024, HNT8 Organization.");
 
     Sleep(500);
     
-    consoleMessages.push_back("");
-    consoleMessages.push_back("Krait 400 CPU at 2500 MHz , 4 Processor(s)");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("Krait 400 CPU at 2500 MHz , 4 Processor(s)");
 
     Sleep(750);
 
-    consoleMessages.push_back("Memory Test : 195815K");
+    consoleMessages.emplace_back("Memory Test : 195815K");
 
     Sleep(100);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("Memory Test : 285718K");
+    consoleMessages.emplace_back("Memory Test : 285718K");
 
     Sleep(100);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("Memory Test: 728591K");
+    consoleMessages.emplace_back("Memory Test: 728591K");
 
     Sleep(100);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("Memory Test: 958126K");
+    consoleMessages.emplace_back("Memory Test: 958126K");
 
     Sleep(100);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("Memory Test: 10485761K");
+    consoleMessages.emplace_back("Memory Test: 10485761K");
 
     Sleep(100);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("Memory Test: 11958967K");
+    consoleMessages.emplace_back("Memory Test: 11958967K");
 
     Sleep(500);
 
-    consoleMessages.push_back("");
-    consoleMessages.push_back("OpenGL Extension v3.3");
-    consoleMessages.push_back("Copyright (C) 1997-2024, KHRONOS GROUP");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("OpenGL Extension v3.3");
+    consoleMessages.emplace_back("Copyright (C) 1997-2024, KHRONOS GROUP");
 
     Sleep(500);
 
-    consoleMessages.push_back("");
-    consoleMessages.push_back("GLFW Extension v3.3.9");
-    consoleMessages.push_back("Copyright (C) 2002-2006, Marcus Geelnard");
-    consoleMessages.push_back("Copyright (C) 2006-2019, Camilla Löwy");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("GLFW Extension v3.3.9");
+    consoleMessages.emplace_back("Copyright (C) 2002-2006, Marcus Geelnard");
+    consoleMessages.emplace_back("Copyright (C) 2006-2019, Camilla Löwy");
 
     Sleep(500);
 
-    consoleMessages.push_back("");
-    consoleMessages.push_back("Dear ImGui Extension v1.90.3");
-    consoleMessages.push_back("MIT License");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("Dear ImGui Extension v1.90.3");
+    consoleMessages.emplace_back("MIT License");
 
     Sleep(500);
 
-    consoleMessages.push_back("");
-    consoleMessages.push_back("FMOD Extension v2.02");
-    consoleMessages.push_back("Copyright (C) 2024, Firelight Technologies Pty Ltd");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("FMOD Extension v2.02");
+    consoleMessages.emplace_back("Copyright (C) 2024, Firelight Technologies Pty Ltd");
 
     Sleep(100);
 
-    consoleMessages.push_back("");
-    consoleMessages.push_back("   Detecting Flash ROM        . . .  ");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("   Detecting Flash ROM        . . .  ");
 
     Sleep(30);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("   Detecting Flash ROM        . . .  __");
+    consoleMessages.emplace_back("   Detecting Flash ROM        . . .  __");
 
     Sleep(30);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("   Detecting Flash ROM        . . .  CyanogenMod 12");
+    consoleMessages.emplace_back("   Detecting Flash ROM        . . .  CyanogenMod 12");
 
     Sleep(100);
 
-    consoleMessages.push_back("   Detecting Flash Extension  . . .  ");
+    consoleMessages.emplace_back("   Detecting Flash Extension  . . .  ");
 
     Sleep(30);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("   Detecting Flash Extension  . . .  __");
+    consoleMessages.emplace_back("   Detecting Flash Extension  . . .  __");
 
     Sleep(30);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("   Detecting Flash Extension  . . .  Generic microSD");
+    consoleMessages.emplace_back("   Detecting Flash Extension  . . .  Generic microSD");
 
     Sleep(100);
 
-    consoleMessages.push_back("   Detecting MPU              . . .  ");
+    consoleMessages.emplace_back("   Detecting MPU              . . .  ");
 
     Sleep(30);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("   Detecting MPU              . . .  __");
+    consoleMessages.emplace_back("   Detecting MPU              . . .  __");
 
     Sleep(30);
 
     consoleMessages.pop_back();
-    consoleMessages.push_back("   Detecting MPU              . . .  Generic S1M Card");
+    consoleMessages.emplace_back("   Detecting MPU              . . .  Generic S1M Card");
 
     Sleep(1600);
 
@@ -138,52 +138,52 @@ void SplashScreenThread() {
 
     mode = 2;
 
-    consoleMessages.push_back("");
-    consoleMessages.push_back("");
-    consoleMessages.push_back("PCI device listening.....");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("PCI device listening.....");
 
     Sleep(300);
 
-    consoleMessages.push_back("Bus  Device  Device ID  Device Class");
-    consoleMessages.push_back("_________________________________________________________");
+    consoleMessages.emplace_back("Bus  Device  Device ID  Device Class");
+    consoleMessages.emplace_back("_________________________________________________________");
     
     Sleep(300);
     
-    consoleMessages.push_back(" 0     37      24C2     IEEE 802.11 Networking Controller");
+    consoleMessages.emplace_back(" 0     37      24C2     IEEE 802.11 Networking Controller");
 
     Sleep(100);
     
-    consoleMessages.push_back(" 0     23      24C4     IEEE 802.15.1 WPAN Controller");
+    consoleMessages.emplace_back(" 0     23      24C4     IEEE 802.15.1 WPAN Controller");
 
     Sleep(100);
     
-    consoleMessages.push_back(" 0     22      24C7     Display Controller");
+    consoleMessages.emplace_back(" 0     22      24C7     Display Controller");
 
     Sleep(100);
     
-    consoleMessages.push_back(" 0     21      24C8     A-GPS Receiver Device");
+    consoleMessages.emplace_back(" 0     21      24C8     A-GPS Receiver Device");
 
     Sleep(100);
     
-    consoleMessages.push_back(" 1     8       4E44     Multi-Axis Accelerometer");
+    consoleMessages.emplace_back(" 1     8       4E44     Multi-Axis Accelerometer");
 
     Sleep(100);
     
-    consoleMessages.push_back(" 1     4       5F33     Proximity Sensor");
+    consoleMessages.emplace_back(" 1     4       5F33     Proximity Sensor");
 
     Sleep(100);
     
-    consoleMessages.push_back(" 1     3       5F34     Ambient Light Sensor");
+    consoleMessages.emplace_back(" 1     3       5F34     Ambient Light Sensor");
 
     Sleep(100);
     
-    consoleMessages.push_back(" 1     2       5F55     Digital Compass");
+    consoleMessages.emplace_back(" 1     2       5F55     Digital Compass");
 
     Sleep(1500);
 
-    consoleMessages.push_back("");
-    consoleMessages.push_back("");
-    consoleMessages.push_back("Initialization finished.");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("");
+    consoleMessages.emplace_back("Initialization finished.");
 
     Sleep(2500);
 
