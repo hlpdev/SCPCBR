@@ -13,6 +13,7 @@ namespace Localization {
         std::string Name;
 
         ImFont* CourierNew;
+        ImFont* CourierNewExtraLarge;
         ImFont* CourierNewLarge;
         ImFont* CourierNewSmall;
         ImFont* CourierNewBold;
@@ -34,6 +35,7 @@ namespace Localization {
     Language* GetActiveLanguage();
 
     ImFont* GetActiveLanguageCourierNew();
+    ImFont* GetActiveLanguageCourierNewExtraLarge();
     ImFont* GetActiveLanguageCourierNewLarge();
     ImFont* GetActiveLanguageCourierNewSmall();
     ImFont* GetActiveLanguageCourierNewBold();
