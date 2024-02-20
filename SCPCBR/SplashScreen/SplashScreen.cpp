@@ -190,7 +190,7 @@ void SplashScreenThread() {
     finished = true;
 }
 
-Util::Image::Image* scpcbrImage = (Util::Image::Image*)malloc(sizeof(Util::Image::Image));
+Util::Image::Image* scpcbrImage = static_cast<Util::Image::Image*>(malloc(sizeof(Util::Image::Image)));
 
 FMOD::Channel* splashChannel;
 
