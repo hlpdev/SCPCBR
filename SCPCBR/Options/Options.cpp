@@ -2,41 +2,37 @@
 
 #include <ini.h>
 
-int Options::ReadIntOption(std::string category, std::string key) {
-    mINI::INIFile file("options.ini");
-    mINI::INIStructure ini;
-    file.read(ini);
-    
-    return std::stoi(ini[category][key]);
+mINI::INIFile* file;
+mINI::INIStructure* ini;
+
+void Options::Init() {
+    file = new mINI::INIFile("options.ini");
+    ini = new mINI::INIStructure;
+
+    file->read(*ini);
 }
 
-bool Options::WriteIntOption(std::string category, std::string key, int value) {
-    mINI::INIFile file("options.ini");
-    mINI::INIStructure ini;
-    file.read(ini);
-    
-    ini[category][key] = std::to_string(value);
-    return file.write(ini);
+int Options::ReadIntOption(const std::string& category, const std::string& key) {
+    return std::stoi(ini->operator[](category).operator[](key));
 }
 
-std::string Options::ReadStringOption(std::string category, std::string key) {
-    mINI::INIFile file("options.ini");
-    mINI::INIStructure ini;
-    file.read(ini);
-
-    return ini[category][key];
+void Options::WriteIntOption(const std::string& category, const std::string& key, int value) {
+    ini->operator[](category).operator[](key) = std::to_string(value);
 }
 
-bool Options::WriteStringOption(std::string category, std::string key, std::string value) {
-    mINI::INIFile file("options.ini");
-    mINI::INIStructure ini;
-    file.read(ini);
-
-    ini[category][key] = value;
-    return file.write(ini);
+std::string Options::ReadStringOption(const std::string& category, const std::string& key) {
+    return ini->operator[](category).operator[](key);
 }
 
-void Options::ResetOptions() {
-    WriteStringOption("Graphics", "DisplayMode", "Fullscreen");
-    WriteStringOption("Misc", "Language", "en-US");
+void Options::WriteStringOption(const std::string& category, const std::string& key, std::string value) {
+    ini->operator[](category).operator[](key) = value;
 }
+
+void Options::Free() {
+    file->write(*ini);
+
+    delete ini;
+    delete file;
+}
+
+void Options::ResetOptions() {}
