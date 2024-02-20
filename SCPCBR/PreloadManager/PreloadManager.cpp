@@ -2553,49 +2553,58 @@ void PreloadManager::Render(GLFWwindow* window, GlobalGameState* gameState) {
     // RENDER LOADING SCREEN IMAGE
     {
         int targetSize = height / 1.75f;
-
-        ImVec2 targetPosition;
+        ImVec2 position = ImVec2(0, 0);
+        ImVec2 pivotPoint = ImVec2(0, 0);
         
         switch (loadingScreenImagePosition) {
             case TopLeft: {
-                targetPosition = ImVec2(0, 0);
+                position = ImVec2(0, 0);
+                pivotPoint = ImVec2(0, 0);
                 break;
             }
             case TopCenter: {
-                targetPosition = ImVec2((width / 2.0f) - (targetSize / 2.0f), 0);
+                position = ImVec2((width / 2.0f), 0);
+                pivotPoint = ImVec2(0.5f, 0);
                 break;
             }
             case TopRight: {
-                targetPosition = ImVec2(width - targetSize, 0);
+                position = ImVec2(width, 0);
+                pivotPoint = ImVec2(1, 0);
                 break;
             }
             case CenterLeft: {
-                targetPosition = ImVec2(0, (height / 2.0f) - (targetSize / 2.0f));
+                position = ImVec2(0, height / 2.0f);
+                pivotPoint = ImVec2(0, 0.5f);
                 break;
             }
             case CenterCenter: {
-                targetPosition = ImVec2((width / 2.0f) - (targetSize / 2.0f), (height / 2.0f) - (targetSize / 2.0f));
+                position = ImVec2(width / 2.0f, height / 2.0f);
+                pivotPoint = ImVec2(0.5f, 0.5f);
                 break;
             }
             case CenterRight: {
-                targetPosition = ImVec2(width - targetSize, (height / 2.0f) - (targetSize / 2.0f));
+                position = ImVec2(width, height / 2.0f);
+                pivotPoint = ImVec2(1, 0.5f);
                 break;
             }
             case BottomLeft: {
-                targetPosition = ImVec2(0, height - targetSize);
+                position = ImVec2(0, height);
+                pivotPoint = ImVec2(0, 1);
                 break;
             }
             case BottomCenter: {
-                targetPosition = ImVec2((width / 2.0f) - (targetSize / 2.0f), height - targetSize);
+                position = ImVec2(width / 2.0f, height);
+                pivotPoint = ImVec2(0.5, 1);
                 break;
             }
             case BottomRight: {
-                targetPosition = ImVec2(width - targetSize, height - targetSize);
+                position = ImVec2(width, height);
+                pivotPoint = ImVec2(1, 1);
                 break;
             }
         }
 
-        ImGui::SetNextWindowPos(targetPosition);
+        ImGui::SetNextWindowPos(position, 0, pivotPoint);
         ImGui::SetNextWindowSize(ImVec2(targetSize, targetSize));
         ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
