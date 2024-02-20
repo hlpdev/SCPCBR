@@ -86,6 +86,7 @@ int main(int argc, char* argv[])
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
+    Options::Init();
     AudioEngine::Init();
     Localization::Init();
     
@@ -158,6 +159,7 @@ int main(int argc, char* argv[])
     
     Localization::Free();
     AudioEngine::Free();
+    Options::Free();
 
     glfwTerminate();
 

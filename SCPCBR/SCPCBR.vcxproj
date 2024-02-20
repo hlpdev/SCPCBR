@@ -801,6 +801,7 @@
     <Content Include="Assets\Fonts\CourierNew\ru.ttf" />
     <Content Include="Assets\Fonts\DSDigital\en.TTF" />
     <Content Include="Assets\Fonts\Journal\en.ttf" />
+    <Content Include="Assets\GFX\Menu\MenuBackground.jpg" />
     <Content Include="Assets\GFX\Window\LauncherBackground.png" />
     <Content Include="Assets\GFX\Window\LauncherTitle.png" />
     <Content Include="Assets\GFX\Window\remastered.ico" />
@@ -871,7 +872,6 @@
     <Content Include="Assets\LoadingScreens\toilet.png" />
     <Content Include="Assets\LoadingScreens\vest.png" />
     <Content Include="Assets\Localization\en.toml" />
-    <Content Include="Assets\Localization\ru.toml" />
     <Content Include="Assets\SFX\Alarm\Alarm.ogg" />
     <Content Include="Assets\SFX\Alarm\Alarm2.ogg" />
     <Content Include="Assets\SFX\Alarm\Alarm2_1.ogg" />
