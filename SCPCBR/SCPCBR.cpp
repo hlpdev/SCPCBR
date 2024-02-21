@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     // Set window icon
     Window::SetWindowIcon(window, GameWindowIcon);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
