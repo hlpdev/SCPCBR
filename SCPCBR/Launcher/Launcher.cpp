@@ -86,12 +86,12 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
         ImVec2 pos1;
         ImVec2 pos2;
 
-        if (height * ((double)backgroundImage->Width / backgroundImage->Height) >= width) {
-            pos1 = ImVec2(0 - (height * ((double)backgroundImage->Width / backgroundImage->Height) - width) / 2, 0);
-            pos2 = ImVec2(width + (height * ((double)backgroundImage->Width / backgroundImage->Height) - width) / 2, height);
+        if (height * (static_cast<float>(backgroundImage->Width) / backgroundImage->Height) >= width) {
+            pos1 = ImVec2(0 - (height * (static_cast<float>(backgroundImage->Width) / backgroundImage->Height) - width) / 2, 0);
+            pos2 = ImVec2(width + (height * (static_cast<float>(backgroundImage->Width) / backgroundImage->Height) - width) / 2, height);
         } else {
-            pos1 = ImVec2(0, 0 - (width / ((double)backgroundImage->Width / backgroundImage->Height) - height) / 2);
-            pos2 = ImVec2(width, height + (width / ((double)backgroundImage->Width / backgroundImage->Height) - height) / 2);
+            pos1 = ImVec2(0, 0 - (width / (static_cast<float>(backgroundImage->Width) / backgroundImage->Height) - height) / 2);
+            pos2 = ImVec2(width, height + (width / (static_cast<float>(backgroundImage->Width) / backgroundImage->Height) - height) / 2);
         }
 
         ImGui::GetBackgroundDrawList()->AddImage((void*)(intptr_t)backgroundImage->TextureId, pos1, pos2);
