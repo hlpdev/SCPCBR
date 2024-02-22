@@ -2517,7 +2517,7 @@ void cycleTextThread() {
     
     cyclingTextStarted = true;
     while (cyclingTextStarted) {
-        for (std::string string : text) {
+        for (const std::string& string : text) {
             currentText = string;
             Sleep(time);
         }
