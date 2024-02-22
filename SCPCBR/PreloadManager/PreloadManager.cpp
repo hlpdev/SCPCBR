@@ -2527,176 +2527,180 @@ void cycleTextThread() {
 FMOD::Channel* cwm1Channel;
 
 void PreloadManager::Render(GLFWwindow* window, GlobalGameState* gameState) {
-    int width, height;
-    glfwGetFramebufferSize(window, &width, &height);
-    
-    if (title == "CWM") {
-        static bool cwmInitPlayed = false;
-        if (!cwmInitPlayed) {
-            cwmInitPlayed = true;
+    try {
+        int width, height;
+        glfwGetFramebufferSize(window, &width, &height);
+        
+        if (title == "CWM") {
+            static bool cwmInitPlayed = false;
+            if (!cwmInitPlayed) {
+                cwmInitPlayed = true;
 
-            cwm1Channel = AudioEngine::PlaySoundByName("Assets/SFX/SCP/990/cwm1.ogg", AudioEngine::GetChannelGroup("Game"));
+                cwm1Channel = AudioEngine::PlaySoundByName("Assets/SFX/SCP/990/cwm1.ogg", AudioEngine::GetChannelGroup("Game"));
+            }
+
+            static bool cwmFinalPlayed = false;
+            if (!cwmFinalPlayed && progress == 1) {
+                cwmFinalPlayed = true;
+
+                if (AudioEngine::IsSoundPlaying(cwm1Channel)) {
+                    AudioEngine::StopSound(cwm1Channel);
+                }
+                
+                AudioEngine::PlaySoundByName("Assets/SFX/SCP/990/cwm2.ogg", AudioEngine::GetChannelGroup("Game"));
+            }
         }
 
-        static bool cwmFinalPlayed = false;
-        if (!cwmFinalPlayed && progress == 1) {
-            cwmFinalPlayed = true;
+        // RENDER LOADING SCREEN IMAGE
+        {
+            int targetSize = height / 1.75f;
+            ImVec2 position = ImVec2(0, 0);
+            ImVec2 pivotPoint = ImVec2(0, 0);
+            
+            switch (loadingScreenImagePosition) {
+                case TopLeft: {
+                    position = ImVec2(0, 0);
+                    pivotPoint = ImVec2(0, 0);
+                    break;
+                }
+                case TopCenter: {
+                    position = ImVec2((width / 2.0f), 0);
+                    pivotPoint = ImVec2(0.5f, 0);
+                    break;
+                }
+                case TopRight: {
+                    position = ImVec2(width, 0);
+                    pivotPoint = ImVec2(1, 0);
+                    break;
+                }
+                case CenterLeft: {
+                    position = ImVec2(0, height / 2.0f);
+                    pivotPoint = ImVec2(0, 0.5f);
+                    break;
+                }
+                case CenterCenter: {
+                    position = ImVec2(width / 2.0f, height / 2.0f);
+                    pivotPoint = ImVec2(0.5f, 0.5f);
+                    break;
+                }
+                case CenterRight: {
+                    position = ImVec2(width, height / 2.0f);
+                    pivotPoint = ImVec2(1, 0.5f);
+                    break;
+                }
+                case BottomLeft: {
+                    position = ImVec2(0, height);
+                    pivotPoint = ImVec2(0, 1);
+                    break;
+                }
+                case BottomCenter: {
+                    position = ImVec2(width / 2.0f, height);
+                    pivotPoint = ImVec2(0.5, 1);
+                    break;
+                }
+                case BottomRight: {
+                    position = ImVec2(width, height);
+                    pivotPoint = ImVec2(1, 1);
+                    break;
+                }
+            }
 
-            if (AudioEngine::IsSoundPlaying(cwm1Channel)) {
-                AudioEngine::StopSound(cwm1Channel);
+            ImGui::SetNextWindowPos(position, 0, pivotPoint);
+            ImGui::SetNextWindowSize(ImVec2(targetSize, targetSize));
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+            ImGui::Begin("## LOADINGSCREEN-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+
+            ImGui::SetCursorPos(ImVec2(0, 0));
+            ImGui::Image(reinterpret_cast<void*>(loadingScreenImage->TextureId), ImVec2(targetSize, targetSize));
+            
+            ImGui::End();
+            ImGui::PopStyleColor(2);
+        }
+        
+        // RENDER BACKGROUND IMAGE
+        if (!disableBackground && loadingScreenBackgroundImage) {
+            int targetSize = height / 2;
+
+            ImGui::SetNextWindowSize(ImVec2(targetSize, targetSize));
+            ImGui::SetNextWindowPos(ImVec2(width / 2.0f, height / 2.0f), 0, ImVec2(0.5, 0.5));
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+            ImGui::Begin("## BACKGROUND-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+
+            ImGui::SetCursorPos(ImVec2(0, 0));
+            ImGui::Image(reinterpret_cast<void*>(loadingScreenBackgroundImage->TextureId), ImVec2(targetSize, targetSize));
+            
+            ImGui::End();
+            ImGui::PopStyleColor(2);
+        }
+
+        // RENDER PROGRESS, TITLE, TEXT
+        {
+            ImVec2 targetSize = ImVec2(Util::Math::ClampMin(static_cast<float>(width) / 3.0f, 750.0f), Util::Math::ClampMin(static_cast<float>(height) / 1.5f, 600.0f));
+            
+            ImGui::SetNextWindowSize(targetSize);
+            ImGui::SetNextWindowPos(ImVec2(width / 2.0f, height / 2.0f), 0, ImVec2(0.5, 0.5));
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+            ImGui::Begin("## PROGRESS-TITLE-TEXT", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+
+            ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.5f);
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1, 1, 1, 1));
+            ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 1));
+            ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.827f, 0, 0, 1));
+            ImGui::SetCursorPosX(5);
+            ImGui::ProgressBar(ProcessPreload(), ImVec2(targetSize.x - 10, 0));
+            ImGui::PopStyleColor(3);
+            ImGui::PopStyleVar();
+
+            ImGui::Dummy(ImVec2(0, 50.0f));
+
+            ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(1, 1, 1, 1));
+            ImGui::PushStyleVar(ImGuiStyleVar_SeparatorTextAlign, ImVec2(0.5f, 0.5f));
+            ImGui::PushFont(Localization::GetActiveLanguageCourierNewLarge());
+            ImGui::SeparatorText(title.c_str());
+            ImGui::PopFont();
+            ImGui::PopStyleVar();
+            ImGui::PopStyleColor();
+
+            ImGui::Dummy(ImVec2(0, 20.0f));
+
+            if (!cyclingTextStarted) {
+                std::thread(cycleTextThread).detach();
+            }
+
+            if (!currentText.empty()) {
+                ImGui::TextWrappedCentered(currentText.c_str());
             }
             
-            AudioEngine::PlaySoundByName("Assets/SFX/SCP/990/cwm2.ogg", AudioEngine::GetChannelGroup("Game"));
-        }
-    }
-
-    // RENDER LOADING SCREEN IMAGE
-    {
-        int targetSize = height / 1.75f;
-        ImVec2 position = ImVec2(0, 0);
-        ImVec2 pivotPoint = ImVec2(0, 0);
-        
-        switch (loadingScreenImagePosition) {
-            case TopLeft: {
-                position = ImVec2(0, 0);
-                pivotPoint = ImVec2(0, 0);
-                break;
-            }
-            case TopCenter: {
-                position = ImVec2((width / 2.0f), 0);
-                pivotPoint = ImVec2(0.5f, 0);
-                break;
-            }
-            case TopRight: {
-                position = ImVec2(width, 0);
-                pivotPoint = ImVec2(1, 0);
-                break;
-            }
-            case CenterLeft: {
-                position = ImVec2(0, height / 2.0f);
-                pivotPoint = ImVec2(0, 0.5f);
-                break;
-            }
-            case CenterCenter: {
-                position = ImVec2(width / 2.0f, height / 2.0f);
-                pivotPoint = ImVec2(0.5f, 0.5f);
-                break;
-            }
-            case CenterRight: {
-                position = ImVec2(width, height / 2.0f);
-                pivotPoint = ImVec2(1, 0.5f);
-                break;
-            }
-            case BottomLeft: {
-                position = ImVec2(0, height);
-                pivotPoint = ImVec2(0, 1);
-                break;
-            }
-            case BottomCenter: {
-                position = ImVec2(width / 2.0f, height);
-                pivotPoint = ImVec2(0.5, 1);
-                break;
-            }
-            case BottomRight: {
-                position = ImVec2(width, height);
-                pivotPoint = ImVec2(1, 1);
-                break;
-            }
+            ImGui::End();
+            ImGui::PopStyleColor(2);
         }
 
-        ImGui::SetNextWindowPos(position, 0, pivotPoint);
-        ImGui::SetNextWindowSize(ImVec2(targetSize, targetSize));
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
-        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
-        ImGui::Begin("## LOADINGSCREEN-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+        // PRESS SPACE TO CONTINUE; PRELOAD COMPLETE
+        if (progress >= 1) {
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+            ImGui::SetNextWindowSize(ImVec2(width, 30));
+            ImGui::SetNextWindowPos(ImVec2(0, height - 50));
+            ImGui::Begin("## PRELOAD-FINISHED", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 
-        ImGui::SetCursorPos(ImVec2(0, 0));
-        ImGui::Image(reinterpret_cast<void*>(loadingScreenImage->TextureId), ImVec2(targetSize, targetSize));
-        
-        ImGui::End();
-        ImGui::PopStyleColor(2);
-    }
-    
-    // RENDER BACKGROUND IMAGE
-    if (!disableBackground && loadingScreenBackgroundImage) {
-        int targetSize = height / 2;
+            ImGui::TextCentered(Localization::GetTranslatedKey("LoadingScreens", "anykey").c_str());
 
-        ImGui::SetNextWindowSize(ImVec2(targetSize, targetSize));
-        ImGui::SetNextWindowPos(ImVec2(width / 2.0f, height / 2.0f), 0, ImVec2(0.5, 0.5));
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
-        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
-        ImGui::Begin("## BACKGROUND-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+            if (glfwGetKey(window, GLFW_KEY_SPACE)) {
+                *gameState = GlobalGameState::MainMenu;
 
-        ImGui::SetCursorPos(ImVec2(0, 0));
-        ImGui::Image(reinterpret_cast<void*>(loadingScreenBackgroundImage->TextureId), ImVec2(targetSize, targetSize));
-        
-        ImGui::End();
-        ImGui::PopStyleColor(2);
-    }
+                cyclingTextStarted = false;
 
-    // RENDER PROGRESS, TITLE, TEXT
-    {
-        ImVec2 targetSize = ImVec2(Util::Math::ClampMin(static_cast<float>(width) / 3.0f, 750.0f), Util::Math::ClampMin(static_cast<float>(height) / 1.5f, 600.0f));
-        
-        ImGui::SetNextWindowSize(targetSize);
-        ImGui::SetNextWindowPos(ImVec2(width / 2.0f, height / 2.0f), 0, ImVec2(0.5, 0.5));
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
-        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
-        ImGui::Begin("## PROGRESS-TITLE-TEXT", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
-
-        ImGui::PushStyleVar(ImGuiStyleVar_FrameBorderSize, 1.5f);
-        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(1, 1, 1, 1));
-        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 1));
-        ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.827f, 0, 0, 1));
-        ImGui::SetCursorPosX(5);
-        ImGui::ProgressBar(ProcessPreload(), ImVec2(targetSize.x - 10, 0));
-        ImGui::PopStyleColor(3);
-        ImGui::PopStyleVar();
-
-        ImGui::Dummy(ImVec2(0, 50.0f));
-
-        ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(1, 1, 1, 1));
-        ImGui::PushStyleVar(ImGuiStyleVar_SeparatorTextAlign, ImVec2(0.5f, 0.5f));
-        ImGui::PushFont(Localization::GetActiveLanguageCourierNewLarge());
-        ImGui::SeparatorText(title.c_str());
-        ImGui::PopFont();
-        ImGui::PopStyleVar();
-        ImGui::PopStyleColor();
-
-        ImGui::Dummy(ImVec2(0, 20.0f));
-
-        if (!cyclingTextStarted) {
-            std::thread(cycleTextThread).detach();
+                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+            }
+            
+            ImGui::End();
+            ImGui::PopStyleColor(2);
         }
-
-        if (!currentText.empty()) {
-            ImGui::TextWrappedCentered(currentText.c_str());
-        }
-        
-        ImGui::End();
-        ImGui::PopStyleColor(2);
-    }
-
-    // PRESS SPACE TO CONTINUE; PRELOAD COMPLETE
-    if (progress >= 1) {
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
-        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
-        ImGui::SetNextWindowSize(ImVec2(width, 30));
-        ImGui::SetNextWindowPos(ImVec2(0, height - 50));
-        ImGui::Begin("## PRELOAD-FINISHED", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
-
-        ImGui::TextCentered(Localization::GetTranslatedKey("LoadingScreens", "anykey").c_str());
-
-        if (glfwGetKey(window, GLFW_KEY_SPACE)) {
-            *gameState = GlobalGameState::MainMenu;
-
-            cyclingTextStarted = false;
-
-            AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
-        }
-        
-        ImGui::End();
-        ImGui::PopStyleColor(2);
+    } catch (...) {
+        // IGNORE, GO TO NEXT FRAME
     }
 }
 
