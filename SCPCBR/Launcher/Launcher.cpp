@@ -103,7 +103,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
         ImGui::SetNextWindowPos(ImVec2(0, 0));
         ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
-        ImGui::Begin("### LAUNCHER-TITLE-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+        ImGui::Begin("### LAUNCHER-TITLE-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus);
 
         ImGui::SetCursorPos(ImVec2(-15, -10));
         ImGui::Image((void*)titleImage->TextureId, ImVec2(titleImage->Width, titleImage->Height));
