@@ -6,19 +6,18 @@
 #include <STB/stb_image.h>
 
 bool Util::Image::LoadImageFromFile(std::string fileName, Image* image) {
-    int components;
-    unsigned char* imageData = stbi_load(fileName.c_str(), &image->Width, &image->Height, &components, 0);
+    unsigned char* imageData = stbi_load(fileName.c_str(), &image->Width, &image->Height, &image->Components, 0);
 
     glGenTextures(1, &image->TextureId);
 
     if (imageData) {
         GLenum format{};
 
-        if (components == 1) {
+        if (image->Components == 1) {
             format = GL_RED;
-        } else if (components == 3) {
+        } else if (image->Components == 3) {
             format = GL_RGB;
-        } else if (components == 4) {
+        } else if (image->Components == 4) {
             format = GL_RGBA;
         }
 

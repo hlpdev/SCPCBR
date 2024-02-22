@@ -14,6 +14,7 @@ namespace Util {
             int Width;
             int Height;
             unsigned int TextureId;
+            int Components;
         } Image;
         
         bool LoadImageFromFile(std::string fileName, Image* image);
