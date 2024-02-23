@@ -14,13 +14,12 @@ namespace ImGui {
     /**
      * \brief Renders the default Dear ImGui text, but centers it relative to the width of the current window
      */
-    template<typename ... Args>
-    void TextCentered(const char* text, Args ... args) {
+    inline void TextCentered(const char* text) {
         const float windowWidth = GetWindowSize().x;
         const float textWidth = CalcTextSize(text).x;
 
         SetCursorPosX((windowWidth - textWidth) * 0.5f);
-        Text(text, args ...);
+        Text("%s", text);
     }
 
     /**
