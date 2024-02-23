@@ -86,10 +86,10 @@ namespace ImGui {
      * \param blackImage A pointer to the image displayed in the main content of the frame, should be the black UI texture found in the original SCP:CB
      * \param padding A boolean to decide whether padding should be enabled or disabled on the inner window created.
      */
-    inline void BeginChildCustom(const char* id, float x, float y, float width, float height, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, bool padding = true) {
+    inline void BeginChildCustom(const char* id, float x, float y, float width, float height, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, float padding = 14.0f) {
         DrawFrameCustom(x, y, width, height, whiteImage, blackImage);
-        SetNextWindowPos(ImVec2(x + (padding ? 14 : 0), y + (padding ? 14 : 0)));
-        SetNextWindowSize(ImVec2(width - (padding ? 14 : 0), height - (padding ? 14 : 0)));
+        SetNextWindowPos(ImVec2(x + padding, y + padding));
+        SetNextWindowSize(ImVec2(width - padding, height - padding));
         Begin(id, nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
     }
 
