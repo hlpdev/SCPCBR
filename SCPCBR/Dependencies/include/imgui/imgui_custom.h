@@ -176,7 +176,7 @@ namespace ImGui {
      * \param font The font that the label will be rendered in
      * \return Returns true if the button was clicked
      */
-    inline bool ButtonCustom(const char* label, ImVec2 size, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, ImFont* font = nullptr) {
+    inline bool ButtonCustom(const std::string& label, ImVec2 size, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, ImFont* font = nullptr) {
         ImVec2 pos = GetWindowPos() + GetCursorPos();
         DrawFrameCustom(pos.x, pos.y, size.x, size.y, whiteImage, blackImage);
 
@@ -188,7 +188,7 @@ namespace ImGui {
         } else {
             PushFont(font);
         }
-        bool result = Button(label, size);
+        bool result = Button(label.c_str(), size);
         PopFont();
         PopStyleColor(3);
         
