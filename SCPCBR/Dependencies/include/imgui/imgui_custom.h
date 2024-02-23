@@ -1,14 +1,13 @@
 #ifndef IMGUICUSTOM_H
 #define IMGUICUSTOM_H
-#include <memory>
 #include <string>
 
 #include "imgui.h"
-#include "imgui_stdlib.h"
 #include "imgui_internal.h"
-#include "../../../Localization/Localization.h"
+#include "imgui_stdlib.h"
 
-#include "../Util/Util.h"
+#include "../../../Localization/Localization.h"
+#include "../../../Util/Util.h"
 
 namespace ImGui {
     /**
@@ -27,14 +26,14 @@ namespace ImGui {
      * \param text The text to wrap and center
      */
     inline void TextWrappedCentered(const char* text) {
-        ImGuiWindow* window = GetCurrentWindow();
+        const ImGuiWindow* window = GetCurrentWindow();
         float width = window->Size.x;
-        
-        std::vector<std::string> words = Util::Strings::Split(text, " ");
+
+        const std::vector<std::string> words = Util::Strings::Split(text, " ");
 
         std::vector<std::string> lines;
 
-        int currentWord = 0;
+        size_t currentWord = 0;
         std::string line;
         while (currentWord < words.size()) {
             if (CalcTextSize((line + words.at(currentWord) + " ").c_str()).x >= (width - 50)) {
@@ -48,8 +47,8 @@ namespace ImGui {
         }
         lines.push_back(line);
 
-        for (std::string line : lines) {
-            TextCentered(line.c_str());
+        for (const std::string& lineRef : lines) {
+            TextCentered(lineRef.c_str());
         }
     }
 
@@ -68,8 +67,8 @@ namespace ImGui {
         const float blackUvMaxX = (width - 6) / static_cast<float>(blackImage->Width);
         const float blackUvMaxY = (height - 6) / static_cast<float>(blackImage->Height);
 
-        ImVec2 whiteUvMax = ImVec2(whiteUvMaxX, whiteUvMaxY);
-        ImVec2 blackUvMax = ImVec2(blackUvMaxX, blackUvMaxY);
+        const ImVec2 whiteUvMax = ImVec2(whiteUvMaxX, whiteUvMaxY);
+        const ImVec2 blackUvMax = ImVec2(blackUvMaxX, blackUvMaxY);
         
         GetBackgroundDrawList()->AddImage(reinterpret_cast<void*>(whiteImage->TextureId), ImVec2(x, y), ImVec2(x + width, y + height), ImVec2(0, 0), whiteUvMax);
         GetBackgroundDrawList()->AddImage(reinterpret_cast<void*>(blackImage->TextureId), ImVec2(x + 3, y + 3), ImVec2(x + width - 3, y + height - 3), ImVec2(0, 0), blackUvMax);
@@ -111,7 +110,7 @@ namespace ImGui {
         Text("%s", label);
         SameLine(160, 0);
 
-        ImVec2 pos = GetWindowPos() + GetCursorPos();
+        const ImVec2 pos = GetWindowPos() + GetCursorPos();
 
         DrawFrameCustom(pos.x, pos.y - 6, 250, 35, whiteImage, blackImage);
         
@@ -142,7 +141,7 @@ namespace ImGui {
         Text("%s", label);
         SameLine(sameLineDistance, 0);
 
-        ImVec2 pos = GetWindowPos() + GetCursorPos();
+        const ImVec2 pos = GetWindowPos() + GetCursorPos();
 
         DrawFrameCustom(pos.x, pos.y - 3, 25, 25, whiteImage, blackImage);
 
@@ -150,7 +149,7 @@ namespace ImGui {
         PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0.25f));
         PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0.5f));
         SetCursorPosY(GetCursorPosY() - 3);
-        bool clicked = Button(std::string("##" + std::string(label) + "checkbox").c_str(), ImVec2(25, 25));
+        const bool clicked = Button(std::string("##" + std::string(label) + "checkbox").c_str(), ImVec2(25, 25));
         PopStyleColor(3);
 
         if (clicked) {
@@ -177,7 +176,7 @@ namespace ImGui {
      * \return Returns true if the button was clicked
      */
     inline bool ButtonCustom(const std::string& label, ImVec2 size, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, ImFont* font = nullptr) {
-        ImVec2 pos = GetWindowPos() + GetCursorPos();
+        const ImVec2 pos = GetWindowPos() + GetCursorPos();
         DrawFrameCustom(pos.x, pos.y, size.x, size.y, whiteImage, blackImage);
 
         PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
@@ -188,7 +187,7 @@ namespace ImGui {
         } else {
             PushFont(font);
         }
-        bool result = Button(label.c_str(), size);
+        const bool result = Button(label.c_str(), size);
         PopFont();
         PopStyleColor(3);
         
