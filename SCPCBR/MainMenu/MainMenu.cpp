@@ -242,14 +242,16 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
         }
 
         // RENDER SCP 173
-        if (Util::Math::RandomFloat(0.0f, 1.0f) <= 0.3f) {
+        {
             ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
             ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
             ImGui::SetNextWindowPos(ImVec2(width, height), 0, ImVec2(1, 1));
             ImGui::SetNextWindowSize(ImVec2(scp173Image->Width, scp173Image->Height));
-            ImGui::Begin("## SCP-173", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+            ImGui::Begin("## SCP-173", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus);
             ImGui::SetCursorPos(ImVec2(0, 0));
-            ImGui::Image(reinterpret_cast<void*>(scp173Image->TextureId), ImVec2(scp173Image->Width, scp173Image->Height));
+            if (Util::Math::RandomFloat(0.0f, 1.0f) <= 0.3f) {
+                ImGui::Image(reinterpret_cast<void*>(scp173Image->TextureId), ImVec2(scp173Image->Width, scp173Image->Height));
+            }
             ImGui::End();
             ImGui::PopStyleColor(2);
         }
