@@ -228,7 +228,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
             ImGui::SetNextWindowPos(ImVec2(width / 2.0f, height), 0, ImVec2(0.5f, 1));
             ImGui::SetNextWindowSize(ImVec2(scpTextImage->Width / 2.0f, scpTextImage->Height / 2.0f));
-            ImGui::Begin("## SCP-TEXT", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+            ImGui::Begin("## SCP-TEXT", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus);
             ImGui::SetCursorPos(ImVec2(0, 0));
             ImGui::Image(reinterpret_cast<void*>(scpTextImage->TextureId), ImVec2(scpTextImage->Width / 2.0f, scpTextImage->Height / 2.0f));
             ImGui::End();
