@@ -94,7 +94,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
             pos2 = ImVec2(width, height + (width / (static_cast<float>(backgroundImage->Width) / backgroundImage->Height) - height) / 2);
         }
 
-        ImGui::GetBackgroundDrawList()->AddImage((void*)(intptr_t)backgroundImage->TextureId, pos1, pos2);
+        ImGui::GetBackgroundDrawList()->AddImage(backgroundImage->TextureIdPtr, pos1, pos2);
     }
 
     // RENDER TITLE
@@ -106,7 +106,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
         ImGui::Begin("### LAUNCHER-TITLE-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus);
 
         ImGui::SetCursorPos(ImVec2(-15, -10));
-        ImGui::Image((void*)titleImage->TextureId, ImVec2(titleImage->Width, titleImage->Height));
+        ImGui::Image(titleImage->TextureIdPtr, ImVec2(titleImage->Width, titleImage->Height));
         
         ImGui::End();
         ImGui::PopStyleColor(2);

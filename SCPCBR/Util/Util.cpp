@@ -32,6 +32,8 @@ bool Util::Image::LoadImageFromFile(std::string fileName, Image* image) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+        image->TextureIdPtr = reinterpret_cast<void*>(image->TextureId);  // NOLINT(performance-no-int-to-ptr)
+
         stbi_image_free(imageData);
         return true;
     }

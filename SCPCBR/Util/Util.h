@@ -14,6 +14,7 @@ namespace Util {
             int Width;
             int Height;
             unsigned int TextureId;
+            void* TextureIdPtr;
             int Components;
         } Image;
         

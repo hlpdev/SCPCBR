@@ -229,7 +229,7 @@ void SplashScreen::Render(GLFWwindow* window, GlobalGameState* gameState, SteamW
         ImGui::SetNextWindowSize(ImVec2(240, 240));
         ImGui::Begin("## SPLASH-SCREEN-LOGO", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
         ImGui::SetCursorPos(ImVec2(0, 0));
-        ImGui::Image(reinterpret_cast<void*>(static_cast<intptr_t>(scpcbrImage->TextureId)), ImVec2(240, 240));
+        ImGui::Image(scpcbrImage->TextureIdPtr, ImVec2(240, 240));
         ImGui::End();
         ImGui::PopStyleColor();
         ImGui::PopStyleVar();

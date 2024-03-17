@@ -70,8 +70,8 @@ namespace ImGui {
         const ImVec2 whiteUvMax = ImVec2(whiteUvMaxX, whiteUvMaxY);
         const ImVec2 blackUvMax = ImVec2(blackUvMaxX, blackUvMaxY);
         
-        GetBackgroundDrawList()->AddImage(reinterpret_cast<void*>(whiteImage->TextureId), ImVec2(x, y), ImVec2(x + width, y + height), ImVec2(0, 0), whiteUvMax);
-        GetBackgroundDrawList()->AddImage(reinterpret_cast<void*>(blackImage->TextureId), ImVec2(x + 3, y + 3), ImVec2(x + width - 3, y + height - 3), ImVec2(0, 0), blackUvMax);
+        GetBackgroundDrawList()->AddImage(whiteImage->TextureIdPtr, ImVec2(x, y), ImVec2(x + width, y + height), ImVec2(0, 0), whiteUvMax);
+        GetBackgroundDrawList()->AddImage(blackImage->TextureIdPtr, ImVec2(x + 3, y + 3), ImVec2(x + width - 3, y + height - 3), ImVec2(0, 0), blackUvMax);
     }
 
     /**
@@ -160,7 +160,7 @@ namespace ImGui {
             const float whiteUvMaxX = 15 / static_cast<float>(whiteImage->Width);
             const float whiteUvMaxY = 15 / static_cast<float>(whiteImage->Width);
             ImVec2 whiteUvMax = ImVec2(whiteUvMaxX, whiteUvMaxY);
-            GetBackgroundDrawList()->AddImage(reinterpret_cast<void*>(whiteImage->TextureId), ImVec2(pos.x + 5, pos.y + 2), ImVec2(pos.x + 20, pos.y + 17), ImVec2(0, 0), whiteUvMax);
+            GetBackgroundDrawList()->AddImage(whiteImage->TextureIdPtr, ImVec2(pos.x + 5, pos.y + 2), ImVec2(pos.x + 20, pos.y + 17), ImVec2(0, 0), whiteUvMax);
         }
 
         return clicked;
@@ -187,6 +187,7 @@ namespace ImGui {
         } else {
             PushFont(font);
         }
+        
         const bool result = Button(label.c_str(), size);
         PopFont();
         PopStyleColor(3);

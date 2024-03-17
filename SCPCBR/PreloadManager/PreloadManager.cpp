@@ -2612,7 +2612,7 @@ void PreloadManager::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::Begin("## LOADINGSCREEN-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 
             ImGui::SetCursorPos(ImVec2(0, 0));
-            ImGui::Image(reinterpret_cast<void*>(loadingScreenImage->TextureId), ImVec2(targetSize, targetSize));
+            ImGui::Image(loadingScreenImage->TextureIdPtr, ImVec2(targetSize, targetSize));
             
             ImGui::End();
             ImGui::PopStyleColor(2);
@@ -2629,7 +2629,7 @@ void PreloadManager::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::Begin("## BACKGROUND-IMAGE", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 
             ImGui::SetCursorPos(ImVec2(0, 0));
-            ImGui::Image(reinterpret_cast<void*>(loadingScreenBackgroundImage->TextureId), ImVec2(targetSize, targetSize));
+            ImGui::Image(loadingScreenBackgroundImage->TextureIdPtr, ImVec2(targetSize, targetSize));
             
             ImGui::End();
             ImGui::PopStyleColor(2);
