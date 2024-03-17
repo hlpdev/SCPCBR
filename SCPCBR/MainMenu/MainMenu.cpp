@@ -12,6 +12,12 @@
 
 #include <archive_entry.h>
 
+#define MAIN_MENU 0
+#define NEW_GAME 1
+#define LOAD_MAP 2
+#define LOAD_GAME 3
+#define OPTIONS 4
+
 namespace MainMenu {
     int width, height;
     
