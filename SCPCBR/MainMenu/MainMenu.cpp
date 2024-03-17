@@ -280,7 +280,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
         static int selectedMenu = 0;
         
         // MAIN
-        if (selectedMenu == 0) {
+        if (selectedMenu == MAIN_MENU) {
             ImGui::SetNextWindowPos(ImVec2(144, 270));
             ImGui::SetNextWindowSize(ImVec2(435, 480));
             ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
@@ -288,22 +288,22 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::Begin("## MAIN-MENU-0", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 
             if (ImGui::ButtonCustom(PreTranslatedStrings::NewGame, ImVec2(430, 75), whiteImage, blackImage)) {
-                selectedMenu = 1;
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                selectedMenu = NEW_GAME;
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
 
             ImGui::Dummy(ImVec2(1, 16));
 
             if (ImGui::ButtonCustom(PreTranslatedStrings::LoadGame, ImVec2(430, 75), whiteImage, blackImage)) {
-                selectedMenu = 2;
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                selectedMenu = LOAD_GAME;
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
 
             ImGui::Dummy(ImVec2(1, 16));
             
             if (ImGui::ButtonCustom(PreTranslatedStrings::Options, ImVec2(430, 75), whiteImage, blackImage)) {
-                selectedMenu = 3;
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                selectedMenu = OPTIONS;
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
 
             ImGui::Dummy(ImVec2(1, 16));
@@ -311,12 +311,12 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             if (ImGui::ButtonCustom(PreTranslatedStrings::Quit, ImVec2(430, 75), whiteImage, blackImage)) {
                 RandomText::ShouldStopGenerating = true;
                 glfwSetWindowShouldClose(window, GLFW_TRUE);
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
             
             ImGui::End();
             ImGui::PopStyleColor(2);
-        } else if (selectedMenu == 1) {
+        } else if (selectedMenu == NEW_GAME) { // NEW GAME
             ImGui::SetNextWindowPos(ImVec2(144, 270));
             ImGui::SetNextWindowSize(ImVec2(610, 480));
             ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
@@ -329,7 +329,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::SameLine();
             if (ImGui::ButtonCustom(PreTranslatedStrings::Back, ImVec2(150, 75), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
                 selectedMenu = 0;
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
 
             ImGui::Dummy(ImVec2(1, 1));
@@ -337,7 +337,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             const ImVec2 currentPos = ImGui::GetWindowPos() + ImGui::GetCursorPos();
             ImGui::Dummy(ImVec2(590, 315));
             ImGui::BeginChildCustom("MAIN-MENU-1-OPTIONS", currentPos.x, currentPos.y, 590, 315, whiteImage, blackImage);
-
+            
             static std::string saveName = "untitled";
             ImGui::InputTextCustom(PreTranslatedStrings::SaveName.c_str(), &saveName, whiteImage, blackImage);
             
@@ -348,7 +348,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             
             static bool introEnabled = true;
             if (ImGui::CheckboxCustom(PreTranslatedStrings::IntroSeq.c_str(), &introEnabled, whiteImage, blackImage)) {
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
 
             ImGui::Dummy(ImVec2(1, 10));
@@ -369,7 +369,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                 keter = false;
                 apollyon = false;
                 description = PreTranslatedStrings::SafeDifficultyDescription.c_str();
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
             ImGui::PopStyleColor();
 
@@ -379,7 +379,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                 keter = false;
                 apollyon = false;
                 description = PreTranslatedStrings::EuclidDifficultyDescription.c_str();
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
             ImGui::PopStyleColor();
 
@@ -389,7 +389,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                 euclid = false;
                 apollyon = false;
                 description = PreTranslatedStrings::KeterDifficultyDescription.c_str();
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
             ImGui::PopStyleColor();
 
@@ -399,7 +399,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                 euclid = false;
                 keter = false;
                 description = PreTranslatedStrings::ApollyonDifficultyDescription.c_str();
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
             ImGui::PopStyleColor();
 
