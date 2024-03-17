@@ -2693,7 +2693,7 @@ void PreloadManager::Render(GLFWwindow* window, GlobalGameState* gameState) {
 
                 cyclingTextStarted = false;
 
-                AudioEngine::PlaySoundByName("Assets\\SFX\\Splash\\Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
             
             ImGui::End();
