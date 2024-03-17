@@ -228,8 +228,19 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
         // RENDER BACKGROUND
         { 
             ImGui::GetBackgroundDrawList()->AddImage(
-                reinterpret_cast<void*>(static_cast<intptr_t>(mainMenuBackgroundImage->TextureId)), ImVec2(0, 0),
-                ImVec2(mainMenuBackgroundImage->Width, mainMenuBackgroundImage->Height));
+                mainMenuBackgroundImage->TextureIdPtr,
+                ImVec2(0, 0),
+                ImVec2(mainMenuBackgroundImage->Width, mainMenuBackgroundImage->Height)
+            );
+            
+            ImGui::GetBackgroundDrawList()->AddImage(
+                whiteImage->TextureIdPtr,
+                ImVec2(1280, 407),
+                ImVec2(width, 413),
+                ImVec2(0, 0),
+                ImVec2((width - 1280) / static_cast<float>(whiteImage->Width), 6 / static_cast<float>(whiteImage->Height)),
+                ImColor(230, 230, 230, 255)
+            );
         }
 
         // RENDER SCP TEXT
