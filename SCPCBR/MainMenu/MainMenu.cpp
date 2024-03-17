@@ -52,6 +52,8 @@ namespace MainMenu {
         std::string KeterDifficultyDescription;
         std::string ApollyonDifficulty;
         std::string ApollyonDifficultyDescription;
+        std::string LoadMap;
+        std::string Start;
 
         std::string DontBlink;
         std::string SecureContainProtect;
@@ -190,6 +192,8 @@ void MainMenu::Init() {
     PreTranslatedStrings::KeterDifficultyDescription = Localization::GetTranslatedKey("MainMenu", "keterdescription");
     PreTranslatedStrings::ApollyonDifficulty = Localization::GetTranslatedKey("MainMenu", "apollyon");
     PreTranslatedStrings::ApollyonDifficultyDescription = Localization::GetTranslatedKey("MainMenu", "apollyondescription");
+    PreTranslatedStrings::LoadMap = Localization::GetTranslatedKey("MainMenu", "loadmap");
+    PreTranslatedStrings::Start = Localization::GetTranslatedKey("MainMenu", "start");
 
     PreTranslatedStrings::DontBlink = Localization::GetTranslatedKey("MainMenu", "dontblink");
     PreTranslatedStrings::SecureContainProtect = Localization::GetTranslatedKey("MainMenu", "securecontainprotect");
