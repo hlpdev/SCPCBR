@@ -2,6 +2,8 @@
 
 #include <ini.h>
 
+#include "../Util/Util.h"
+
 mINI::INIFile* file;
 mINI::INIStructure* ini;
 
@@ -26,6 +28,14 @@ std::string Options::ReadStringOption(const std::string& category, const std::st
 
 void Options::WriteStringOption(const std::string& category, const std::string& key, std::string value) {
     ini->operator[](category).operator[](key) = value;
+}
+
+bool Options::ReadBoolOption(const std::string& category, const std::string& key) {
+    return Util::Strings::ToLower(ini->operator[](category).operator[](key)) == "true";
+}
+
+void Options::WriteBoolOption(const std::string& category, const std::string& key, bool value) {
+    ini->operator[](category).operator[](key) = value ? "true" : "false";
 }
 
 void Options::Free() {

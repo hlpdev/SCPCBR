@@ -9,6 +9,8 @@ namespace Options {
     void WriteIntOption(const std::string& category, const std::string& key, int value);
     std::string ReadStringOption(const std::string& category, const std::string& key);
     void WriteStringOption(const std::string& category, const std::string& key, std::string value);
+    bool ReadBoolOption(const std::string& category, const std::string& key);
+    void WriteBoolOption(const std::string& category, const std::string& key, bool value);
     
     void ResetOptions();
 
