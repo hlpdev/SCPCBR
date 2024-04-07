@@ -139,15 +139,16 @@ namespace ImGui {
      * \param whiteImage A pointer to the image displayed on the border of the frame, should be the white UI texture found in the original SCP:CB
      * \param blackImage A pointer to the image displayed in the main content of the frame, should be the black UI texture found in the original SCP:CB
      * \param sameLineDistance The distance the checkbox will appear from the beginning X coordinate
+     * \param disabled Whether the checkbox should be rendered as disabled
      * \return Returns true if the checkbox was clicked
      */
-    inline bool CheckboxCustom(const char* label, bool* value, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, float sameLineDistance = 300.0f) {
+    inline bool CheckboxCustom(const char* label, bool* value, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, float sameLineDistance = 300.0f, bool disabled = false) {
         Text("%s", label);
         SameLine(sameLineDistance, 0);
 
         const ImVec2 pos = GetWindowPos() + GetCursorPos();
-
-        DrawFrameCustom(pos.x, pos.y - 3, 25, 25, whiteImage, blackImage);
+        
+        DrawFrameCustom(pos.x, pos.y - 3, 25, 25, whiteImage, blackImage, disabled);
 
         PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0.25f));
