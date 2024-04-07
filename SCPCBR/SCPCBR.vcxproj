@@ -74,7 +74,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;archive.lib;freetype.lib;steam_api64.lib;fmod_vc.lib;fmodL_vc.lib;</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);glfw3dll.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;archive.lib;freetype.lib;steam_api64.lib;fmod_vc.lib;fmodL_vc.lib;discord_game_sdk.dll.lib;</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>rmdir "$(OutDir)\Assets\" /S /Q</Command>
@@ -106,6 +106,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioEngine\AudioEngine.cpp" />
+    <ClCompile Include="Dependencies\include\discord\achievement_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\activity_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\application_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\core.cpp" />
+    <ClCompile Include="Dependencies\include\discord\image_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\lobby_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\network_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\overlay_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\relationship_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\storage_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\store_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\types.cpp" />
+    <ClCompile Include="Dependencies\include\discord\user_manager.cpp" />
+    <ClCompile Include="Dependencies\include\discord\voice_manager.cpp" />
     <ClCompile Include="Dependencies\include\imgui\imgui.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
@@ -531,6 +545,7 @@
       <AdditionalOptions>-m64  </AdditionalOptions>
     </ClCompile>
     <ClCompile Include="Dependencies\src\glad.c" />
+    <ClCompile Include="DiscordWrapper\DiscordWrapper.cpp" />
     <ClCompile Include="GameAssembly\GameAssembly.cpp" />
     <ClCompile Include="Launcher\Launcher.cpp" />
     <ClCompile Include="Localization\Localization.cpp" />
@@ -620,6 +635,23 @@
     <ClInclude Include="AudioEngine\AudioEngine.h" />
     <ClInclude Include="Dependencies\include\archive.h" />
     <ClInclude Include="Dependencies\include\archive_entry.h" />
+    <ClInclude Include="Dependencies\include\discord\achievement_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\activity_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\application_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\core.h" />
+    <ClInclude Include="Dependencies\include\discord\discord.h" />
+    <ClInclude Include="Dependencies\include\discord\event.h" />
+    <ClInclude Include="Dependencies\include\discord\ffi.h" />
+    <ClInclude Include="Dependencies\include\discord\image_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\lobby_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\network_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\overlay_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\relationship_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\storage_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\store_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\types.h" />
+    <ClInclude Include="Dependencies\include\discord\user_manager.h" />
+    <ClInclude Include="Dependencies\include\discord\voice_manager.h" />
     <ClInclude Include="Dependencies\include\FMOD\fmod.h" />
     <ClInclude Include="Dependencies\include\FMOD\fmod.hpp" />
     <ClInclude Include="Dependencies\include\FMOD\fmod_codec.h" />
@@ -782,6 +814,7 @@
     <ClInclude Include="Dependencies\include\steam\steam_api_internal.h" />
     <ClInclude Include="Dependencies\include\steam\steam_gameserver.h" />
     <ClInclude Include="Dependencies\include\toml.hpp" />
+    <ClInclude Include="DiscordWrapper\DiscordWrapper.h" />
     <ClInclude Include="ExecutableResources\resource.h" />
     <ClInclude Include="GameAssembly\GameAssembly.h" />
     <ClInclude Include="Launcher\Launcher.h" />
@@ -1945,6 +1978,7 @@
     <Content Include="Dependencies\include\steam\steam_api.json" />
     <Content Include="Dependencies\lib\archive.lib" />
     <Content Include="Dependencies\lib\archive_static.lib" />
+    <Content Include="Dependencies\lib\discord_game_sdk.dll.lib" />
     <Content Include="Dependencies\lib\fmodL_vc.lib" />
     <Content Include="Dependencies\lib\fmod_vc.lib" />
     <Content Include="Dependencies\lib\freetype.lib" />
