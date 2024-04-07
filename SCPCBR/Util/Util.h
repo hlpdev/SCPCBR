@@ -28,6 +28,8 @@ namespace Util {
         std::vector<std::string> Split(std::string text, std::string delimiter);
 
         void ReplaceAll(std::string& text, const std::string& replace, const std::string& replaceWith);
+
+        std::string ToLower(std::string string);
     }
 
     namespace Error {

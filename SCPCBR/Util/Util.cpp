@@ -94,6 +94,12 @@ void Util::Strings::ReplaceAll(std::string& text, const std::string& replace, co
     }
 }
 
+std::string Util::Strings::ToLower(std::string string) {
+    for(char &c : string)
+        c = tolower(c);
+    return string;
+}
+
 int Util::Math::RandomInt(int min, int max) {
     std::random_device random;
     std::mt19937 generator(random());
