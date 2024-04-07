@@ -49,6 +49,11 @@ namespace Util {
         float ClampMin(float number, float min);
         float ClampMax(float number, float max);
     }
+
+    namespace Time {
+        int64_t GetCurrentEpochSeconds();
+        int64_t GetCurrentEpochMilliseconds();
+    }
 }
 
 #endif // UTIL_H

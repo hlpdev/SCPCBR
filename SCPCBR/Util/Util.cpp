@@ -1,5 +1,6 @@
 #include "Util.h"
 
+#include <chrono>
 #include <Windows.h>
 #include <random>
 
@@ -170,4 +171,18 @@ float Util::Math::ClampMax(float number, float max) {
     }
 
     return number;
+}
+
+int64_t Util::Time::GetCurrentEpochSeconds() {
+    const std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+    const std::chrono::duration<int64_t, std::ratio<1, 10000000>> epoch = now.time_since_epoch();
+
+    return std::chrono::duration_cast<std::chrono::seconds>(epoch).count();
+}
+
+int64_t Util::Time::GetCurrentEpochMilliseconds() {
+    const std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+    const std::chrono::duration<int64_t, std::ratio<1, 10000000>> epoch = now.time_since_epoch();
+
+    return std::chrono::duration_cast<std::chrono::milliseconds>(epoch).count();
 }
