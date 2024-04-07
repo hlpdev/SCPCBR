@@ -4,6 +4,7 @@
 #include "GameAssembly/GameAssembly.h"
 #include "Localization/Localization.h"
 #include "SteamWrapper/SteamWrapper.h"
+#include "DiscordWrapper/DiscordWrapper.h"
 #include "AudioEngine/AudioEngine.h"
 #include "Options/Options.h"
 #include "Launcher/Launcher.h"
@@ -32,7 +33,8 @@ int main(int argc, char* argv[])
     // Hide console window
     ShowWindowAsync(GetConsoleWindow(), SW_HIDE);
 
-    SteamWrapper* steam = nullptr;
+    SteamWrapper* steam = new SteamWrapper;
+    DiscordWrapper* discord = new DiscordWrapper;
     
     // Initialize GLFW
     if (!glfwInit()) {
@@ -93,7 +95,7 @@ int main(int argc, char* argv[])
     Launcher::Init();
     SplashScreen::Init();
     PreloadManager::Init();
-    MainMenu::Init();
+    MainMenu::Init(discord);
 
     AudioEngine::CreateChannelGroup("Game");
     AudioEngine::CreateChannelGroup("Music");
@@ -101,9 +103,21 @@ int main(int argc, char* argv[])
     AudioEngine::SetChannelGroupVolume("Game", Options::ReadIntOption("Audio", "GameVolume") / 100.0f);
     AudioEngine::SetChannelGroupVolume("Music", Options::ReadIntOption("Audio", "MusicVolume") / 100.0f);
     
+    discord::Activity activity = {};
+    activity.SetDetails("In the launcher");
+    activity.SetType(discord::ActivityType::Playing);
+    activity.SetSupportedPlatforms(static_cast<uint32_t>(discord::ActivitySupportedPlatformFlags::Desktop));
+    activity.GetAssets().SetLargeImage("scpcbr");
+    activity.GetTimestamps().SetStart(Util::Time::GetCurrentEpochSeconds());
+    discord->UpdateActivity(activity);
+    
     while (!glfwWindowShouldClose(window)) {
         if (steam) {
             steam->RunCallbacks();
+        }
+
+        if (discord) {
+            discord->RunCallbacks();
         }
         
         AudioEngine::RunCallbacks();
@@ -164,6 +178,7 @@ int main(int argc, char* argv[])
     glfwTerminate();
 
     delete steam;
+    delete discord;
     
     exit(EXIT_SUCCESS);  // NOLINT(concurrency-mt-unsafe)
 }
