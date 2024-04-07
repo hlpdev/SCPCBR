@@ -60,8 +60,9 @@ namespace ImGui {
      * \param height The height of the frame
      * \param whiteImage A pointer to the image displayed on the border of the frame, should be the white UI texture found in the original SCP:CB
      * \param blackImage A pointer to the image displayed in the main content of the frame, should be the black UI texture found in the original SCP:CB
+     * \param dim Whether to slightly dim the frame, giving it a disabled look
      */
-    inline void DrawFrameCustom(float x, float y, float width, float height, Util::Image::Image* whiteImage, Util::Image::Image* blackImage) {
+    inline void DrawFrameCustom(float x, float y, float width, float height, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, bool dim = false) {
         const float whiteUvMaxX = width / static_cast<float>(whiteImage->Width);
         const float whiteUvMaxY = height / static_cast<float>(whiteImage->Width);
         const float blackUvMaxX = (width - 6) / static_cast<float>(blackImage->Width);
@@ -69,9 +70,12 @@ namespace ImGui {
 
         const ImVec2 whiteUvMax = ImVec2(whiteUvMaxX, whiteUvMaxY);
         const ImVec2 blackUvMax = ImVec2(blackUvMaxX, blackUvMaxY);
+
+        const ImColor whiteColor = !dim ? ImColor(255, 255, 255) : ImColor(150, 150, 150);
+        const ImColor blackColor = !dim ? ImColor(255, 255, 255) : ImColor(150, 150, 150);
         
-        GetBackgroundDrawList()->AddImage(whiteImage->TextureIdPtr, ImVec2(x, y), ImVec2(x + width, y + height), ImVec2(0, 0), whiteUvMax);
-        GetBackgroundDrawList()->AddImage(blackImage->TextureIdPtr, ImVec2(x + 3, y + 3), ImVec2(x + width - 3, y + height - 3), ImVec2(0, 0), blackUvMax);
+        GetBackgroundDrawList()->AddImage(whiteImage->TextureIdPtr, ImVec2(x, y), ImVec2(x + width, y + height), ImVec2(0, 0), whiteUvMax, whiteColor);
+        GetBackgroundDrawList()->AddImage(blackImage->TextureIdPtr, ImVec2(x + 3, y + 3), ImVec2(x + width - 3, y + height - 3), ImVec2(0, 0), blackUvMax, blackColor);
     }
 
     /**
