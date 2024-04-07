@@ -12,11 +12,15 @@
 
 #include <archive_entry.h>
 
+#include "../Options/Options.h"
+
 #define MAIN_MENU 0
 #define NEW_GAME 1
 #define LOAD_MAP 2
 #define LOAD_GAME 3
 #define OPTIONS 4
+
+class DiscordWrapper;
 
 namespace MainMenu {
     int width, height;
@@ -33,6 +37,8 @@ namespace MainMenu {
 
     ImVec4 nonHovered = ImVec4(1, 1, 1, 1);
     ImVec4 hovered = ImVec4(0.8f, 0.8f, 0.8f, 1);
+
+    DiscordWrapper* discord = nullptr;
 
     namespace PreTranslatedStrings {
         std::string NewGame;
@@ -149,7 +155,9 @@ void RandomTextThread() {
     }
 }
 
-void MainMenu::Init() {
+void MainMenu::Init(DiscordWrapper* discordWrapper) {
+    discord = discordWrapper;
+    
     mainMenuBackgroundImage = new Util::Image::Image;
     if (!Util::Image::LoadImageFromFile("Assets/GFX/Menu/MenuBackground.jpg", mainMenuBackgroundImage)) {
         Util::Error::Exit("The texture \"Assets/GFX/Menu/MenuBackground.jpg\" failed to load. Ensure the file exists, or verify your game files.");
@@ -223,7 +231,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
         }
 
         std::string verString = "SCP: CONTAINMENT BREACH REMASTERED V2.0.0 ALPHA";
-        ImGui::GetForegroundDrawList()->AddText(ImVec2(1, height - ImGui::CalcTextSize(verString.c_str()).y - 1), ImColor(255, 255, 255), std::string(std::to_string(ImGui::GetMousePos().x) + "x" + std::to_string(ImGui::GetMousePos().y)).c_str());
+        ImGui::GetForegroundDrawList()->AddText(ImVec2(1, height - ImGui::CalcTextSize(verString.c_str()).y - 1), ImColor(255, 255, 255), verString.c_str());
         
         // RENDER BACKGROUND
         { 
@@ -272,6 +280,20 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::SetCursorPos(ImVec2(0, 0));
             if (Util::Math::RandomFloat(0.0f, 1.0f) <= 0.3f) {
                 ImGui::Image(scp173Image->TextureIdPtr, ImVec2(scp173Image->Width, scp173Image->Height));
+            }
+            ImGui::End();
+            ImGui::PopStyleColor(2);
+        }
+
+        // RENDER DISCORD BUTTON
+        {
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+            ImGui::SetNextWindowPos(ImVec2(width - 95, 5));
+            ImGui::Begin("## DISCORD-BUTTON", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+            ImGui::SetCursorPos(ImVec2(0, 0));
+            if (ImGui::ButtonCustom("DISCORD", ImVec2(90, 40), whiteImage, blackImage, Localization::GetActiveLanguageCourierNewSmall())) {
+                discord->OpenGuildInvite("Q7VKS6hwEV");
             }
             ImGui::End();
             ImGui::PopStyleColor(2);
@@ -393,8 +415,12 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             }
             ImGui::PopStyleColor();
 
+            const bool apollyonDisabled = !Options::ReadBoolOption("SaveGame", "Apollyon");
+            if (apollyonDisabled) {
+                ImGui::BeginDisabled();
+            }
             ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(80 / 255.0f, 79 / 255.0f, 79 / 255.0f, 1));
-            if (ImGui::CheckboxCustom(PreTranslatedStrings::ApollyonDifficulty.c_str(), &apollyon, whiteImage, blackImage, 110)) {
+            if (ImGui::CheckboxCustom(PreTranslatedStrings::ApollyonDifficulty.c_str(), &apollyon, whiteImage, blackImage, 110, apollyonDisabled)) {
                 safe = false;
                 euclid = false;
                 keter = false;
@@ -402,6 +428,9 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                 AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
             ImGui::PopStyleColor();
+            if (apollyonDisabled) {
+                ImGui::EndDisabled();
+            }
 
             ImGui::BeginChildCustom("DIFFICULTY-DESCRIPTION", 316, 549, 399, 103, whiteImage, blackImage, 1.0f);
             ImGui::PushFont(Localization::GetActiveLanguageCourierNewSmall());
@@ -424,7 +453,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             
             ImGui::End();
             ImGui::PopStyleColor(2);
-        } else if (selectedMenu == LOAD_MAP) {
+        } else if (selectedMenu == LOAD_MAP) { // LOAD MAP
             ImGui::SetNextWindowPos(ImVec2(144, 270));
             ImGui::SetNextWindowSize(ImVec2(610, 480));
             ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
@@ -444,7 +473,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
 
             ImGui::End();
             ImGui::PopStyleColor(2);
-        } else if (selectedMenu == LOAD_GAME) {
+        } else if (selectedMenu == LOAD_GAME) { // LOAD GAME
             ImGui::SetNextWindowPos(ImVec2(144, 270));
             ImGui::SetNextWindowSize(ImVec2(610, 480));
             ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
@@ -464,7 +493,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
 
             ImGui::End();
             ImGui::PopStyleColor(2);
-        } else if (selectedMenu == OPTIONS) {
+        } else if (selectedMenu == OPTIONS) { // OPTIONS
             ImGui::SetNextWindowPos(ImVec2(144, 270));
             ImGui::SetNextWindowSize(ImVec2(610, 480));
             ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
@@ -481,6 +510,11 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             }
 
             ImGui::Dummy(ImVec2(1, 1));
+
+            const ImVec2 currentPos = ImGui::GetWindowPos() + ImGui::GetCursorPos();
+            ImGui::BeginChildCustom("MAIN-MENU-1-OPTIONS", currentPos.x, currentPos.y, 590, 315, whiteImage, blackImage);
+
+            ImGui::EndChildCustom();
 
             ImGui::End();
             ImGui::PopStyleColor(2);

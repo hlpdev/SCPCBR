@@ -5,8 +5,10 @@
 
 #include <GLFW/glfw3.h>
 
+#include "../DiscordWrapper/DiscordWrapper.h"
+
 namespace MainMenu {
-    void Init();
+    void Init(DiscordWrapper* discordWrapper);
     void Render(GLFWwindow* window, GlobalGameState* gameState);
     void Free();
 }
