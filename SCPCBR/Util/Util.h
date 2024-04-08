@@ -30,6 +30,8 @@ namespace Util {
         void ReplaceAll(std::string& text, const std::string& replace, const std::string& replaceWith);
 
         std::string ToLower(std::string string);
+
+        std::string Random(int length);
     }
 
     namespace Error {

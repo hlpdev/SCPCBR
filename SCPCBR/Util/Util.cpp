@@ -101,6 +101,19 @@ std::string Util::Strings::ToLower(std::string string) {
     return string;
 }
 
+std::string Util::Strings::Random(int length) {
+    auto randchar = []() -> char {
+        const char charset[] =
+            "0123456789"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const size_t max_index = (sizeof(charset) - 1);
+        return charset[ rand() % max_index ];
+    };
+    std::string str(length,0);
+    std::generate_n( str.begin(), length, randchar );
+    return str;
+}
+
 int Util::Math::RandomInt(int min, int max) {
     std::random_device random;
     std::mt19937 generator(random());
