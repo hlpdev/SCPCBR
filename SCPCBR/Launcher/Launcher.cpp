@@ -11,8 +11,11 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_custom.h>
 
-Util::Image::Image* backgroundImage;
-Util::Image::Image* titleImage;
+namespace Launcher {
+    Util::Image::Image* backgroundImage;
+    Util::Image::Image* titleImage;
+    DiscordWrapper* discord;
+}
 
 void Launcher::Init() {
     bool res;
