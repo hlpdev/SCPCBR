@@ -181,7 +181,8 @@ namespace ImGui {
      * \param selected Whether to render a green square around the button indicating that it is selected
      * \return Returns true if the button was clicked
      */
-    inline bool ButtonCustom(const std::string& label, ImVec2 size, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, ImFont* font = nullptr) {
+    inline bool ButtonCustom(const std::string& label, ImVec2 size, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, ImFont* font = nullptr, bool selected = false) {
+        const ImVec2 cursorPos = GetCursorPos();
         const ImVec2 pos = GetWindowPos() + GetCursorPos();
 
         if (selected) {
@@ -198,7 +199,8 @@ namespace ImGui {
         } else {
             PushFont(font);
         }
-        
+
+        SetCursorPos(cursorPos);
         const bool result = Button(label.c_str(), size);
         PopFont();
         PopStyleColor(3);
