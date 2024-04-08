@@ -65,7 +65,37 @@ namespace MainMenu {
         std::string ApollyonDifficultyDescription;
         std::string LoadMap;
         std::string Start;
+        std::string Discord;
 
+        std::string Graphics;
+        std::string Audio;
+        std::string Controls;
+        std::string Advanced;
+
+        std::string VSync;
+        std::string FOV;
+        std::string FrameLimit;
+        std::string FrameLimitValue;
+        std::string GameVolume;
+        std::string MusicVolume;
+        std::string EnableUserTracks;
+        std::string MouseSensitivity;
+        std::string InvertMouseXAxis;
+        std::string InvertMouseYAxis;
+        std::string MoveForward;
+        std::string MoveLeft;
+        std::string MoveRight;
+        std::string MoveBackward;
+        std::string QuickSave;
+        std::string ManualBlink;
+        std::string Sprint;
+        std::string OpenCloseInventory;
+        std::string Crouch;
+        std::string TakeScreenshot;
+        std::string ShowHud;
+        std::string EnableConsole;
+        std::string ShowFps;
+        
         std::string DontBlink;
         std::string SecureContainProtect;
         std::string HappyEndings;
@@ -207,6 +237,36 @@ void MainMenu::Init(DiscordWrapper* discordWrapper) {
     PreTranslatedStrings::ApollyonDifficultyDescription = Localization::GetTranslatedKey("MainMenu", "apollyondescription");
     PreTranslatedStrings::LoadMap = Localization::GetTranslatedKey("MainMenu", "loadmap");
     PreTranslatedStrings::Start = Localization::GetTranslatedKey("MainMenu", "start");
+    PreTranslatedStrings::Discord = Localization::GetTranslatedKey("Launcher", "DiscordButton2");
+    
+    PreTranslatedStrings::Graphics = Localization::GetTranslatedKey("MainMenu", "graphics");
+    PreTranslatedStrings::Audio = Localization::GetTranslatedKey("MainMenu", "audio");
+    PreTranslatedStrings::Controls = Localization::GetTranslatedKey("MainMenu", "controls");
+    PreTranslatedStrings::Advanced = Localization::GetTranslatedKey("MainMenu", "advanced");
+
+    PreTranslatedStrings::VSync = Localization::GetTranslatedKey("MainMenu", "vsync");
+    PreTranslatedStrings::FOV = Localization::GetTranslatedKey("MainMenu", "fov");
+    PreTranslatedStrings::FrameLimit = Localization::GetTranslatedKey("MainMenu", "framelimit");
+    PreTranslatedStrings::FrameLimitValue = Localization::GetTranslatedKey("MainMenu", "framelimitvalue");
+    PreTranslatedStrings::GameVolume = Localization::GetTranslatedKey("MainMenu", "gamevolume");
+    PreTranslatedStrings::MusicVolume = Localization::GetTranslatedKey("MainMenu", "musicvolume");
+    PreTranslatedStrings::EnableUserTracks = Localization::GetTranslatedKey("MainMenu", "usertracks");
+    PreTranslatedStrings::MouseSensitivity = Localization::GetTranslatedKey("MainMenu", "mousesensitivity");
+    PreTranslatedStrings::InvertMouseXAxis = Localization::GetTranslatedKey("MainMenu", "invertmouseaxis", {"X"});
+    PreTranslatedStrings::InvertMouseYAxis = Localization::GetTranslatedKey("MainMenu", "invertmouseaxis", {"Y"});
+    PreTranslatedStrings::MoveForward = Localization::GetTranslatedKey("MainMenu", "moveforward");
+    PreTranslatedStrings::MoveLeft = Localization::GetTranslatedKey("MainMenu", "moveleft");
+    PreTranslatedStrings::MoveRight = Localization::GetTranslatedKey("MainMenu", "moveright");
+    PreTranslatedStrings::MoveBackward = Localization::GetTranslatedKey("MainMenu", "movebackward");
+    PreTranslatedStrings::QuickSave = Localization::GetTranslatedKey("MainMenu", "quicksave");
+    PreTranslatedStrings::ManualBlink = Localization::GetTranslatedKey("MainMenu", "manualblink");
+    PreTranslatedStrings::Sprint = Localization::GetTranslatedKey("MainMenu", "sprint");
+    PreTranslatedStrings::OpenCloseInventory = Localization::GetTranslatedKey("MainMenu", "opencloseinventory");
+    PreTranslatedStrings::Crouch = Localization::GetTranslatedKey("MainMenu", "crouch");
+    PreTranslatedStrings::TakeScreenshot = Localization::GetTranslatedKey("MainMenu", "takescreenshot");
+    PreTranslatedStrings::ShowHud = Localization::GetTranslatedKey("MainMenu", "showhud");
+    PreTranslatedStrings::EnableConsole = Localization::GetTranslatedKey("MainMenu", "enableconsole");
+    PreTranslatedStrings::ShowFps = Localization::GetTranslatedKey("MainMenu", "showfps");
 
     PreTranslatedStrings::DontBlink = Localization::GetTranslatedKey("MainMenu", "dontblink");
     PreTranslatedStrings::SecureContainProtect = Localization::GetTranslatedKey("MainMenu", "securecontainprotect");
@@ -297,7 +357,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::SetNextWindowPos(ImVec2(width - 95, 5));
             ImGui::Begin("## DISCORD-BUTTON", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
             ImGui::SetCursorPos(ImVec2(0, 0));
-            if (ImGui::ButtonCustom("DISCORD", ImVec2(90, 40), whiteImage, blackImage, Localization::GetActiveLanguageCourierNewSmall())) {
+            if (ImGui::ButtonCustom(PreTranslatedStrings::Discord, ImVec2(90, 40), whiteImage, blackImage, Localization::GetActiveLanguageCourierNewSmall())) {
                 discord->OpenGuildInvite("Q7VKS6hwEV");
             }
             ImGui::End();
