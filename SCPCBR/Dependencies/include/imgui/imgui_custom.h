@@ -178,10 +178,16 @@ namespace ImGui {
      * \param whiteImage A pointer to the image displayed on the border of the frame, should be the white UI texture found in the original SCP:CB
      * \param blackImage A pointer to the image displayed in the main content of the frame, should be the black UI texture found in the original SCP:CB
      * \param font The font that the label will be rendered in
+     * \param selected Whether to render a green square around the button indicating that it is selected
      * \return Returns true if the button was clicked
      */
     inline bool ButtonCustom(const std::string& label, ImVec2 size, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, ImFont* font = nullptr) {
         const ImVec2 pos = GetWindowPos() + GetCursorPos();
+
+        if (selected) {
+            GetBackgroundDrawList()->AddRectFilled(ImVec2(pos.x - 3, pos.y - 3), ImVec2(pos.x + size.x + 3, pos.y + size.y + 3), ImColor(0, 255, 0));
+        }
+        
         DrawFrameCustom(pos.x, pos.y, size.x, size.y, whiteImage, blackImage);
 
         PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
