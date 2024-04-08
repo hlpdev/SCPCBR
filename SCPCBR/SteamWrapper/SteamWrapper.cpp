@@ -16,6 +16,10 @@ SteamWrapper::SteamWrapper() {
     if (!SteamAPI_Init()) {
         Util::Error::Exit("Failed to initialize the Steam API. Ensure you are launching the game through Steam!");
     }
+
+    if (!SteamUser()->UserHasLicenseForApp(SteamUser()->GetSteamID(), 2090230)) {
+        Util::Error::Exit("You do not own the game on steam, ensure you have added it to your library!");
+    }
 }
 
 SteamWrapper::~SteamWrapper() {
