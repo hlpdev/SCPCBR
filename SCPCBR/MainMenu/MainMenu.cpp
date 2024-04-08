@@ -422,95 +422,96 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::Dummy(ImVec2(1, 1));
 
             const ImVec2 currentPos = ImGui::GetWindowPos() + ImGui::GetCursorPos();
-            ImGui::Dummy(ImVec2(590, 315));
-            ImGui::BeginChildCustom("MAIN-MENU-1-OPTIONS", currentPos.x, currentPos.y, 590, 315, whiteImage, blackImage);
-            
-            static std::string saveName = "untitled";
-            ImGui::InputTextCustom(PreTranslatedStrings::SaveName.c_str(), &saveName, whiteImage, blackImage);
-            
-            static std::string seed = "9SOI25GEU";
-            ImGui::InputTextCustom(PreTranslatedStrings::SaveSeed.c_str(), &seed, whiteImage, blackImage);
+            ImGui::Dummy(ImVec2(588, 315));
+            if (ImGui::BeginChildCustom("MAIN-MENU-1-OPTIONS", currentPos.x, currentPos.y, 588, 315, whiteImage, blackImage)) {
+                static std::string saveName = "untitled";
+                ImGui::InputTextCustom(PreTranslatedStrings::SaveName.c_str(), &saveName, whiteImage, blackImage);
+                
+                static std::string seed = "9SOI25GEU";
+                ImGui::InputTextCustom(PreTranslatedStrings::SaveSeed.c_str(), &seed, whiteImage, blackImage);
 
-            ImGui::Dummy(ImVec2(1, 10));
-            
-            static bool introEnabled = true;
-            if (ImGui::CheckboxCustom(PreTranslatedStrings::IntroSeq.c_str(), &introEnabled, whiteImage, blackImage)) {
-                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                ImGui::Dummy(ImVec2(1, 10));
+                
+                static bool introEnabled = true;
+                if (ImGui::CheckboxCustom(PreTranslatedStrings::IntroSeq.c_str(), &introEnabled, whiteImage, blackImage)) {
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                }
+
+                ImGui::Dummy(ImVec2(1, 10));
+
+                ImGui::Text("%s", PreTranslatedStrings::Difficulty.c_str());
+
+                ImGui::Dummy(ImVec2(1, 6));
+
+                static bool safe = true;
+                static bool euclid = false;
+                static bool keter = false;
+                static bool apollyon = false;
+                static const char* description = PreTranslatedStrings::SafeDifficultyDescription.c_str();
+
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(96 / 255.0f, 117 / 255.0f, 46 / 255.0f, 1));
+                if (ImGui::CheckboxCustom(PreTranslatedStrings::SafeDifficulty.c_str(), &safe, whiteImage, blackImage, 110)) {
+                    euclid = false;
+                    keter = false;
+                    apollyon = false;
+                    description = PreTranslatedStrings::SafeDifficultyDescription.c_str();
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                }
+                ImGui::PopStyleColor();
+
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(152 / 255.0f, 152 / 255.0f, 10 / 255.0f, 1));
+                if (ImGui::CheckboxCustom(PreTranslatedStrings::EuclidDifficulty.c_str(), &euclid, whiteImage, blackImage, 110)) {
+                    safe = false;
+                    keter = false;
+                    apollyon = false;
+                    description = PreTranslatedStrings::EuclidDifficultyDescription.c_str();
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                }
+                ImGui::PopStyleColor();
+
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(152 / 255.0f, 11 / 255.0f, 10 / 255.0f, 1));
+                if (ImGui::CheckboxCustom(PreTranslatedStrings::KeterDifficulty.c_str(), &keter, whiteImage, blackImage, 110)) {
+                    safe = false;
+                    euclid = false;
+                    apollyon = false;
+                    description = PreTranslatedStrings::KeterDifficultyDescription.c_str();
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                }
+                ImGui::PopStyleColor();
+
+                const bool apollyonDisabled = !Options::ReadBoolOption("SaveGame", "Apollyon");
+                if (apollyonDisabled) {
+                    ImGui::BeginDisabled();
+                }
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(80 / 255.0f, 79 / 255.0f, 79 / 255.0f, 1));
+                if (ImGui::CheckboxCustom(PreTranslatedStrings::ApollyonDifficulty.c_str(), &apollyon, whiteImage, blackImage, 110, apollyonDisabled)) {
+                    safe = false;
+                    euclid = false;
+                    keter = false;
+                    description = PreTranslatedStrings::ApollyonDifficultyDescription.c_str();
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                }
+                ImGui::PopStyleColor();
+                if (apollyonDisabled) {
+                    ImGui::EndDisabled();
+                }
+
+                if (ImGui::BeginChildCustom("DIFFICULTY-DESCRIPTION", 316, 549, 399, 103, whiteImage, blackImage, 1.0f)) {
+                    ImGui::PushFont(Localization::GetActiveLanguageCourierNewSmall());
+                    ImGui::TextWrapped("%s", description);
+                    ImGui::PopFont();
+                    ImGui::EndChildCustom();
+                }
+                
+                ImGui::EndChildCustom();
             }
-
-            ImGui::Dummy(ImVec2(1, 10));
-
-            ImGui::Text("%s", PreTranslatedStrings::Difficulty.c_str());
-
-            ImGui::Dummy(ImVec2(1, 6));
-
-            static bool safe = true;
-            static bool euclid = false;
-            static bool keter = false;
-            static bool apollyon = false;
-            static const char* description = PreTranslatedStrings::SafeDifficultyDescription.c_str();
-
-            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(96 / 255.0f, 117 / 255.0f, 46 / 255.0f, 1));
-            if (ImGui::CheckboxCustom(PreTranslatedStrings::SafeDifficulty.c_str(), &safe, whiteImage, blackImage, 110)) {
-                euclid = false;
-                keter = false;
-                apollyon = false;
-                description = PreTranslatedStrings::SafeDifficultyDescription.c_str();
-                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
-            }
-            ImGui::PopStyleColor();
-
-            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(152 / 255.0f, 152 / 255.0f, 10 / 255.0f, 1));
-            if (ImGui::CheckboxCustom(PreTranslatedStrings::EuclidDifficulty.c_str(), &euclid, whiteImage, blackImage, 110)) {
-                safe = false;
-                keter = false;
-                apollyon = false;
-                description = PreTranslatedStrings::EuclidDifficultyDescription.c_str();
-                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
-            }
-            ImGui::PopStyleColor();
-
-            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(152 / 255.0f, 11 / 255.0f, 10 / 255.0f, 1));
-            if (ImGui::CheckboxCustom(PreTranslatedStrings::KeterDifficulty.c_str(), &keter, whiteImage, blackImage, 110)) {
-                safe = false;
-                euclid = false;
-                apollyon = false;
-                description = PreTranslatedStrings::KeterDifficultyDescription.c_str();
-                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
-            }
-            ImGui::PopStyleColor();
-
-            const bool apollyonDisabled = !Options::ReadBoolOption("SaveGame", "Apollyon");
-            if (apollyonDisabled) {
-                ImGui::BeginDisabled();
-            }
-            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(80 / 255.0f, 79 / 255.0f, 79 / 255.0f, 1));
-            if (ImGui::CheckboxCustom(PreTranslatedStrings::ApollyonDifficulty.c_str(), &apollyon, whiteImage, blackImage, 110, apollyonDisabled)) {
-                safe = false;
-                euclid = false;
-                keter = false;
-                description = PreTranslatedStrings::ApollyonDifficultyDescription.c_str();
-                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
-            }
-            ImGui::PopStyleColor();
-            if (apollyonDisabled) {
-                ImGui::EndDisabled();
-            }
-
-            ImGui::BeginChildCustom("DIFFICULTY-DESCRIPTION", 316, 549, 399, 103, whiteImage, blackImage, 1.0f);
-            ImGui::PushFont(Localization::GetActiveLanguageCourierNewSmall());
-            ImGui::TextWrapped("%s", description);
-            ImGui::PopFont();
-            ImGui::EndChildCustom();
-            
-            ImGui::EndChildCustom();
 
             if (ImGui::ButtonCustom(PreTranslatedStrings::LoadMap, ImVec2(138, 75), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
                 selectedMenu = LOAD_MAP;
                 AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
 
-            ImGui::SameLine(460);
+            ImGui::SameLine(458);
 
             if (ImGui::ButtonCustom(PreTranslatedStrings::Start, ImVec2(138, 75), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
                 AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
@@ -576,10 +577,117 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
 
             ImGui::Dummy(ImVec2(1, 1));
 
-            const ImVec2 currentPos = ImGui::GetWindowPos() + ImGui::GetCursorPos();
-            ImGui::BeginChildCustom("MAIN-MENU-1-OPTIONS", currentPos.x, currentPos.y, 590, 315, whiteImage, blackImage);
+            static int selectedOptionsMenu = GRAPHICS;
 
-            ImGui::EndChildCustom();
+            ImGui::Dummy(ImVec2(3, 0));
+            
+            ImGui::SameLine(11);
+            
+            if (ImGui::ButtonCustom(PreTranslatedStrings::Graphics, ImVec2(100, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNewSmall(), selectedOptionsMenu == GRAPHICS)) {
+                selectedOptionsMenu = GRAPHICS;
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+            }
+
+            ImGui::SameLine(165);
+
+            if (ImGui::ButtonCustom(PreTranslatedStrings::Audio, ImVec2(100, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNewSmall(), selectedOptionsMenu == AUDIO)) {
+                selectedOptionsMenu = AUDIO;
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+            }
+
+            ImGui::SameLine(325);
+
+            if (ImGui::ButtonCustom(PreTranslatedStrings::Controls, ImVec2(100, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNewSmall(), selectedOptionsMenu == CONTROLS)) {
+                selectedOptionsMenu = CONTROLS;
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+            }
+
+            ImGui::SameLine(493);
+            
+            if (ImGui::ButtonCustom(PreTranslatedStrings::Advanced, ImVec2(100, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNewSmall(), selectedOptionsMenu == ADVANCED)) {
+                selectedOptionsMenu = ADVANCED;
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+            }
+            
+            
+            ImGui::Dummy(ImVec2(1, 3));
+
+            const ImVec2 currentPos2 = ImGui::GetWindowPos() + ImGui::GetCursorPos();
+            if (selectedOptionsMenu == GRAPHICS) {
+                if (ImGui::BeginChildCustom("MAIN-MENU-1-OPTIONS", currentPos2.x, currentPos2.y, 588, 173, whiteImage, blackImage)) {
+                    static bool value = Options::ReadBoolOption("Graphics", "VSync");
+                    if (ImGui::CheckboxCustom(PreTranslatedStrings::VSync.c_str(), &value, whiteImage, blackImage)) {
+                        Options::WriteBoolOption("Graphics", "VSync", value);
+                    }
+                }
+
+                ImGui::Dummy(ImVec2(1, 4));
+                
+                {
+                    static int value = Options::ReadIntOption("Graphics", "FOV");
+                    ImGui::Text("%s", PreTranslatedStrings::FOV.c_str());
+                    
+                    ImGui::SameLine(300);
+                    
+                    ImGui::SetNextItemWidth(200);
+                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 2);
+                    
+                    ImGui::GetForegroundDrawList()->AddRect(
+                        ImGui::GetWindowPos() + ImGui::GetCursorPos() - ImVec2(1, 1),
+                        ImGui::GetWindowPos() + ImGui::GetCursorPos() + ImVec2(201, 27),
+                        ImColor(255, 255, 255)
+                        );
+
+                    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0.0f));
+                    ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0.0f));
+                    ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0.0f));
+                    ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.95f, 0.0f, 0.0f, 1.0f));
+                    ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.93f, 0.0f, 0.0f, 1.0f));
+                    if (ImGui::SliderInt("##FOVSLIDER", &value, 50, 90)) {
+                        Options::WriteIntOption("Graphics", "FOV", value);
+                    }
+                    ImGui::PopStyleColor(5);
+                }
+
+                ImGui::Dummy(ImVec2(1, 4));
+
+                {
+                    static bool value = Options::ReadBoolOption("Graphics", "Framelimit");
+                    if (ImGui::CheckboxCustom(PreTranslatedStrings::FrameLimit.c_str(), &value, whiteImage, blackImage)) {
+                        Options::WriteBoolOption("Graphics", "Framelimit", value);
+                    }
+                }
+
+                ImGui::Dummy(ImVec2(1, 4));
+
+                if (Options::ReadBoolOption("Graphics", "Framelimit")) {
+                    static int value = Options::ReadIntOption("Graphics", "FramelimitValue");
+                    ImGui::Text("%s", PreTranslatedStrings::FrameLimitValue.c_str());
+                    
+                    ImGui::SameLine(300);
+                    
+                    ImGui::SetNextItemWidth(200);
+                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 2);
+                    
+                    ImGui::GetForegroundDrawList()->AddRect(
+                        ImGui::GetWindowPos() + ImGui::GetCursorPos() - ImVec2(1, 1),
+                        ImGui::GetWindowPos() + ImGui::GetCursorPos() + ImVec2(201, 27),
+                        ImColor(255, 255, 255)
+                        );
+
+                    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0.0f));
+                    ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0.0f));
+                    ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0.0f));
+                    ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.95f, 0.0f, 0.0f, 1.0f));
+                    ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.93f, 0.0f, 0.0f, 1.0f));
+                    if (ImGui::SliderInt("##FRAMELIMITSLIDER", &value,  20, 360)) {
+                        Options::WriteIntOption("Graphics", "FramelimitValue", value);
+                    }
+                    ImGui::PopStyleColor(5);
+                }
+            
+                ImGui::EndChildCustom();
+            }
 
             ImGui::End();
             ImGui::PopStyleColor(2);

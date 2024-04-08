@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
     AudioEngine::Init();
     Localization::Init();
     
-    Launcher::Init();
+    Launcher::Init(discord);
     SplashScreen::Init();
     PreloadManager::Init();
     MainMenu::Init(discord);
