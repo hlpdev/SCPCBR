@@ -547,6 +547,7 @@
     <ClCompile Include="Dependencies\src\glad.c" />
     <ClCompile Include="DiscordWrapper\DiscordWrapper.cpp" />
     <ClCompile Include="GameAssembly\GameAssembly.cpp" />
+    <ClCompile Include="GenerationSystem\GenerationSystem.cpp" />
     <ClCompile Include="Launcher\Launcher.cpp" />
     <ClCompile Include="Localization\Localization.cpp" />
     <ClCompile Include="MainMenu\MainMenu.cpp" />
@@ -817,6 +818,7 @@
     <ClInclude Include="DiscordWrapper\DiscordWrapper.h" />
     <ClInclude Include="ExecutableResources\resource.h" />
     <ClInclude Include="GameAssembly\GameAssembly.h" />
+    <ClInclude Include="GenerationSystem\GenerationSystem.h" />
     <ClInclude Include="Launcher\Launcher.h" />
     <ClInclude Include="Localization\Localization.h" />
     <ClInclude Include="MainMenu\MainMenu.h" />

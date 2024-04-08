@@ -12,6 +12,7 @@
 
 #include <archive_entry.h>
 
+#include "../GenerationSystem/GenerationSystem.h"
 #include "../Options/Options.h"
 
 #define MAIN_MENU 0
@@ -28,6 +29,8 @@
 class DiscordWrapper;
 
 namespace MainMenu {
+    GenerationSystem::GenerationInstructions* generationInstructions = nullptr;
+    
     int width, height;
     
     Util::Image::Image* mainMenuBackgroundImage;
@@ -110,6 +113,17 @@ namespace MainMenu {
         std::string TakenOver;
         std::string Spiral;
         std::string RealityDamage;
+
+        std::vector<std::string> RandomSeeds {
+            "DIE",
+            "DONTBLINK",
+            "SNAP",
+            "5CPI73",
+            "LARRYSOME",
+            "D9341",
+            "JORGE",
+            "SEBOTAN"
+        };
     }
 }
 
@@ -192,6 +206,10 @@ void RandomTextThread() {
 
 void MainMenu::Init(DiscordWrapper* discordWrapper) {
     discord = discordWrapper;
+
+    generationInstructions = new GenerationSystem::GenerationInstructions;
+    generationInstructions->Name = "Untitled";
+    generationInstructions->Difficulty = GenerationSystem::Difficulty::SAFE;
     
     mainMenuBackgroundImage = new Util::Image::Image;
     if (!Util::Image::LoadImageFromFile("Assets/GFX/Menu/MenuBackground.jpg", mainMenuBackgroundImage)) {
@@ -375,6 +393,12 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::Begin("## MAIN-MENU-0", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
 
             if (ImGui::ButtonCustom(PreTranslatedStrings::NewGame, ImVec2(430, 75), whiteImage, blackImage)) {
+                if (Util::Math::RandomInt(1, 10) == 1) {
+                    generationInstructions->Seed = PreTranslatedStrings::RandomSeeds.at(Util::Math::RandomInt(0, PreTranslatedStrings::RandomSeeds.size() - 1));
+                } else {
+                    generationInstructions->Seed = Util::Strings::Random(8);
+                }
+                
                 selectedMenu = NEW_GAME;
                 AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
             }
@@ -424,11 +448,8 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             const ImVec2 currentPos = ImGui::GetWindowPos() + ImGui::GetCursorPos();
             ImGui::Dummy(ImVec2(588, 315));
             if (ImGui::BeginChildCustom("MAIN-MENU-1-OPTIONS", currentPos.x, currentPos.y, 588, 315, whiteImage, blackImage)) {
-                static std::string saveName = "untitled";
-                ImGui::InputTextCustom(PreTranslatedStrings::SaveName.c_str(), &saveName, whiteImage, blackImage);
-                
-                static std::string seed = "9SOI25GEU";
-                ImGui::InputTextCustom(PreTranslatedStrings::SaveSeed.c_str(), &seed, whiteImage, blackImage);
+                ImGui::InputTextCustom(PreTranslatedStrings::SaveName.c_str(), &generationInstructions->Name, whiteImage, blackImage);
+                ImGui::InputTextCustom(PreTranslatedStrings::SaveSeed.c_str(), &generationInstructions->Seed, whiteImage, blackImage);
 
                 ImGui::Dummy(ImVec2(1, 10));
                 
@@ -455,6 +476,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                     keter = false;
                     apollyon = false;
                     description = PreTranslatedStrings::SafeDifficultyDescription.c_str();
+                    generationInstructions->Difficulty = GenerationSystem::Difficulty::SAFE;
                     AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
                 }
                 ImGui::PopStyleColor();
@@ -465,6 +487,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                     keter = false;
                     apollyon = false;
                     description = PreTranslatedStrings::EuclidDifficultyDescription.c_str();
+                    generationInstructions->Difficulty = GenerationSystem::Difficulty::EUCLID;
                     AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
                 }
                 ImGui::PopStyleColor();
@@ -475,6 +498,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                     euclid = false;
                     apollyon = false;
                     description = PreTranslatedStrings::KeterDifficultyDescription.c_str();
+                    generationInstructions->Difficulty = GenerationSystem::Difficulty::KETER;
                     AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
                 }
                 ImGui::PopStyleColor();
@@ -489,6 +513,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                     euclid = false;
                     keter = false;
                     description = PreTranslatedStrings::ApollyonDifficultyDescription.c_str();
+                    generationInstructions->Difficulty = GenerationSystem::Difficulty::APOLLYON;
                     AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
                 }
                 ImGui::PopStyleColor();
@@ -614,79 +639,150 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
 
             const ImVec2 currentPos2 = ImGui::GetWindowPos() + ImGui::GetCursorPos();
             if (selectedOptionsMenu == GRAPHICS) {
-                if (ImGui::BeginChildCustom("MAIN-MENU-1-OPTIONS", currentPos2.x, currentPos2.y, 588, 173, whiteImage, blackImage)) {
-                    static bool value = Options::ReadBoolOption("Graphics", "VSync");
-                    if (ImGui::CheckboxCustom(PreTranslatedStrings::VSync.c_str(), &value, whiteImage, blackImage)) {
-                        Options::WriteBoolOption("Graphics", "VSync", value);
+                if (ImGui::BeginChildCustom("MAIN-MENU-OPTIONS-GRAPHICS", currentPos2.x, currentPos2.y, 588, 173, whiteImage, blackImage)) {
+                    {
+                        static bool value = Options::ReadBoolOption("Graphics", "VSync");
+                        if (ImGui::CheckboxCustom(PreTranslatedStrings::VSync.c_str(), &value, whiteImage, blackImage)) {
+                            Options::WriteBoolOption("Graphics", "VSync", value);
+                        }
                     }
-                }
 
-                ImGui::Dummy(ImVec2(1, 4));
+                    ImGui::Dummy(ImVec2(1, 4));
                 
-                {
-                    static int value = Options::ReadIntOption("Graphics", "FOV");
-                    ImGui::Text("%s", PreTranslatedStrings::FOV.c_str());
-                    
-                    ImGui::SameLine(300);
-                    
-                    ImGui::SetNextItemWidth(200);
-                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 2);
-                    
-                    ImGui::GetForegroundDrawList()->AddRect(
-                        ImGui::GetWindowPos() + ImGui::GetCursorPos() - ImVec2(1, 1),
-                        ImGui::GetWindowPos() + ImGui::GetCursorPos() + ImVec2(201, 27),
-                        ImColor(255, 255, 255)
-                        );
+                    {
+                        static int value = Options::ReadIntOption("Graphics", "FOV");
+                        ImGui::Text("%s", PreTranslatedStrings::FOV.c_str());
+                        
+                        ImGui::SameLine(300);
+                        
+                        ImGui::SetNextItemWidth(200);
+                        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 2);
+                        
+                        ImGui::GetForegroundDrawList()->AddRect(
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() - ImVec2(1, 1),
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() + ImVec2(201, 27),
+                            ImColor(255, 255, 255)
+                            );
 
-                    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0.0f));
-                    ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0.0f));
-                    ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0.0f));
-                    ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.95f, 0.0f, 0.0f, 1.0f));
-                    ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.93f, 0.0f, 0.0f, 1.0f));
-                    if (ImGui::SliderInt("##FOVSLIDER", &value, 50, 90)) {
-                        Options::WriteIntOption("Graphics", "FOV", value);
+                        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.95f, 0.0f, 0.0f, 1.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.93f, 0.0f, 0.0f, 1.0f));
+                        if (ImGui::SliderInt("##FOV-SLIDER", &value, 50, 90)) {
+                            Options::WriteIntOption("Graphics", "FOV", value);
+                        }
+                        ImGui::PopStyleColor(5);
                     }
-                    ImGui::PopStyleColor(5);
-                }
 
-                ImGui::Dummy(ImVec2(1, 4));
+                    ImGui::Dummy(ImVec2(1, 4));
 
-                {
-                    static bool value = Options::ReadBoolOption("Graphics", "Framelimit");
-                    if (ImGui::CheckboxCustom(PreTranslatedStrings::FrameLimit.c_str(), &value, whiteImage, blackImage)) {
-                        Options::WriteBoolOption("Graphics", "Framelimit", value);
+                    {
+                        static bool value = Options::ReadBoolOption("Graphics", "Framelimit");
+                        if (ImGui::CheckboxCustom(PreTranslatedStrings::FrameLimit.c_str(), &value, whiteImage, blackImage)) {
+                            Options::WriteBoolOption("Graphics", "Framelimit", value);
+                        }
                     }
-                }
 
-                ImGui::Dummy(ImVec2(1, 4));
+                    ImGui::Dummy(ImVec2(1, 4));
 
-                if (Options::ReadBoolOption("Graphics", "Framelimit")) {
-                    static int value = Options::ReadIntOption("Graphics", "FramelimitValue");
-                    ImGui::Text("%s", PreTranslatedStrings::FrameLimitValue.c_str());
-                    
-                    ImGui::SameLine(300);
-                    
-                    ImGui::SetNextItemWidth(200);
-                    ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 2);
-                    
-                    ImGui::GetForegroundDrawList()->AddRect(
-                        ImGui::GetWindowPos() + ImGui::GetCursorPos() - ImVec2(1, 1),
-                        ImGui::GetWindowPos() + ImGui::GetCursorPos() + ImVec2(201, 27),
-                        ImColor(255, 255, 255)
-                        );
+                    if (Options::ReadBoolOption("Graphics", "Framelimit")) {
+                        static int value = Options::ReadIntOption("Graphics", "FramelimitValue");
+                        ImGui::Text("%s", PreTranslatedStrings::FrameLimitValue.c_str());
+                        
+                        ImGui::SameLine(300);
+                        
+                        ImGui::SetNextItemWidth(200);
+                        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 2);
+                        
+                        ImGui::GetForegroundDrawList()->AddRect(
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() - ImVec2(1, 1),
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() + ImVec2(201, 27),
+                            ImColor(255, 255, 255)
+                            );
 
-                    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0.0f));
-                    ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0.0f));
-                    ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0.0f));
-                    ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.95f, 0.0f, 0.0f, 1.0f));
-                    ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.93f, 0.0f, 0.0f, 1.0f));
-                    if (ImGui::SliderInt("##FRAMELIMITSLIDER", &value,  20, 360)) {
-                        Options::WriteIntOption("Graphics", "FramelimitValue", value);
+                        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.95f, 0.0f, 0.0f, 1.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.93f, 0.0f, 0.0f, 1.0f));
+                        if (ImGui::SliderInt("##FRAME-LIMIT-SLIDER", &value,  20, 360)) {
+                            Options::WriteIntOption("Graphics", "FramelimitValue", value);
+                        }
+                        ImGui::PopStyleColor(5);
                     }
-                    ImGui::PopStyleColor(5);
+
+                    ImGui::EndChildCustom();
                 }
-            
-                ImGui::EndChildCustom();
+            } else if (selectedOptionsMenu == AUDIO) {
+                if (ImGui::BeginChildCustom("MAIN-MENU-OPTIONS-AUDIO", currentPos2.x, currentPos2.y, 588, 143, whiteImage, blackImage)) {
+                    {
+                        static int value = Options::ReadIntOption("Audio", "GameVolume");
+                        ImGui::Text("%s", PreTranslatedStrings::GameVolume.c_str());
+                        
+                        ImGui::SameLine(300);
+                        
+                        ImGui::SetNextItemWidth(200);
+                        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 2);
+                        
+                        ImGui::GetForegroundDrawList()->AddRect(
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() - ImVec2(1, 1),
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() + ImVec2(201, 27),
+                            ImColor(255, 255, 255)
+                            );
+
+                        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.95f, 0.0f, 0.0f, 1.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.93f, 0.0f, 0.0f, 1.0f));
+                        if (ImGui::SliderInt("##GAME-VOLUME-SLIDER", &value, 0, 100, "%d%%")) {
+                            Options::WriteIntOption("Audio", "GameVolume", value);
+                            AudioEngine::SetChannelGroupVolume("Game", value / 100.0f);
+                        }
+                        ImGui::PopStyleColor(5);
+                    }
+
+                    ImGui::Dummy(ImVec2(1, 4));
+
+                    {
+                        static int value = Options::ReadIntOption("Audio", "MusicVolume");
+                        ImGui::Text("%s", PreTranslatedStrings::MusicVolume.c_str());
+                        
+                        ImGui::SameLine(300);
+                        
+                        ImGui::SetNextItemWidth(200);
+                        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 2);
+                        
+                        ImGui::GetForegroundDrawList()->AddRect(
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() - ImVec2(1, 1),
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() + ImVec2(201, 27),
+                            ImColor(255, 255, 255)
+                            );
+
+                        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.95f, 0.0f, 0.0f, 1.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.93f, 0.0f, 0.0f, 1.0f));
+                        if (ImGui::SliderInt("##MUSIC-VOLUME-SLIDER", &value, 0, 100, "%d%%")) {
+                            Options::WriteIntOption("Audio", "MusicVolume", value);
+                            AudioEngine::SetChannelGroupVolume("Music", value / 100.0f);
+                        }
+                        ImGui::PopStyleColor(5);
+                    }
+
+                    ImGui::Dummy(ImVec2(1, 4));
+
+                    {
+                        static bool value = Options::ReadBoolOption("Audio", "EnableUserTracks");
+                        if (ImGui::CheckboxCustom(PreTranslatedStrings::EnableUserTracks.c_str(), &value, whiteImage, blackImage)) {
+                            Options::WriteBoolOption("Audio", "EnableUserTracks", value);
+                        }
+                    }
+
+                    ImGui::EndChildCustom();
+                }
             }
 
             ImGui::End();
