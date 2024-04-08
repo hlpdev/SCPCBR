@@ -17,7 +17,7 @@ namespace Launcher {
     DiscordWrapper* discord;
 }
 
-void Launcher::Init() {
+void Launcher::Init(DiscordWrapper* discordWrapper) {
     bool res;
 
     backgroundImage = (Util::Image::Image*)malloc(sizeof(Util::Image::Image));
@@ -135,6 +135,7 @@ void Launcher::Render(GLFWwindow* window, GlobalGameState* gameState) {
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
 
     if (ImGui::Button(Localization::GetTranslatedKey("Launcher", "DiscordButton").c_str(), ImVec2(ImGui::GetWindowSize().x * 0.5f - 10, 0.0f))) {
+        discord->OpenGuildInvite("Q7VKS6hwEV");
         AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
     }
     ImGui::SameLine(0, ImGui::GetStyle().ItemInnerSpacing.x);
