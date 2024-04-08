@@ -20,6 +20,11 @@
 #define LOAD_GAME 3
 #define OPTIONS 4
 
+#define GRAPHICS 0
+#define AUDIO 1
+#define CONTROLS 2
+#define ADVANCED 3
+
 class DiscordWrapper;
 
 namespace MainMenu {
