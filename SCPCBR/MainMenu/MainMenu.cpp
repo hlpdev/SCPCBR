@@ -644,6 +644,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                         static bool value = Options::ReadBoolOption("Graphics", "VSync");
                         if (ImGui::CheckboxCustom(PreTranslatedStrings::VSync.c_str(), &value, whiteImage, blackImage)) {
                             Options::WriteBoolOption("Graphics", "VSync", value);
+                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
                         }
                     }
 
@@ -681,6 +682,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                         static bool value = Options::ReadBoolOption("Graphics", "Framelimit");
                         if (ImGui::CheckboxCustom(PreTranslatedStrings::FrameLimit.c_str(), &value, whiteImage, blackImage)) {
                             Options::WriteBoolOption("Graphics", "Framelimit", value);
+                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
                         }
                     }
 
@@ -715,7 +717,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                     ImGui::EndChildCustom();
                 }
             } else if (selectedOptionsMenu == AUDIO) {
-                if (ImGui::BeginChildCustom("MAIN-MENU-OPTIONS-AUDIO", currentPos2.x, currentPos2.y, 588, 143, whiteImage, blackImage)) {
+                if (ImGui::BeginChildCustom("MAIN-MENU-OPTIONS-AUDIO", currentPos2.x, currentPos2.y, 588, 140, whiteImage, blackImage)) {
                     {
                         static int value = Options::ReadIntOption("Audio", "GameVolume");
                         ImGui::Text("%s", PreTranslatedStrings::GameVolume.c_str());
@@ -778,6 +780,181 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                         static bool value = Options::ReadBoolOption("Audio", "EnableUserTracks");
                         if (ImGui::CheckboxCustom(PreTranslatedStrings::EnableUserTracks.c_str(), &value, whiteImage, blackImage)) {
                             Options::WriteBoolOption("Audio", "EnableUserTracks", value);
+                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                        }
+                    }
+
+                    ImGui::EndChildCustom();
+                }
+            } else if (selectedOptionsMenu == CONTROLS) {
+                if (ImGui::BeginChildCustom("MAIN-MENU-OPTIONS-CONTROLS", currentPos2.x, currentPos2.y, 588, 395, whiteImage, blackImage)) {
+                    {
+                        static float value = static_cast<float>(Options::ReadIntOption("Controls", "MouseSensitivity")) / 10.0f;
+                        ImGui::Text("%s", PreTranslatedStrings::MouseSensitivity.c_str());
+                        
+                        ImGui::SameLine(300);
+                        
+                        ImGui::SetNextItemWidth(200);
+                        ImGui::SetCursorPosY(ImGui::GetCursorPosY() - 2);
+                        
+                        ImGui::GetForegroundDrawList()->AddRect(
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() - ImVec2(1, 1),
+                            ImGui::GetWindowPos() + ImGui::GetCursorPos() + ImVec2(201, 27),
+                            ImColor(255, 255, 255)
+                            );
+
+                        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0, 0, 0, 0.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(0.95f, 0.0f, 0.0f, 1.0f));
+                        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(0.93f, 0.0f, 0.0f, 1.0f));
+                        if (ImGui::SliderFloat("##MOUSE-SENSITIVITY-SLIDER", &value, 0.1f, 3.0f, "%.1f")) {
+                            Options::WriteIntOption("Controls", "MouseSensitivity", static_cast<int>(value * 10));
+                        }
+                        ImGui::PopStyleColor(5);
+                    }
+
+                    ImGui::Dummy(ImVec2(1, 4));
+
+                    {
+                        static bool value = Options::ReadBoolOption("Controls", "InvertMouseXAxis");
+                        if (ImGui::CheckboxCustom(PreTranslatedStrings::InvertMouseXAxis.c_str(), &value, whiteImage, blackImage)) {
+                            Options::WriteBoolOption("Controls", "InvertMouseXAxis", value);
+                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                        }
+                    }
+
+                    ImGui::Dummy(ImVec2(1, 4));
+
+                    {
+                        static bool value = Options::ReadBoolOption("Controls", "InvertMouseYAxis");
+                        if (ImGui::CheckboxCustom(PreTranslatedStrings::InvertMouseYAxis.c_str(), &value, whiteImage, blackImage)) {
+                            Options::WriteBoolOption("Controls", "InvertMouseYAxis", value);
+                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                        }
+                    }
+
+                    ImGui::Dummy(ImVec2(1, 4));
+                    
+                    {
+                        static int value = Options::ReadIntOption("Controls", "MoveForward");
+                        if (ImGui::Hotkey(PreTranslatedStrings::MoveForward.c_str(), value, window, whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
+                            if (value != Options::ReadIntOption("Controls", "MoveForward")) {
+                                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            }
+                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                        }
+                    }
+                    
+                    {
+                        static int value = Options::ReadIntOption("Controls", "MoveLeft");
+                        if (ImGui::Hotkey(PreTranslatedStrings::MoveLeft.c_str(), value, window, whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
+                            if (value != Options::ReadIntOption("Controls", "MoveLeft")) {
+                                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            }
+                            Options::WriteIntOption("Controls", "MoveLeft", value);
+                        }
+                    }
+                    
+                    {
+                        static int value = Options::ReadIntOption("Controls", "MoveBackward");
+                        if (ImGui::Hotkey(PreTranslatedStrings::MoveBackward.c_str(), value, window, whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
+                            if (value != Options::ReadIntOption("Controls", "MoveBackward")) {
+                                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            }
+                            Options::WriteIntOption("Controls", "MoveBackward", value);
+                        }
+                    }
+                    
+                    {
+                        static int value = Options::ReadIntOption("Controls", "MoveRight");
+                        if (ImGui::Hotkey(PreTranslatedStrings::MoveRight.c_str(), value, window, whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
+                            if (value != Options::ReadIntOption("Controls", "MoveRight")) {
+                                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            }
+                            Options::WriteIntOption("Controls", "MoveRight", value);
+                        }
+                    }
+                    
+                    {
+                        static int value = Options::ReadIntOption("Controls", "QuickSave");
+                        if (ImGui::Hotkey(PreTranslatedStrings::QuickSave.c_str(), value, window, whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
+                            if (value != Options::ReadIntOption("Controls", "QuickSave")) {
+                                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            }
+                            Options::WriteIntOption("Controls", "QuickSave", value);
+                        }
+                    }
+                    
+                    {
+                        static int value = Options::ReadIntOption("Controls", "ManualBlink");
+                        if (ImGui::Hotkey(PreTranslatedStrings::ManualBlink.c_str(), value, window, whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
+                            if (value != Options::ReadIntOption("Controls", "ManualBlink")) {
+                                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            }
+                            Options::WriteIntOption("Controls", "ManualBlink", value);
+                        }
+                    }
+                    
+                    {
+                        static int value = Options::ReadIntOption("Controls", "Sprint");
+                        if (ImGui::Hotkey(PreTranslatedStrings::Sprint.c_str(), value, window, whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
+                            if (value != Options::ReadIntOption("Controls", "Sprint")) {
+                                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            }
+                            Options::WriteIntOption("Controls", "Sprint", value);
+                        }
+                    }
+                    
+                    {
+                        static int value = Options::ReadIntOption("Controls", "OpenCloseInventory");
+                        if (ImGui::Hotkey(PreTranslatedStrings::OpenCloseInventory.c_str(), value, window, whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
+                            if (value != Options::ReadIntOption("Controls", "OpenCloseInventory")) {
+                                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            }
+                            Options::WriteIntOption("Controls", "OpenCloseInventory", value);
+                        }
+                    }
+                    
+                    {
+                        static int value = Options::ReadIntOption("Controls", "Crouch");
+                        if (ImGui::Hotkey(PreTranslatedStrings::Crouch.c_str(), value, window, whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
+                            if (value != Options::ReadIntOption("Controls", "Crouch")) {
+                                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            }
+                            Options::WriteIntOption("Controls", "Crouch", value);
+                        }
+                    }
+
+                    ImGui::EndChildCustom();
+                }
+            } else if (selectedOptionsMenu == ADVANCED) {
+                if (ImGui::BeginChildCustom("MAIN-MENU-OPTIONS-ADVANCED", currentPos2.x, currentPos2.y, 588, 139, whiteImage, blackImage)) {
+                    {
+                        static bool value = Options::ReadBoolOption("Advanced", "ShowHud");
+                        if (ImGui::CheckboxCustom(PreTranslatedStrings::ShowHud.c_str(), &value, whiteImage, blackImage)) {
+                            Options::WriteBoolOption("Advanced", "ShowHud", value);
+                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                        }
+                    }
+
+                    ImGui::Dummy(ImVec2(1, 4));
+
+                    {
+                        static bool value = Options::ReadBoolOption("Advanced", "EnableInGameConsole");
+                        if (ImGui::CheckboxCustom(PreTranslatedStrings::EnableConsole.c_str(), &value, whiteImage, blackImage)) {
+                            Options::WriteBoolOption("Advanced", "EnableInGameConsole", value);
+                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                        }
+                    }
+
+                    ImGui::Dummy(ImVec2(1, 4));
+
+                    {
+                        static bool value = Options::ReadBoolOption("Advanced", "ShowFps");
+                        if (ImGui::CheckboxCustom(PreTranslatedStrings::ShowFps.c_str(), &value, whiteImage, blackImage)) {
+                            Options::WriteBoolOption("Advanced", "ShowFps", value);
+                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
                         }
                     }
 
