@@ -47,6 +47,8 @@ namespace Localization {
 
     std::string GetTranslatedKey(const std::string& category, const std::string& key, const std::vector<std::string>& args = {});
 
+    std::string KeyboardKeyToName(int key);
+
     void Free();
 }
 

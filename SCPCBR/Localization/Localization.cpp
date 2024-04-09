@@ -1,7 +1,9 @@
 #include "Localization.h"
 
 #include <filesystem>
+#include <unordered_map>
 #include <vector>
+#include <GLFW/glfw3.h>
 
 #include "../Options/Options.h"
 
@@ -172,6 +174,137 @@ std::string Localization::GetTranslatedKey(const std::string& category, const st
     }
 
     return localizedString;
+}
+
+bool KeyMappingsInitialized = false;
+std::unordered_map<int, std::string> KeyMappings;
+
+std::string Localization::KeyboardKeyToName(int key) {
+    if (!KeyMappingsInitialized) {
+        KeyMappings[GLFW_KEY_SPACE] = "SPACE";
+        KeyMappings[GLFW_KEY_APOSTROPHE] = "'";
+        KeyMappings[GLFW_KEY_COMMA] = ",";
+        KeyMappings[GLFW_KEY_MINUS] = "-";
+        KeyMappings[GLFW_KEY_PERIOD] = ".";
+        KeyMappings[GLFW_KEY_SLASH] = "/";
+        KeyMappings[GLFW_KEY_0] = "0";
+        KeyMappings[GLFW_KEY_1] = "1";
+        KeyMappings[GLFW_KEY_2] = "2";
+        KeyMappings[GLFW_KEY_3] = "3";
+        KeyMappings[GLFW_KEY_4] = "4";
+        KeyMappings[GLFW_KEY_5] = "5";
+        KeyMappings[GLFW_KEY_6] = "6";
+        KeyMappings[GLFW_KEY_7] = "7";
+        KeyMappings[GLFW_KEY_8] = "8";
+        KeyMappings[GLFW_KEY_9] = "9";
+        KeyMappings[GLFW_KEY_SEMICOLON] = ";";
+        KeyMappings[GLFW_KEY_EQUAL] = "=";
+        KeyMappings[GLFW_KEY_A] = "A";
+        KeyMappings[GLFW_KEY_B] = "B";
+        KeyMappings[GLFW_KEY_C] = "C";
+        KeyMappings[GLFW_KEY_D] = "D";
+        KeyMappings[GLFW_KEY_E] = "E";
+        KeyMappings[GLFW_KEY_F] = "F";
+        KeyMappings[GLFW_KEY_G] = "G";
+        KeyMappings[GLFW_KEY_H] = "H";
+        KeyMappings[GLFW_KEY_I] = "I";
+        KeyMappings[GLFW_KEY_J] = "J";
+        KeyMappings[GLFW_KEY_K] = "K";
+        KeyMappings[GLFW_KEY_L] = "L";
+        KeyMappings[GLFW_KEY_M] = "M";
+        KeyMappings[GLFW_KEY_N] = "N";
+        KeyMappings[GLFW_KEY_O] = "O";
+        KeyMappings[GLFW_KEY_P] = "P";
+        KeyMappings[GLFW_KEY_Q] = "Q";
+        KeyMappings[GLFW_KEY_R] = "R";
+        KeyMappings[GLFW_KEY_S] = "S";
+        KeyMappings[GLFW_KEY_T] = "T";
+        KeyMappings[GLFW_KEY_U] = "U";
+        KeyMappings[GLFW_KEY_V] = "V";
+        KeyMappings[GLFW_KEY_W] = "W";
+        KeyMappings[GLFW_KEY_X] = "X";
+        KeyMappings[GLFW_KEY_Y] = "Y";
+        KeyMappings[GLFW_KEY_Z] = "Z";
+        KeyMappings[GLFW_KEY_LEFT_BRACKET] = "[";
+        KeyMappings[GLFW_KEY_BACKSLASH] = "\\";
+        KeyMappings[GLFW_KEY_RIGHT_BRACKET] = "]";
+        KeyMappings[GLFW_KEY_GRAVE_ACCENT] = "`";
+        KeyMappings[GLFW_KEY_ENTER] = "ENTER";
+        KeyMappings[GLFW_KEY_TAB] = "TAB";
+        KeyMappings[GLFW_KEY_BACKSPACE] = "BACKSPACE";
+        KeyMappings[GLFW_KEY_INSERT] = "INSERT";
+        KeyMappings[GLFW_KEY_DELETE] = "DELETE";
+        KeyMappings[GLFW_KEY_RIGHT] = "RIGHT";
+        KeyMappings[GLFW_KEY_LEFT] = "LEFT";
+        KeyMappings[GLFW_KEY_DOWN] = "DOWN";
+        KeyMappings[GLFW_KEY_UP] = "UP";
+        KeyMappings[GLFW_KEY_PAGE_UP] = "PAGE UP";
+        KeyMappings[GLFW_KEY_PAGE_DOWN] = "PAGE DOWN";
+        KeyMappings[GLFW_KEY_HOME] = "HOME";
+        KeyMappings[GLFW_KEY_END] = "END";
+        KeyMappings[GLFW_KEY_CAPS_LOCK] = "CAPS LOCK";
+        KeyMappings[GLFW_KEY_SCROLL_LOCK] = "SCROLL LOCK";
+        KeyMappings[GLFW_KEY_NUM_LOCK] = "NUM LOCK";
+        KeyMappings[GLFW_KEY_PRINT_SCREEN] = "PRINT SCREEN";
+        KeyMappings[GLFW_KEY_PAUSE] = "PAUSE";
+        KeyMappings[GLFW_KEY_F1] = "F1";
+        KeyMappings[GLFW_KEY_F2] = "F2";
+        KeyMappings[GLFW_KEY_F3] = "F3";
+        KeyMappings[GLFW_KEY_F4] = "F4";
+        KeyMappings[GLFW_KEY_F5] = "F5";
+        KeyMappings[GLFW_KEY_F6] = "F6";
+        KeyMappings[GLFW_KEY_F7] = "F7";
+        KeyMappings[GLFW_KEY_F8] = "F8";
+        KeyMappings[GLFW_KEY_F9] = "F9";
+        KeyMappings[GLFW_KEY_F10] = "F10";
+        KeyMappings[GLFW_KEY_F11] = "F11";
+        KeyMappings[GLFW_KEY_F12] = "F12";
+        KeyMappings[GLFW_KEY_F13] = "F13";
+        KeyMappings[GLFW_KEY_F14] = "F14";
+        KeyMappings[GLFW_KEY_F15] = "F15";
+        KeyMappings[GLFW_KEY_F16] = "F16";
+        KeyMappings[GLFW_KEY_F17] = "F17";
+        KeyMappings[GLFW_KEY_F18] = "F18";
+        KeyMappings[GLFW_KEY_F19] = "F19";
+        KeyMappings[GLFW_KEY_F20] = "F20";
+        KeyMappings[GLFW_KEY_F21] = "F21";
+        KeyMappings[GLFW_KEY_F22] = "F22";
+        KeyMappings[GLFW_KEY_F23] = "F23";
+        KeyMappings[GLFW_KEY_F24] = "F24";
+        KeyMappings[GLFW_KEY_F25] = "F25";
+        KeyMappings[GLFW_KEY_KP_0] = "KEYPAD 0";
+        KeyMappings[GLFW_KEY_KP_1] = "KEYPAD 1";
+        KeyMappings[GLFW_KEY_KP_2] = "KEYPAD 2";
+        KeyMappings[GLFW_KEY_KP_3] = "KEYPAD 3";
+        KeyMappings[GLFW_KEY_KP_4] = "KEYPAD 4";
+        KeyMappings[GLFW_KEY_KP_5] = "KEYPAD 5";
+        KeyMappings[GLFW_KEY_KP_6] = "KEYPAD 6";
+        KeyMappings[GLFW_KEY_KP_7] = "KEYPAD 7";
+        KeyMappings[GLFW_KEY_KP_8] = "KEYPAD 8";
+        KeyMappings[GLFW_KEY_KP_9] = "KEYPAD 9";
+        KeyMappings[GLFW_KEY_KP_DECIMAL] = "KEYPAD .";
+        KeyMappings[GLFW_KEY_KP_DIVIDE] = "KEYPAD /";
+        KeyMappings[GLFW_KEY_KP_MULTIPLY] = "KEYPAD *";
+        KeyMappings[GLFW_KEY_KP_SUBTRACT] = "KEYPAD -";
+        KeyMappings[GLFW_KEY_KP_ADD] = "KEYPAD +";
+        KeyMappings[GLFW_KEY_KP_ENTER] = "KEYPAD ENTER";
+        KeyMappings[GLFW_KEY_KP_EQUAL] = "KEYPAD =";
+        KeyMappings[GLFW_KEY_LEFT_SHIFT] = "LEFT SHIFT";
+        KeyMappings[GLFW_KEY_LEFT_CONTROL] = "LEFT CONTROL";
+        KeyMappings[GLFW_KEY_LEFT_ALT] = "LEFT ALT";
+        KeyMappings[GLFW_KEY_LEFT_SUPER] = "LEFT SUPER";
+        KeyMappings[GLFW_KEY_RIGHT_SHIFT] = "RIGHT SHIFT";
+        KeyMappings[GLFW_KEY_RIGHT_CONTROL] = "RIGHT CONTROL";
+        KeyMappings[GLFW_KEY_RIGHT_ALT] = "RIGHT ALT";
+        KeyMappings[GLFW_KEY_RIGHT_SUPER] = "RIGHT SUPER";
+        KeyMappings[GLFW_KEY_MENU] = "MENU";
+        KeyMappings[GLFW_KEY_UNKNOWN] = "UNKNOWN";
+        KeyMappings[NULL] = "NONE";
+
+        KeyMappingsInitialized = true;
+    }
+
+    return KeyMappings[key];
 }
 
 void Localization::Free() {
