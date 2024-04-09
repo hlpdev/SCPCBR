@@ -207,6 +207,31 @@ namespace ImGui {
         
         return result;
     }
+
+    
+    
+    inline bool Hotkey(const char* label, int& key, GLFWwindow* glfwWindow, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, ImFont* font = nullptr, float sameLineDistance = 270.0f) {
+        TextUnformatted(label);
+        SameLine(sameLineDistance);
+
+        SetCursorPosY(GetCursorPosY() - 1);
+        ButtonCustom(Localization::KeyboardKeyToName(key), ImVec2(150, 26), whiteImage, blackImage, font);
+        if (IsItemHovered()) {
+            for (auto i = GLFW_KEY_SPACE; i <= GLFW_KEY_LAST; i++) {
+                if (i == GLFW_KEY_ESCAPE || i == GLFW_MOUSE_BUTTON_1 || i == GLFW_MOUSE_BUTTON_2) {
+                    continue;
+                }
+
+                if (glfwGetKey(glfwWindow, i)) {
+                    key = i;
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+	}
+
 }
 
 #endif // IMGUICUSTOM_H
