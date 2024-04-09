@@ -127,10 +127,10 @@ int main(int argc, char* argv[])
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
-#ifdef _DEBUG
-        ImGui::GetForegroundDrawList()->AddText(ImVec2(1, 1), ImColor(255, 255, 255), std::string(std::to_string((int)ImGui::GetIO().Framerate) + " FPS").c_str());
-#endif
+        
+        if (Options::ReadBoolOption("Advanced", "ShowFps")) {
+            ImGui::GetForegroundDrawList()->AddText(ImVec2(1, 1), ImColor(255, 255, 255), std::string(std::to_string(static_cast<int>(ImGui::GetIO().Framerate)) + " FPS").c_str());
+        }
 
         switch (CurrentGlobalGameState) {
             case GlobalGameState::Launcher: {
