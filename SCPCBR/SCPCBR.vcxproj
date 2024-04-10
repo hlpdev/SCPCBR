@@ -547,6 +547,7 @@
     <ClCompile Include="Dependencies\src\glad.c" />
     <ClCompile Include="DiscordWrapper\DiscordWrapper.cpp" />
     <ClCompile Include="GameAssembly\GameAssembly.cpp" />
+    <ClCompile Include="GameManager\GameManager.cpp" />
     <ClCompile Include="GenerationSystem\GenerationSystem.cpp" />
     <ClCompile Include="Launcher\Launcher.cpp" />
     <ClCompile Include="Localization\Localization.cpp" />
@@ -818,6 +819,7 @@
     <ClInclude Include="DiscordWrapper\DiscordWrapper.h" />
     <ClInclude Include="ExecutableResources\resource.h" />
     <ClInclude Include="GameAssembly\GameAssembly.h" />
+    <ClInclude Include="GameManager\GameManager.h" />
     <ClInclude Include="GenerationSystem\GenerationSystem.h" />
     <ClInclude Include="Launcher\Launcher.h" />
     <ClInclude Include="Localization\Localization.h" />
@@ -837,6 +839,7 @@
     <Content Include="Assets\Fonts\DSDigital\en.TTF" />
     <Content Include="Assets\Fonts\Journal\en.ttf" />
     <Content Include="Assets\GFX\Menu\MenuBackground.jpg" />
+    <Content Include="Assets\GFX\Test\Barrel.mesh" />
     <Content Include="Assets\GFX\Window\LauncherBackground.png" />
     <Content Include="Assets\GFX\Window\LauncherTitle.png" />
     <Content Include="Assets\GFX\Window\remastered.ico" />

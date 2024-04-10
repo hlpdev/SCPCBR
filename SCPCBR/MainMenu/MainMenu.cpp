@@ -73,6 +73,7 @@ namespace MainMenu {
         std::string Graphics;
         std::string Audio;
         std::string Controls;
+        std::string ControlsWarning;
         std::string Advanced;
 
         std::string VSync;
@@ -260,6 +261,7 @@ void MainMenu::Init(DiscordWrapper* discordWrapper) {
     PreTranslatedStrings::Graphics = Localization::GetTranslatedKey("MainMenu", "graphics");
     PreTranslatedStrings::Audio = Localization::GetTranslatedKey("MainMenu", "audio");
     PreTranslatedStrings::Controls = Localization::GetTranslatedKey("MainMenu", "controls");
+    PreTranslatedStrings::ControlsWarning = Localization::GetTranslatedKey("MainMenu", "controlswarning");
     PreTranslatedStrings::Advanced = Localization::GetTranslatedKey("MainMenu", "advanced");
 
     PreTranslatedStrings::VSync = Localization::GetTranslatedKey("MainMenu", "vsync");
@@ -540,6 +542,10 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
 
             if (ImGui::ButtonCustom(PreTranslatedStrings::Start, ImVec2(138, 75), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew())) {
                 AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+
+                // TODO
+                // TESTING PURPOSES CURRENTLY
+                *gameState = GlobalGameState::Game;
             }
             
             ImGui::End();
@@ -787,7 +793,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                     ImGui::EndChildCustom();
                 }
             } else if (selectedOptionsMenu == CONTROLS) {
-                if (ImGui::BeginChildCustom("MAIN-MENU-OPTIONS-CONTROLS", currentPos2.x, currentPos2.y, 588, 395, whiteImage, blackImage)) {
+                if (ImGui::BeginChildCustom("MAIN-MENU-OPTIONS-CONTROLS", currentPos2.x, currentPos2.y, 588, 480, whiteImage, blackImage)) {
                     {
                         static float value = static_cast<float>(Options::ReadIntOption("Controls", "MouseSensitivity")) / 10.0f;
                         ImGui::Text("%s", PreTranslatedStrings::MouseSensitivity.c_str());
@@ -834,7 +840,19 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
                         }
                     }
 
-                    ImGui::Dummy(ImVec2(1, 4));
+                    ImGui::Dummy(ImVec2(1, 1));
+
+                    ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(1, 1, 1, 1));
+                    ImGui::PushStyleColor(ImGuiCol_SeparatorHovered, ImVec4(1, 1, 1, 1));
+                    ImGui::PushStyleColor(ImGuiCol_SeparatorActive, ImVec4(1, 1, 1, 1));
+                    ImGui::Separator();
+                    
+                    ImGui::TextWrappedCentered(PreTranslatedStrings::ControlsWarning.c_str());
+
+                    ImGui::Separator();
+                    ImGui::PopStyleColor(3);
+                    
+                    ImGui::Dummy(ImVec2(1, 2));
                     
                     {
                         static int value = Options::ReadIntOption("Controls", "MoveForward");

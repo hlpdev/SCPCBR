@@ -11,6 +11,7 @@
 #include "SplashScreen/SplashScreen.h"
 #include "PreloadManager/PreloadManager.h"
 #include "MainMenu/MainMenu.h"
+#include "GameManager/GameManager.h"
 
 #include <GLFW/glfw3.h>
 
@@ -96,6 +97,8 @@ int main(int argc, char* argv[])
     SplashScreen::Init();
     PreloadManager::Init();
     MainMenu::Init(discord);
+    
+    GameManager::Init(discord);
 
     AudioEngine::CreateChannelGroup("Game");
     AudioEngine::CreateChannelGroup("Music");
@@ -150,6 +153,7 @@ int main(int argc, char* argv[])
                 break;
             }
             case GlobalGameState::Game: {
+                GameManager::Render(window, &CurrentGlobalGameState);
                 break;
             }
         }
@@ -166,6 +170,8 @@ int main(int argc, char* argv[])
         glfwSwapBuffers(window);
     }
 
+    GameManager::Free();
+    
     MainMenu::Free();
     PreloadManager::Free();
     SplashScreen::Free();
