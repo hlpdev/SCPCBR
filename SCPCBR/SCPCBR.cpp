@@ -113,6 +113,8 @@ int main(int argc, char* argv[])
     activity.GetAssets().SetLargeImage("scpcbr");
     activity.GetTimestamps().SetStart(Util::Time::GetCurrentEpochSeconds());
     discord->UpdateActivity(activity);
+
+    Window::SetWindowDisplayMode(window, Options::ReadIntOption("Graphics", "DisplayMode"));
     
     while (!glfwWindowShouldClose(window)) {
         if (steam) {
