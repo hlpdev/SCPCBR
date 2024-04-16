@@ -62,7 +62,7 @@ namespace ImGui {
      * \param blackImage A pointer to the image displayed in the main content of the frame, should be the black UI texture found in the original SCP:CB
      * \param dim Whether to slightly dim the frame, giving it a disabled look
      */
-    inline void DrawFrameCustom(float x, float y, float width, float height, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, bool dim = false) {
+    inline void DrawFrameCustom(float x, float y, float width, float height, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, bool dim = false, bool useWindowDrawlist = false) {
         const float whiteUvMaxX = width / static_cast<float>(whiteImage->Width);
         const float whiteUvMaxY = height / static_cast<float>(whiteImage->Width);
         const float blackUvMaxX = (width - 6) / static_cast<float>(blackImage->Width);
@@ -73,9 +73,14 @@ namespace ImGui {
 
         const ImColor whiteColor = !dim ? ImColor(255, 255, 255) : ImColor(150, 150, 150);
         const ImColor blackColor = !dim ? ImColor(255, 255, 255) : ImColor(150, 150, 150);
-        
-        GetBackgroundDrawList()->AddImage(whiteImage->TextureIdPtr, ImVec2(x, y), ImVec2(x + width, y + height), ImVec2(0, 0), whiteUvMax, whiteColor);
-        GetBackgroundDrawList()->AddImage(blackImage->TextureIdPtr, ImVec2(x + 3, y + 3), ImVec2(x + width - 3, y + height - 3), ImVec2(0, 0), blackUvMax, blackColor);
+
+        if (useWindowDrawlist) {
+            GetWindowDrawList()->AddImage(whiteImage->TextureIdPtr, ImVec2(x, y), ImVec2(x + width, y + height), ImVec2(0, 0), whiteUvMax, whiteColor);
+            GetWindowDrawList()->AddImage(blackImage->TextureIdPtr, ImVec2(x + 3, y + 3), ImVec2(x + width - 3, y + height - 3), ImVec2(0, 0), blackUvMax, blackColor);
+        } else {
+            GetBackgroundDrawList()->AddImage(whiteImage->TextureIdPtr, ImVec2(x, y), ImVec2(x + width, y + height), ImVec2(0, 0), whiteUvMax, whiteColor);
+            GetBackgroundDrawList()->AddImage(blackImage->TextureIdPtr, ImVec2(x + 3, y + 3), ImVec2(x + width - 3, y + height - 3), ImVec2(0, 0), blackUvMax, blackColor);
+        }
     }
 
     /**
@@ -89,10 +94,12 @@ namespace ImGui {
      * \param blackImage A pointer to the image displayed in the main content of the frame, should be the black UI texture found in the original SCP:CB
      * \param padding A boolean to decide whether padding should be enabled or disabled on the inner window created.
      */
-    inline bool BeginChildCustom(const char* id, float x, float y, float width, float height, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, float padding = 14.0f) {
-        DrawFrameCustom(x, y, width, height, whiteImage, blackImage);
+    inline bool BeginChildCustom(const char* id, float x, float y, float width, float height, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, float padding = 14.0f, bool useWindowDrawList = false) {
+        DrawFrameCustom(x, y, width, height, whiteImage, blackImage, false, useWindowDrawList);
         SetNextWindowPos(ImVec2(x + padding, y + padding));
         SetNextWindowSize(ImVec2(width - padding, height - padding));
+        PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
+        PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
         return Begin(id, nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
     }
 
@@ -101,6 +108,7 @@ namespace ImGui {
      */
     inline void EndChildCustom() {
         End();
+        PopStyleColor(2);
     }
 
     /**
@@ -181,7 +189,7 @@ namespace ImGui {
      * \param selected Whether to render a green square around the button indicating that it is selected
      * \return Returns true if the button was clicked
      */
-    inline bool ButtonCustom(const std::string& label, ImVec2 size, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, ImFont* font = nullptr, bool selected = false) {
+    inline bool ButtonCustom(const std::string& label, ImVec2 size, Util::Image::Image* whiteImage, Util::Image::Image* blackImage, ImFont* font = nullptr, bool selected = false, bool useWindowDrawlist = false) {
         const ImVec2 cursorPos = GetCursorPos();
         const ImVec2 pos = GetWindowPos() + GetCursorPos();
 
@@ -189,7 +197,7 @@ namespace ImGui {
             GetBackgroundDrawList()->AddRectFilled(ImVec2(pos.x - 3, pos.y - 3), ImVec2(pos.x + size.x + 3, pos.y + size.y + 3), ImColor(0, 255, 0));
         }
         
-        DrawFrameCustom(pos.x, pos.y, size.x, size.y, whiteImage, blackImage);
+        DrawFrameCustom(pos.x, pos.y, size.x, size.y, whiteImage, blackImage, false, useWindowDrawlist);
 
         PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0.25f));
