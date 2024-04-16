@@ -103,8 +103,8 @@ int main(int argc, char* argv[])
     AudioEngine::CreateChannelGroup("Game");
     AudioEngine::CreateChannelGroup("Music");
 
-    AudioEngine::SetChannelGroupVolume("Game", Options::ReadIntOption("Audio", "GameVolume") / 100.0f);
-    AudioEngine::SetChannelGroupVolume("Music", Options::ReadIntOption("Audio", "MusicVolume") / 100.0f);
+    AudioEngine::SetChannelGroupVolume("Game", static_cast<float>(Options::ReadIntOption("Audio", "GameVolume")) / 100.0f);
+    AudioEngine::SetChannelGroupVolume("Music", static_cast<float>(Options::ReadIntOption("Audio", "MusicVolume")) / 100.0f);
     
     discord::Activity activity = {};
     activity.SetDetails("In the launcher");
