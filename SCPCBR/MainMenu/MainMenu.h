@@ -6,10 +6,11 @@
 #include <GLFW/glfw3.h>
 
 #include "../DiscordWrapper/DiscordWrapper.h"
+#include "../SteamWrapper/SteamWrapper.h"
 
 namespace MainMenu {
     void Init(DiscordWrapper* discordWrapper);
-    void Render(GLFWwindow* window, GlobalGameState* gameState);
+    void Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapper* steam);
     void Free();
 }
 

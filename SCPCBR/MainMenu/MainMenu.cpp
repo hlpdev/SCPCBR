@@ -12,6 +12,7 @@
 
 #include <archive_entry.h>
 
+#include "../GameAssembly/GameAssembly.h"
 #include "../GenerationSystem/GenerationSystem.h"
 #include "../Options/Options.h"
 
@@ -52,6 +53,7 @@ namespace MainMenu {
         std::string NewGame;
         std::string LoadGame;
         std::string Options;
+        std::string Info;
         std::string Quit;
         std::string Back;
         std::string SaveName;
@@ -69,6 +71,15 @@ namespace MainMenu {
         std::string LoadMap;
         std::string Start;
         std::string Discord;
+        std::string GitHub;
+        std::string StorePage;
+        std::string Mods;
+        std::string Credits;
+        std::string Close;
+        std::string Disclaimer1;
+        std::string Disclaimer2;
+        std::string Disclaimer3;
+        std::string DebugWarning;
 
         std::string Graphics;
         std::string Audio;
@@ -240,6 +251,7 @@ void MainMenu::Init(DiscordWrapper* discordWrapper) {
     PreTranslatedStrings::NewGame = Localization::GetTranslatedKey("MainMenu", "newgame");
     PreTranslatedStrings::LoadGame = Localization::GetTranslatedKey("MainMenu", "loadgame");
     PreTranslatedStrings::Options = Localization::GetTranslatedKey("MainMenu", "options");
+    PreTranslatedStrings::Info = Localization::GetTranslatedKey("MainMenu", "info");
     PreTranslatedStrings::Quit = Localization::GetTranslatedKey("MainMenu", "quit");
     PreTranslatedStrings::Back = Localization::GetTranslatedKey("MainMenu", "back");
     PreTranslatedStrings::SaveName = Localization::GetTranslatedKey("MainMenu", "savename");
@@ -256,7 +268,16 @@ void MainMenu::Init(DiscordWrapper* discordWrapper) {
     PreTranslatedStrings::ApollyonDifficultyDescription = Localization::GetTranslatedKey("MainMenu", "apollyondescription");
     PreTranslatedStrings::LoadMap = Localization::GetTranslatedKey("MainMenu", "loadmap");
     PreTranslatedStrings::Start = Localization::GetTranslatedKey("MainMenu", "start");
-    PreTranslatedStrings::Discord = Localization::GetTranslatedKey("Launcher", "DiscordButton2");
+    PreTranslatedStrings::Discord = Localization::GetTranslatedKey("MainMenu", "discordbutton");
+    PreTranslatedStrings::GitHub = Localization::GetTranslatedKey("MainMenu", "githubbutton");
+    PreTranslatedStrings::StorePage = Localization::GetTranslatedKey("MainMenu", "storepagebutton");
+    PreTranslatedStrings::Mods = Localization::GetTranslatedKey("MainMenu", "modsbutton");
+    PreTranslatedStrings::Credits = Localization::GetTranslatedKey("MainMenu", "creditsbutton");
+    PreTranslatedStrings::Close = Localization::GetTranslatedKey("MainMenu", "closebutton");
+    PreTranslatedStrings::Disclaimer1 = Localization::GetTranslatedKey("MainMenu", "disclaimerpart1");
+    PreTranslatedStrings::Disclaimer2 = Localization::GetTranslatedKey("MainMenu", "disclaimerpart2");
+    PreTranslatedStrings::Disclaimer3 = Localization::GetTranslatedKey("MainMenu", "disclaimerpart3");
+    PreTranslatedStrings::DebugWarning = Localization::GetTranslatedKey("MainMenu", "debugwarning");
     
     PreTranslatedStrings::Graphics = Localization::GetTranslatedKey("MainMenu", "graphics");
     PreTranslatedStrings::Audio = Localization::GetTranslatedKey("MainMenu", "audio");
@@ -306,7 +327,7 @@ void MainMenu::Init(DiscordWrapper* discordWrapper) {
     std::thread(RandomTextThread).detach();
 }
 
-void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
+void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapper* steam) {
     try {
         glfwGetFramebufferSize(window, &width, &height);
 
@@ -317,6 +338,11 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
 
         std::string verString = "SCP: CONTAINMENT BREACH REMASTERED V2.0.0 ALPHA";
         ImGui::GetForegroundDrawList()->AddText(ImVec2(1, height - ImGui::CalcTextSize(verString.c_str()).y - 1), ImColor(255, 255, 255), verString.c_str());
+
+        static bool InfoPopupOpen = false;
+        if (InfoPopupOpen) {
+            ImGui::BeginDisabled();
+        }
         
         // RENDER BACKGROUND
         { 
@@ -365,20 +391,6 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
             ImGui::SetCursorPos(ImVec2(0, 0));
             if (Util::Math::RandomFloat(0.0f, 1.0f) <= 0.3f) {
                 ImGui::Image(scp173Image->TextureIdPtr, ImVec2(scp173Image->Width, scp173Image->Height));
-            }
-            ImGui::End();
-            ImGui::PopStyleColor(2);
-        }
-
-        // RENDER DISCORD BUTTON
-        {
-            ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
-            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
-            ImGui::SetNextWindowPos(ImVec2(width - 95, 5));
-            ImGui::Begin("## DISCORD-BUTTON", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
-            ImGui::SetCursorPos(ImVec2(0, 0));
-            if (ImGui::ButtonCustom(PreTranslatedStrings::Discord, ImVec2(90, 40), whiteImage, blackImage, Localization::GetActiveLanguageCourierNewSmall())) {
-                discord->OpenGuildInvite("Q7VKS6hwEV");
             }
             ImGui::End();
             ImGui::PopStyleColor(2);
@@ -982,6 +994,115 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState) {
 
             ImGui::End();
             ImGui::PopStyleColor(2);
+        }
+
+        if (InfoPopupOpen) {
+            ImGui::EndDisabled();
+        }
+
+        // RENDER INFO POPUP
+        {
+            if (InfoPopupOpen) {
+                ImGui::BeginDisabled();
+            }
+
+            bool InfoPopupOpenRn = InfoPopupOpen;
+            ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0));
+            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+            ImGui::SetNextWindowPos(ImVec2(width - 95, 5));
+            ImGui::Begin("## INFO-BUTTON", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+            ImGui::SetCursorPos(ImVec2(0, 0));
+            if (ImGui::ButtonCustom(PreTranslatedStrings::Info, ImVec2(90, 40), whiteImage, blackImage, Localization::GetActiveLanguageCourierNewSmall())) {
+                AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                InfoPopupOpen = true;
+            }
+            ImGui::End();
+            ImGui::PopStyleColor(2);
+            
+            if (InfoPopupOpenRn) {
+                ImGui::EndDisabled();
+            }
+
+            if (InfoPopupOpen) {
+                ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0.7f));
+                ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+                ImGui::SetNextWindowSize(ImVec2(width, height));
+                ImGui::SetNextWindowPos(ImVec2(0, 0));
+                ImGui::Begin("## INFO-WINDOW-BACKGROUND", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus);
+                ImGui::End();
+                ImGui::PopStyleColor(2);
+
+                ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0, 0, 0, 0.7f));
+                ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0, 0, 0, 0));
+                ImGui::SetNextWindowSize(ImVec2(441, 611));
+                ImGui::SetNextWindowPos(ImVec2((width / 2) - (435 / 2), (height / 2) - (605 / 2)));
+                ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(19, 15));
+                ImGui::Begin("## INFO-WINDOW-CONTAINER", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+
+                ImGui::DrawFrameCustom((width / 2) - (429.0f / 2) + 6, (height / 2) - (603.0f / 2), 423, 603, whiteImage, blackImage, false, true);
+
+                ImGui::TextWrappedCentered(GameTitle);
+                ImGui::TextWrappedCentered(GameVersion);
+
+                #if _DEBUG
+                ImGui::TextWrappedCentered(PreTranslatedStrings::DebugWarning.c_str());
+                #endif
+
+                ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(0.9f, 0.9f, 0.9f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_SeparatorHovered, ImVec4(0.9f, 0.9f, 0.9f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_SeparatorActive, ImVec4(0.9f, 0.9f, 0.9f, 1.0f));
+                ImGui::PushStyleVar(ImGuiStyleVar_SeparatorTextBorderSize, 3.0f);
+                ImGui::PushStyleVar(ImGuiStyleVar_SeparatorTextPadding, ImVec2(0, 3));
+                ImGui::Separator();
+                ImGui::PopStyleVar(2);
+                ImGui::PopStyleColor(3);
+                
+                ImGui::TextWrapped("%s", PreTranslatedStrings::Disclaimer1.c_str());
+                ImGui::TextWrapped("%s", PreTranslatedStrings::Disclaimer2.c_str());
+                ImGui::TextWrapped("%s", PreTranslatedStrings::Disclaimer3.c_str());
+
+                ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(0.9f, 0.9f, 0.9f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_SeparatorHovered, ImVec4(0.9f, 0.9f, 0.9f, 1.0f));
+                ImGui::PushStyleColor(ImGuiCol_SeparatorActive, ImVec4(0.9f, 0.9f, 0.9f, 1.0f));
+                ImGui::PushStyleVar(ImGuiStyleVar_SeparatorTextBorderSize, 3.0f);
+                ImGui::PushStyleVar(ImGuiStyleVar_SeparatorTextPadding, ImVec2(0, 3));
+                ImGui::Separator();
+                ImGui::PopStyleVar(2);
+                ImGui::PopStyleColor(3);
+                
+                if (ImGui::ButtonCustom(PreTranslatedStrings::Discord, ImVec2(401, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew(), false, true)) {
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                    discord->OpenGuildInvite("Q7VKS6hwEV");
+                }
+
+                if (ImGui::ButtonCustom(PreTranslatedStrings::GitHub, ImVec2(401, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew(), false, true)) {
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                    steam->OpenLinkInOverlay("https://github.com/hlpdev/SCPCBR");
+                }
+
+                if (ImGui::ButtonCustom(PreTranslatedStrings::StorePage, ImVec2(401, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew(), false, true)) {
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                    steam->OpenLinkInOverlay("https://store.steampowered.com/app/2090230/SCP_Containment_Breach_Remastered/");
+                }
+
+                if (ImGui::ButtonCustom(PreTranslatedStrings::Mods, ImVec2(401, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew(), false, true)) {
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                    steam->OpenLinkInOverlay("https://steamcommunity.com/app/2090230/workshop/");
+                }
+
+                if (ImGui::ButtonCustom(PreTranslatedStrings::Credits, ImVec2(401, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew(), false, true)) {
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                }
+
+                if (ImGui::ButtonCustom(PreTranslatedStrings::Close, ImVec2(401, 30), whiteImage, blackImage, Localization::GetActiveLanguageCourierNew(), false, true)) {
+                    AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                    InfoPopupOpen = false;
+                }
+
+                ImGui::End();
+                ImGui::PopStyleVar();
+                ImGui::PopStyleColor(2);
+            }
         }
     } catch (...) {
         // IGNORE, CONTINUE TO NEXT FRAME
