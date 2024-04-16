@@ -630,7 +630,6 @@
     <ClCompile Include="SCPCBR.cpp" />
     <ClCompile Include="SplashScreen\SplashScreen.cpp" />
     <ClCompile Include="SteamWrapper\SteamWrapper.cpp" />
-    <ClCompile Include="Types\Types.cpp" />
     <ClCompile Include="Util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
