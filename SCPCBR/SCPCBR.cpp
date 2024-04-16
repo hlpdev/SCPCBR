@@ -29,7 +29,7 @@ GlobalGameState CurrentGlobalGameState;
 
 int main(int argc, char* argv[])
 {
-    CurrentGlobalGameState = GlobalGameState::Launcher;
+    CurrentGlobalGameState = GlobalGameState::Splash;
     
     // Hide console window
     ShowWindowAsync(GetConsoleWindow(), SW_HIDE);
@@ -136,10 +136,10 @@ int main(int argc, char* argv[])
         }
 
         switch (CurrentGlobalGameState) {
-            case GlobalGameState::Launcher: {
+            /*case GlobalGameState::Launcher: {
                 Launcher::Render(window, &CurrentGlobalGameState);
                 break;
-            }
+            }*/
             case GlobalGameState::Splash: {
                 SplashScreen::Render(window, &CurrentGlobalGameState, steam);
                 break;
