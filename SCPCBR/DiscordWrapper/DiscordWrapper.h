@@ -1,6 +1,6 @@
 #ifndef DISCORDWRAPPER_H
 #define DISCORDWRAPPER_H
-#include <xstring>
+#include <string>
 #include <discord/types.h>
 
 class DiscordWrapper {
