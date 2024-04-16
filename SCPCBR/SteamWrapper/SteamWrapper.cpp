@@ -41,3 +41,7 @@ void SteamWrapper::SetRichPresence(const std::string& key, const std::string& va
 void SteamWrapper::ClearRichPresence() {
     SteamFriends()->ClearRichPresence();
 }
+
+void SteamWrapper::OpenLinkInOverlay(const std::string& url) {
+    SteamFriends()->ActivateGameOverlayToWebPage(url.c_str());
+}

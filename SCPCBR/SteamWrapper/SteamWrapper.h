@@ -21,6 +21,8 @@ public:
 
     void SetRichPresence(const std::string& key, const std::string& value);
     void ClearRichPresence();
+
+    void OpenLinkInOverlay(const std::string& url);
 };
 
 #endif // STEAMWRAPPER_H
