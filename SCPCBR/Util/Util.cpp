@@ -42,16 +42,16 @@ bool Util::Image::LoadImageFromFile(std::string fileName, Image* image) {
     return false;
 }
 
-void Util::Error::Exit(std::string message) {
-    MessageBoxA(0, message.c_str(), "SCP:CBR FATAL ERROR", MB_TOPMOST | MB_ICONERROR);
-    exit(EXIT_FAILURE);
+[[noreturn]] void Util::Error::Exit(const std::string& message) {
+    MessageBoxA(nullptr, message.c_str(), "SCP:CBR FATAL ERROR", MB_TOPMOST | MB_ICONERROR);
+    exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
 }
 
-void Util::Error::ExitFast() {
-    exit(EXIT_FAILURE);
+[[noreturn]] void Util::Error::ExitFast() {
+    exit(EXIT_FAILURE); // NOLINT(concurrency-mt-unsafe)
 }
 
-void Util::Strings::ReplaceByDelimiter(std::string& string, std::string& delimiter, std::string& toReplaceWith) {
+void Util::Strings::ReplaceByDelimiter(std::string string, std::string delimiter, std::string toReplaceWith) {
     size_t startPos = 0;
     while ((startPos = string.find(delimiter, startPos)) != std::string::npos) {
         string.replace(startPos, delimiter.length(), toReplaceWith);
@@ -59,7 +59,7 @@ void Util::Strings::ReplaceByDelimiter(std::string& string, std::string& delimit
     }
 }
 
-std::string Util::Strings::ReplaceByDelimiterCopy(std::string string, std::string& delimiter, std::string& toReplaceWith) {
+std::string Util::Strings::ReplaceByDelimiterCopy(std::string string, std::string delimiter, std::string toReplaceWith) {
     size_t startPos = 0;
     while ((startPos = string.find(delimiter, startPos)) != std::string::npos) {
         string.replace(startPos, delimiter.length(), toReplaceWith);
@@ -84,7 +84,7 @@ std::vector<std::string> Util::Strings::Split(std::string text, std::string deli
     return res;
 }
 
-void Util::Strings::ReplaceAll(std::string& text, const std::string& replace, const std::string& replaceWith) {
+void Util::Strings::ReplaceAll(std::string text, const std::string replace, const std::string replaceWith) {
     for( size_t pos = 0; ; pos += replace.length() ) {
         // Locate the substring to replace
         pos = text.find( replace, pos );

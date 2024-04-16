@@ -22,12 +22,12 @@ namespace Util {
     }
 
     namespace Strings {
-        void ReplaceByDelimiter(std::string& string, std::string& delimiter, std::string& toReplaceWith);
-        std::string ReplaceByDelimiterCopy(std::string string, std::string& delimiter, std::string& toReplaceWith);
+        void ReplaceByDelimiter(std::string string, std::string delimiter, std::string toReplaceWith);
+        std::string ReplaceByDelimiterCopy(std::string string, std::string delimiter, std::string toReplaceWith);
 
         std::vector<std::string> Split(std::string text, std::string delimiter);
 
-        void ReplaceAll(std::string& text, const std::string& replace, const std::string& replaceWith);
+        void ReplaceAll(std::string text, std::string replace, std::string replaceWith);
 
         std::string ToLower(std::string string);
 
@@ -35,7 +35,7 @@ namespace Util {
     }
 
     namespace Error {
-        void Exit(std::string message);
+        void Exit(const std::string& message);
         void ExitFast();
     }
 
