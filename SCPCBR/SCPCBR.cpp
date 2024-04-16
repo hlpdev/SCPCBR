@@ -66,9 +66,9 @@ int main(int argc, char* argv[])
     // Set window icon
     Window::SetWindowIcon(window, GameWindowIcon);
 
-    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {  // NOLINT(clang-diagnostic-cast-function-type-strict)
         glfwTerminate();
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);  // NOLINT(concurrency-mt-unsafe)
     }
 
     glEnable(GL_MULTISAMPLE);
