@@ -124,6 +124,13 @@ int main(int argc, char* argv[])
         if (discord) {
             discord->RunCallbacks();
         }
+
+        if (GetAsyncKeyState(VK_F11) & 1) {
+            Window::SetWindowDisplayMode(
+                window,
+                Options::ReadIntOption("Graphics", "DisplayMode") == 0 ? 1 : 0
+            );
+        }
         
         AudioEngine::RunCallbacks();
         
@@ -151,7 +158,7 @@ int main(int argc, char* argv[])
                 break;
             }
             case GlobalGameState::MainMenu: {
-                MainMenu::Render(window, &CurrentGlobalGameState);
+                MainMenu::Render(window, &CurrentGlobalGameState, steam);
                 break;
             }
             case GlobalGameState::Game: {
