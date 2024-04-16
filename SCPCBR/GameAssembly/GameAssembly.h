@@ -17,6 +17,7 @@
 
 namespace Window {
     void SetWindowIcon(GLFWwindow* window, std::string iconPath);
+    void SetWindowDisplayMode(GLFWwindow* window, int displayMode);
 }
 
 #endif // GAMEASSEMBLY_H
