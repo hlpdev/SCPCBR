@@ -872,7 +872,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapp
                             if (value != Options::ReadIntOption("Controls", "MoveForward")) {
                                 AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
                             }
-                            AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
+                            Options::WriteIntOption("Controls", "MoveForward", value);
                         }
                     }
                     
