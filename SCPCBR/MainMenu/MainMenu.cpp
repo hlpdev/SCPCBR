@@ -486,6 +486,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapp
 
                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(96 / 255.0f, 117 / 255.0f, 46 / 255.0f, 1));
                 if (ImGui::CheckboxCustom(PreTranslatedStrings::SafeDifficulty.c_str(), &safe, whiteImage, blackImage, 110)) {
+                    safe = true;
                     euclid = false;
                     keter = false;
                     apollyon = false;
@@ -498,6 +499,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapp
                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(152 / 255.0f, 152 / 255.0f, 10 / 255.0f, 1));
                 if (ImGui::CheckboxCustom(PreTranslatedStrings::EuclidDifficulty.c_str(), &euclid, whiteImage, blackImage, 110)) {
                     safe = false;
+                    euclid = true;
                     keter = false;
                     apollyon = false;
                     description = PreTranslatedStrings::EuclidDifficultyDescription.c_str();
@@ -510,6 +512,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapp
                 if (ImGui::CheckboxCustom(PreTranslatedStrings::KeterDifficulty.c_str(), &keter, whiteImage, blackImage, 110)) {
                     safe = false;
                     euclid = false;
+                    keter = true;
                     apollyon = false;
                     description = PreTranslatedStrings::KeterDifficultyDescription.c_str();
                     generationInstructions->Difficulty = GenerationSystem::Difficulty::KETER;
@@ -526,6 +529,7 @@ void MainMenu::Render(GLFWwindow* window, GlobalGameState* gameState, SteamWrapp
                     safe = false;
                     euclid = false;
                     keter = false;
+                    apollyon = true;
                     description = PreTranslatedStrings::ApollyonDifficultyDescription.c_str();
                     generationInstructions->Difficulty = GenerationSystem::Difficulty::APOLLYON;
                     AudioEngine::PlaySoundByName("Assets/SFX/Splash/Button.ogg", AudioEngine::GetChannelGroup("Game"));
