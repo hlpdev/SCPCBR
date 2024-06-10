@@ -169,7 +169,7 @@ std::string Localization::GetTranslatedKey(const std::string& category, const st
     int index = 0;
     for (std::string arg : args) {
         std::string identifier = std::string(std::string("{") + std::to_string(index) + std::string("}"));
-        Util::Strings::ReplaceByDelimiter(localizedString, identifier, arg);
+        localizedString = Util::Strings::ReplaceByDelimiterCopy(localizedString, identifier, arg);
         index++;
     }
 
