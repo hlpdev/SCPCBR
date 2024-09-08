@@ -552,6 +552,7 @@
     <ClCompile Include="Dependencies\src\glcontext_egl.cpp" />
     <ClCompile Include="Dependencies\src\glcontext_html5.cpp" />
     <ClCompile Include="Dependencies\src\glcontext_wgl.cpp" />
+    <ClCompile Include="Dependencies\src\loguru.cpp" />
     <ClCompile Include="Dependencies\src\nvapi.cpp" />
     <ClCompile Include="Dependencies\src\renderer_agc.cpp" />
     <ClCompile Include="Dependencies\src\renderer_d3d11.cpp" />
@@ -795,6 +796,7 @@
     <ClInclude Include="Dependencies\include\imgui\imstb_truetype.h" />
     <ClInclude Include="Dependencies\include\ini.h" />
     <ClInclude Include="Dependencies\include\KHR\khrplatform.h" />
+    <ClInclude Include="Dependencies\include\loguru\loguru.hpp" />
     <ClInclude Include="Dependencies\include\STB\stb_image.h" />
     <ClInclude Include="Dependencies\include\steam\isteamapps.h" />
     <ClInclude Include="Dependencies\include\steam\isteamappticket.h" />
